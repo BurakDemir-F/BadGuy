@@ -1,22 +1,15 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 public class MeshDrawerWindow : EditorWindow
 {
-    private Object _objectToDraw;
-    private KeyCode _drawKeyCode;
-    private bool _overrideEvents;
-    private List<GameObject> _drawnObjects;
-    private List<GameObject> _allCreatedObjects;
-
+    private List<DrawableObject> _drawableObjects;
+    private DrawableObject _currentDrawable;
     private bool _isInitialized;
-    private bool _isIndicatorCreated;
-
-    private GameObject _installationIndicator;
-    private GameObject _parent;
+    private KeyCode _genericDrawKey;
+    private KeyCode _genericStopKey;
 
     [MenuItem("Tools/Mesh Drawer")]
     static void Init()
@@ -31,8 +24,9 @@ public class MeshDrawerWindow : EditorWindow
         if (_isInitialized)
             return;
 
-        _drawnObjects = new List<GameObject>();
-        _allCreatedObjects = new List<GameObject>();
+        _drawableObjects = new List<DrawableObject>();
+        _drawableObjects.Add(new DrawableObject());
+        _currentDrawable = _drawableObjects[0];
         _isInitialized = true;
     }
 
@@ -49,53 +43,49 @@ public class MeshDrawerWindow : EditorWindow
 
     private void OnGUI()
     {
-        EditorGUILayout.BeginHorizontal();
-        _objectToDraw = EditorGUILayout.ObjectField("Object to draw", _objectToDraw, typeof(GameObject), true);
-        _drawKeyCode = (KeyCode)EditorGUILayout.EnumPopup("Draw Key Code",_drawKeyCode);
-        if (_objectToDraw && !_isIndicatorCreated)
+        DrawGenericKeyCode();
+        DrawDrawables();
+        ShowAddDrawableButton();
+    }
+
+    private void DrawGenericKeyCode()
+    {
+        _genericDrawKey = (KeyCode)EditorGUILayout.EnumPopup("Generic Draw Key",_genericDrawKey);
+        _genericStopKey = (KeyCode)EditorGUILayout.EnumPopup("Generic Stop Key",_genericStopKey);
+    }
+
+    private void DrawDrawables()
+    {
+        foreach (var drawableObject in _drawableObjects)
         {
-            if (!_parent)
-                _parent = CreateGameObject(null, "Parent");
+            EditorGUILayout.BeginHorizontal();
 
-            if (!_allCreatedObjects.Contains(_parent))
-                _allCreatedObjects.Add(_parent);
+            drawableObject.Prefab = (GameObject)EditorGUILayout.ObjectField(drawableObject.Prefab == null
+                    ? "Prefab"
+                    : drawableObject.Prefab.name,
+                drawableObject.Prefab,
+                typeof(GameObject),
+                true);
 
-            _installationIndicator = CreateGameObject(_objectToDraw, "Installation Indicator");
-            _allCreatedObjects.Add(_installationIndicator);
-            _isIndicatorCreated = true;
+            drawableObject.activationKey = (KeyCode)EditorGUILayout.EnumPopup("Activation Key",drawableObject.activationKey);
+
+            EditorGUILayout.EndHorizontal();
         }
+    }
 
-        if (!_objectToDraw)
+    private void ShowAddDrawableButton()
+    {
+        if (GUILayout.Button("Add New Drawable Object"))
         {
-            _isIndicatorCreated = false;
-        }
-
-        EditorGUILayout.EndHorizontal();
-
-        if (GUILayout.Button("Stop Drawing"))
-        {
-            if (_installationIndicator)
-            {
-                DestroyImmediate(_installationIndicator);
-                _objectToDraw = null;
-            }
-        }
-
-        if (GUILayout.Button("Clear all created objects"))
-        {
-            foreach (var obj in _allCreatedObjects)
-            {
-                DestroyImmediate(obj);
-            }
-
-            _isIndicatorCreated = false;
-            _objectToDraw = null;
+            _drawableObjects.Add(new DrawableObject());
         }
     }
 
     private void OnSceneGui(SceneView view)
     {
-        if (!_isInitialized || !_isIndicatorCreated)
+        CheckDrawableActivationStatus();
+        
+        if (!_isInitialized || !_currentDrawable.IsDrawable)
             return;
 
         var currentEvent = Event.current;
@@ -103,34 +93,66 @@ public class MeshDrawerWindow : EditorWindow
         var isWorldPosAcquired = GetMouseWorldPos(out var worldPos);
 
         if (isWorldPosAcquired)
-        {
-            _installationIndicator.transform.position = worldPos;
-        }
+            _currentDrawable.indicator.transform.position = worldPos;
 
-        if (currentEvent.type == EventType.KeyDown)
+        var isDrawable = currentEvent.type == EventType.KeyDown && currentEvent.keyCode == _genericDrawKey &&
+                         isWorldPosAcquired;
+
+        if (isDrawable)
         {
-            if (currentEvent.keyCode == _drawKeyCode)
-            {
-                if (isWorldPosAcquired)
-                {
-                    var newObj = CreateGameObject(_objectToDraw);
-                    newObj.transform.position = worldPos;
-                    newObj.transform.rotation = _installationIndicator.transform.rotation;
-                    newObj.transform.SetParent(_parent.transform);
-                    _drawnObjects.Add(newObj);
-                    _allCreatedObjects.Add(newObj);
-                }
-            }
+            var newObj = _currentDrawable.CreateInstanceAndTrack();
+            newObj.transform.position = worldPos;
+            _currentDrawable.SetRotationLast();
+            _currentDrawable.SetParentLast();
         }
 
         if (currentEvent.type == EventType.ScrollWheel)
         {
             var scrollDelta = currentEvent.delta;
-            Debug.Log($"scrol delta: {scrollDelta.y}");
-            _installationIndicator.transform.Rotate(Vector3.up, 360f * scrollDelta.y * .01f);
+            _currentDrawable.indicator.transform.Rotate(Vector3.up, 360f * scrollDelta.y * .01f);
         }
         
         currentEvent.type = EventType.Used;
+    }
+
+    private void CheckDrawableActivationStatus()
+    {
+        var currentEvent = Event.current;
+        if(currentEvent.type != EventType.KeyDown)
+            return;
+
+        var keyCode = currentEvent.keyCode;
+
+        if (keyCode == _genericStopKey)
+        {
+            foreach (var drawable in _drawableObjects)
+            {
+                drawable.IsDrawable = false;
+            }
+            return;
+        }
+        
+        DrawableObject drawableObject = null;
+        
+        foreach (var drawable in _drawableObjects)
+        {
+            if (drawable.activationKey != keyCode)
+                continue;
+
+            drawableObject = drawable;
+        }
+        
+        if(drawableObject == null)
+            return;
+
+        drawableObject.IsDrawable = true;
+        _currentDrawable = drawableObject;
+
+        foreach (var drawable in _drawableObjects)
+        {
+            if (drawable != drawableObject)
+                drawable.IsDrawable = false;
+        }
     }
 
     private bool GetMouseWorldPos(out Vector3 position)
@@ -146,7 +168,78 @@ public class MeshDrawerWindow : EditorWindow
         position = Vector3.zero;
         return false;
     }
+}
 
+[System.Serializable]
+public class DrawableObject
+{
+
+    private bool _isDrawable;
+
+    public bool IsDrawable
+    {
+        get { return _isDrawable;}
+        set
+        {
+            _isDrawable = value;
+            if(indicator)
+                indicator.gameObject.SetActive(_isDrawable);
+        }
+    }
+    private GameObject _prefab;
+
+    public GameObject Prefab
+    {
+        get => _prefab;
+        set
+        {
+            if(value == null)
+                return;
+
+            if(value == _prefab)
+                return;
+            
+            _prefab = value;
+
+            if (!indicator)
+            {
+                indicator = CreateGameObject(_prefab, "Indicator");
+            }
+
+            if (!parent)
+            {
+                parent = CreateGameObject(null, "parent").transform;
+            }
+
+            IsDrawable = true;
+        }
+    }
+    public GameObject indicator { get; private set; }
+    public Transform parent{ get; private set; }
+    public List<GameObject> instances;
+    public KeyCode activationKey;
+    public DrawableObject()
+    {
+        instances = new();
+    }
+
+    public GameObject CreateInstanceAndTrack()
+    {
+        var newObj = CreateGameObject(Prefab, indicator.name);
+        instances.Add(newObj);
+        return newObj;
+    }
+
+    public void SetRotationLast()
+    {
+        instances[^1].transform.rotation = indicator.transform.rotation;
+    }
+
+    public void SetParentLast()
+    {
+        instances[^1].transform.SetParent(parent);
+    }
+    
     private GameObject CreateGameObject(Object prefab = null, string name = "")
     {
         if (prefab != null)
@@ -159,17 +252,15 @@ public class MeshDrawerWindow : EditorWindow
         var newObj = new GameObject(name == "" ? "Object" : name);
         return newObj;
     }
-}
 
-[System.Serializable]
-public class DrawableObject
-{
-    public GameObject prefab;
-    public Transform parent;
-    public List<GameObject> instances;
-    public KeyCode drawKey;
-    public DrawableObject()
+    private void Clear()
     {
-        instances = new();
+        foreach (var instance in instances)
+        {
+            Object.DestroyImmediate(instance);
+        }
+        
+        Object.DestroyImmediate(indicator);
+        Object.DestroyImmediate(parent);
     }
 }
