@@ -17,7 +17,7 @@ namespace Player
 
         protected override void OnMovementDirectionChanged()
         {
-            _character.Move(MoveDirectionOnXZ * (Time.deltaTime * Speed));
+            var collisionFlags = _character.Move(MoveDirectionOnXZ * (Time.deltaTime * Speed));
             Rotate();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using AYellowpaper;
 using UnityEngine;
 
@@ -74,6 +75,11 @@ namespace Generic
             Move(directionVec);
         }
 
+        protected void Move()
+        {
+            Move(MoveVector);
+        }
+        
         protected void Move(Vector2 direction)
         {
             var changeInXY = direction * (Speed * Time.deltaTime);
