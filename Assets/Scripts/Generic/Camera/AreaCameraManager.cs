@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 
@@ -10,6 +11,7 @@ namespace Generic.Camera
     {
         [SerializeField] private TriggerCameraDict _triggerAreas;
         [SerializeField]private TriggerArea _enteredArea;
+        [SerializeField] private Transform _lookTarget;
 
         [SerializeField] private int _lowPriority;
         [SerializeField] private int _highPriority;
@@ -24,6 +26,7 @@ namespace Generic.Camera
                 
                 area.Setup(_controlTag);
                 cam.Setup(_highPriority,_lowPriority);
+                cam.SetLookTarget(_lookTarget);
 
                 area.TriggerEnter += TriggerEntered;
                 area.TriggerExit += TriggerExited;
@@ -81,8 +84,12 @@ namespace Generic.Camera
             {
                 var triggerArea = t.GetComponentInChildren<TriggerArea>();
                 var camArea = t.GetComponentInChildren<CameraBase>();
+                camArea.SetLookTarget(_lookTarget);
+                EditorUtility.SetDirty(camArea);
                 _triggerAreas.Add(triggerArea,camArea);
             }
+            
+            EditorUtility.SetDirty(this);
         } 
         
 #endif

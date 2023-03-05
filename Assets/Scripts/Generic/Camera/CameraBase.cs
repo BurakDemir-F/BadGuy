@@ -31,5 +31,10 @@ namespace Generic.Camera
         {
             _vcam.Priority = _lowPriority;
         }
+        
+        public void SetLookTarget(Transform target)
+        {
+            _vcam.m_LookAt = target;
+        }
     }
 }

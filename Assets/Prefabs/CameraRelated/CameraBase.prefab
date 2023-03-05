@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7625222551783251141}
   - component: {fileID: 8481090940170132176}
   - component: {fileID: 318050138881909782}
+  - component: {fileID: 3176699034492004316}
   m_Layer: 0
   m_Name: CameraBase
   m_TagString: Untagged
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 50
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -85,6 +86,24 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 2879422494048481852}
+--- !u!114 &3176699034492004316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6089893417892551587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfa4d6776db6c64993113e149f6f4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActivated: 1
+  _showInRuntime: 1
+  _color: {r: 1, g: 0, b: 0.06640482, a: 1}
+  _size: 2
+  _drawWire: 0
+  _gizmoShape: 0
 --- !u!1 &7934091408394190928
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4001350191495311134}
   - component: {fileID: 5836376627049453670}
   - component: {fileID: 2600752613861281082}
+  - component: {fileID: 7147906355427218143}
   m_Layer: 0
   m_Name: TriggerArea
   m_TagString: Untagged
@@ -44,7 +45,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 2, z: 10}
+  m_Size: {x: 17, y: 2, z: 17}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2600752613861281082
 MonoBehaviour:
@@ -58,3 +59,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef273cfc0d414728adda074f88a2351d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7147906355427218143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755098171237963760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c72ba05b7694c918e7a14eafd8d6db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoColor: {r: 0, g: 0.32743883, b: 1, a: 1}
+  drawSolid: 0
