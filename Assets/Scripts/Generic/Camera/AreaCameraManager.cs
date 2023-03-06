@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using Utilities;
 
@@ -17,6 +14,10 @@ namespace Generic.Camera
         [SerializeField] private int _highPriority;
         [SerializeField] private string _controlTag;
 
+        private CameraBase _currentCamera;
+        
+        public Transform CurrentCameraTransform => _currentCamera.transform;
+        
         private void Start()
         {
             foreach (var areaCamPair in _triggerAreas)
@@ -48,10 +49,8 @@ namespace Generic.Camera
 
         private void TriggerEntered(TriggerArea area)
         {
-            if(_enteredArea != null)
-                return;
-            
             _enteredArea = area;
+            _currentCamera = _triggerAreas[_enteredArea];
 
             foreach (var areaCamPair in _triggerAreas)
             {

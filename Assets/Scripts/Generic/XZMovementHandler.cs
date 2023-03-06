@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using AYellowpaper;
 using UnityEngine;
+using Utilities;
 
 namespace Generic
 {
@@ -11,6 +12,8 @@ namespace Generic
 
         protected float Speed;
         protected float RotateSpeed;
+        protected float FallSpeed;
+        protected float Gravity;
         protected Vector3 MoveDirectionOnXZ;
         protected bool IsMoving;
         
@@ -23,12 +26,13 @@ namespace Generic
             SetSpeed(_speedProvider.Value);
         }
 
-        protected virtual void Update()
+        protected override void Update()
         {
-            DetectTargetLocationChanges();
+            base.Update();
+            UpdateMovement();
         }
 
-        private void DetectTargetLocationChanges()
+        private void UpdateMovement()
         {
             if(MoveVector.x == 0 & MoveVector.y == 0)
             {
@@ -36,14 +40,29 @@ namespace Generic
                 return;
             }
 
-            MoveDirectionOnXZ = new Vector3(MoveVector.x, 0f, MoveVector.y);
+            MoveDirectionOnXZ = GetMovementDirection();
             ChangeMovementStatus(true);
+            ApplyGravity();
             OnMovementDirectionChanged();
         }
 
-        protected virtual void OnMovementDirectionChanged() {}
+        protected virtual Vector3 GetMovementDirection()
+        {
+            return new Vector3(CurrentMoveVector.x, 0f, CurrentMoveVector.y);
+        }
 
-        private void ChangeMovementStatus(bool isMovingNow)
+        protected virtual void OnMovementDirectionChanged()
+        {
+            Move();
+            Rotate();
+        }
+
+        protected virtual void ApplyGravity()
+        {
+            
+        }
+        
+        protected void ChangeMovementStatus(bool isMovingNow)
         {
             if (IsMoving && !isMovingNow)
             {
@@ -75,7 +94,7 @@ namespace Generic
             Move(directionVec);
         }
 
-        protected void Move()
+        protected virtual void Move()
         {
             Move(MoveVector);
         }
@@ -88,11 +107,11 @@ namespace Generic
             myTransform.position += changeInXZ;
         }
 
-        protected void Rotate()
+        protected virtual void Rotate()
         {
             var myTransform = transform;
             var currentRotation = myTransform.rotation;
-            var toRotation = Quaternion.LookRotation(MoveDirectionOnXZ);
+            var toRotation = Quaternion.LookRotation(MoveDirectionOnXZ.SetY(0f));
             myTransform.rotation = Quaternion.RotateTowards(currentRotation, toRotation, RotateSpeed * Time.deltaTime);
         }
 
@@ -100,6 +119,8 @@ namespace Generic
         {
             Speed = speedProvider.MoveSpeed;
             RotateSpeed = speedProvider.RotateSpeed;
+            FallSpeed = speedProvider.FallSpeed;
+            Gravity = speedProvider.Gravity;
         }
     }
 }

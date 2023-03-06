@@ -1,11 +1,10 @@
-﻿using System;
-using Generic;
+﻿using Generic;
 using UnityEngine;
 
 namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerMovementHandler : XZMovementHandler
+    public class PlayerMovementHandler : CameraBasedMovementHandler
     {
         private CharacterController _character;
 
@@ -15,10 +14,20 @@ namespace Player
             _character = GetComponent<CharacterController>();
         }
 
-        protected override void OnMovementDirectionChanged()
+        protected override void Move()
         {
-            var collisionFlags = _character.Move(MoveDirectionOnXZ * (Time.deltaTime * Speed));
-            Rotate();
+            _character.Move(MoveDirectionOnXZ * (Time.deltaTime * Speed));
+        }
+
+        protected override void ApplyGravity()
+        {
+            if(_character.isGrounded)
+            {
+                MoveDirectionOnXZ.y = 0f;
+                return;
+            }
+
+            MoveDirectionOnXZ.y = -FallSpeed * Gravity * Time.deltaTime;
         }
     }
 }

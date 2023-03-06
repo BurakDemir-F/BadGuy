@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "HorizontalAxis",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "f7fbc06d-0892-43ae-97be-e83ab31bf7e4",
                     "expectedControlType": "Axis",
                     "processors": "",
@@ -25,7 +25,7 @@
                 },
                 {
                     "name": "VerticalAxis",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "51a63141-631c-443a-a0fe-a1b5e88c9b21",
                     "expectedControlType": "Axis",
                     "processors": "",
@@ -37,7 +37,7 @@
                 {
                     "name": "2D Vector",
                     "id": "e897c9c8-b76f-4d5c-8f95-e63a3e88a7ca",
-                    "path": "2DVector(mode=1)",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

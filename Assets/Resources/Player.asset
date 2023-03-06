@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   _moveSpeed: 5
-  _rotateSpeed: 120
+  _rotateSpeed: 360
+  _fallSpeed: 50
+  _gravity: 9.8
