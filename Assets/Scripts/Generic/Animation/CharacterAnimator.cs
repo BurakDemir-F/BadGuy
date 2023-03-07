@@ -1,16 +1,14 @@
-﻿using System;
-using Generic.Animation;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Generic.Animation
 {
-    public class CharacterAnimator : AnimatorUser
+    public class CharacterAnimator : AnimatorUser<AnimType>
     {
 
         private static readonly int Status = Animator.StringToHash("Status");
         
         //Also you can use AnimType, Action dict.
-        public virtual float Animate(AnimType type) 
+        public override float Animate(AnimType type) 
         {
             switch (type)
             {
@@ -30,7 +28,15 @@ namespace Generic.Animation
                     return 0f;                   
             }
         }
-
+        
+#if UNITY_EDITOR
+        [ContextMenu("Fill Animation Data")]
+        protected void FillAnimations()
+        {
+            FillAnimationData();
+        }
+#endif
+        
         /*
          * Status
          * 0 - Idle
@@ -38,5 +44,10 @@ namespace Generic.Animation
          *
          * 
          */
+    }
+    
+    public enum AnimType
+    {
+        None,Walk,Idle
     }
 }

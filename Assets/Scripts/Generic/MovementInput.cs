@@ -14,7 +14,6 @@ namespace Generic
         private Inputs.PlayerActions _playerActions;
         public Vector2 MoveVector { get; private set; }
         public Vector2 CurrentMoveVector => _currentInput;
-        public float HorizontalAxis { get; private set; }
         public float VerticalAxis { get; private set; }
 
         protected virtual void Start()
@@ -36,11 +35,6 @@ namespace Generic
             MoveVector = context.ReadValue<Vector2>();
         }
 
-        public void OnHorizontalAxis(InputAction.CallbackContext context)
-        {
-            HorizontalAxis = context.ReadValue<float>();
-        }
-
         public void OnVerticalAxis(InputAction.CallbackContext context)
         {
             VerticalAxis = context.ReadValue<float>();
@@ -52,6 +46,12 @@ namespace Generic
                 return;
 
             _currentInput = Vector2.SmoothDamp(_currentInput, MoveVector, ref _refSmoothValue, _inputSmoothSpeed);
+            
+            if (MoveVector.x == 0f)
+                _currentInput.x = 0f;
+
+            if (MoveVector.y == 0f)
+                _currentInput.y = 0f;
         }
     }
 }

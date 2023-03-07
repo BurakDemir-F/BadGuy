@@ -18,6 +18,10 @@ namespace Utilities
         {
             return new Vector3(@this.x, yValue, @this.z);
         }
+        public static Vector3 SetX(this Vector3 @this,float xValue)
+        {
+            return new Vector3(xValue, @this.y, @this.z);
+        }
         
         public static Vector3 AddZ(this Vector3 @this,float zValue)
         {

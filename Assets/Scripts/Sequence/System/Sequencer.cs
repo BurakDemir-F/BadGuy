@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Sequence
+namespace Sequence.System
 {
     public class Sequencer : MonoBehaviour
     {

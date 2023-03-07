@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Sequence
+namespace Sequence.System
 {
     public class SequenceNode : MonoBehaviour, ISequenceNode
     {

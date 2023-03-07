@@ -33,9 +33,10 @@ namespace Generic
 
         private void UpdateMovement()
         {
-            if(MoveVector.x == 0 & MoveVector.y == 0)
+            if(MoveVector.x == 0 && MoveVector.y == 0)
             {
                 ChangeMovementStatus(false);
+                MoveDirectionOnXZ = Vector3.zero;
                 return;
             }
 
@@ -75,27 +76,10 @@ namespace Generic
                 MovementStarted?.Invoke();
             }
         }
-        
-        protected void UpdateOnMoveVector()
-        {
-            if(MoveVector.x == 0f && MoveVector.y == 0)
-                return;
-            
-            Move(MoveVector);
-        }
-
-        protected void UpdateOnAxis()
-        {
-            if(HorizontalAxis == 0 && VerticalAxis == 0)
-                return;
-            
-            var directionVec = new Vector3(HorizontalAxis,VerticalAxis);
-            Move(directionVec);
-        }
 
         protected virtual void Move()
         {
-            Move(MoveVector);
+            Move(CurrentMoveVector);
         }
         
         protected void Move(Vector2 direction)
