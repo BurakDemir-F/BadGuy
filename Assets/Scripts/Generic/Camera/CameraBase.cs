@@ -20,15 +20,18 @@ namespace Generic.Camera
             _highPriority = highPriority;
             _lowPriority = lowPriority;
             _vcam.Priority = _lowPriority;
+            _vcam.gameObject.SetActive(false);
         }
 
         public virtual void Activate()
         {
+            _vcam.gameObject.SetActive(true);
             _vcam.Priority = _highPriority;
         }
 
         public virtual void Deactivate()
         {
+            _vcam.gameObject.SetActive(false);
             _vcam.Priority = _lowPriority;
         }
         

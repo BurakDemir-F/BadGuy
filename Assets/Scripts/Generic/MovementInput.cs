@@ -30,9 +30,27 @@ namespace Generic
             _inputs.Dispose();
         }
 
+        public virtual void EnableInputs()
+        {
+            _inputs.Player.Enable();
+            _inputs.Player.Movement.Enable();
+            _inputs.Player.Look.Enable();
+        }
+
+        public virtual void DisableInputs()
+        {
+            _inputs.Player.Disable();
+            _inputs.Player.Look.Disable();
+            _inputs.Player.Movement.Disable();
+        }
+
         public void OnMovement(InputAction.CallbackContext context)
         {
             MoveVector = context.ReadValue<Vector2>();
+        }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
         }
 
         public void OnVerticalAxis(InputAction.CallbackContext context)

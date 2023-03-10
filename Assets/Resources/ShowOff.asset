@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777ecd7e8f44429584d18e891e2c99eb, type: 3}
+  m_Name: ShowOff
+  m_EditorClassIdentifier: 
+  _data:
+  - IsActive: 0
+    Description: Crazy Old Man!
+    NeedCameraMovement: 0
+    Camera: {fileID: 0}
+    ShowOffDuration: 2
+  - IsActive: 1
+    Description: The Dog!
+    NeedCameraMovement: 1
+    Camera: {fileID: 0}
+    ShowOffDuration: 2
+  - IsActive: 1
+    Description: Grave Yard!
+    NeedCameraMovement: 1
+    Camera: {fileID: 0}
+    ShowOffDuration: 2

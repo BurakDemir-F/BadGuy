@@ -17,11 +17,11 @@ namespace Generic.Animation
                     return 0f;
                 
                 case AnimType.Walk:
-                    Animator.SetInteger(Status,1);
+                    animator.SetInteger(Status,1);
                     return AnimationData[AnimType.Walk].Length;
                 
                 case AnimType.Idle:
-                    Animator.SetInteger(Status,0);
+                    animator.SetInteger(Status,0);
                     return AnimationData[AnimType.Idle].Length;
                 
                 default:

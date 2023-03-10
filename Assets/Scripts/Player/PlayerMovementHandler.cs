@@ -1,4 +1,5 @@
-﻿using Generic;
+﻿using Cinemachine;
+using Generic;
 using UnityEngine;
 using Utilities;
 
@@ -8,6 +9,7 @@ namespace Player
     public class PlayerMovementHandler : CameraBasedMovementHandler
     {
         private CharacterController _character;
+        [SerializeField] private CinemachineFreeLook _freeLookCam;
 
         protected override void Start()
         {
@@ -29,6 +31,18 @@ namespace Player
             }
 
             MoveDirectionOnXZ.y = -FallSpeed * Gravity * Time.deltaTime;
+        }
+
+        public override void EnableInputs()
+        {
+            base.EnableInputs();
+            _freeLookCam.GetComponent<CinemachineInputProvider>().enabled = true;
+        }
+
+        public override void DisableInputs()
+        {
+            base.DisableInputs();
+            _freeLookCam.GetComponent<CinemachineInputProvider>().enabled = false;
         }
     }
 }

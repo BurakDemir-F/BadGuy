@@ -1,6 +1,8 @@
-﻿using AYellowpaper;
+﻿using System;
+using AYellowpaper;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Npc
 {
@@ -8,6 +10,8 @@ namespace Npc
     {
         [SerializeField] protected InterfaceReference<INPCDataProvider> _npcDataProvider;
         [SerializeField] protected NavMeshAgent _agent;
+        [SerializeField] protected NpcAnimator _animator;
+        [SerializeField] private NpcStatusTrack statusTrack;
         
         protected Transform _currentAttackTarget;
         protected bool _hasActiveTarget;
@@ -19,6 +23,14 @@ namespace Npc
         {
             _touchedCollider = new Collider[_colliderTrackCount];
             _agent.speed = _npcDataProvider.Value.MoveSpeed;
+            statusTrack = new NpcStatusTrack();
+            statusTrack.CurrentStatus = NpcStatus.Patrol;
+            statusTrack.NpcStatusChanged += OnNpcStatusChanged;
+        }
+
+        private void OnDestroy()
+        {
+            statusTrack.NpcStatusChanged -= OnNpcStatusChanged;
         }
 
         private void Update()
@@ -32,10 +44,33 @@ namespace Npc
             var attackRadius = _npcDataProvider.Value.AttackRangeRadius;
             
             if (distance <= attackRadius)
+            {
+                statusTrack.CurrentStatus = NpcStatus.Attack;
                 Attack();
+            }
             else
+            {
+                statusTrack.CurrentStatus = NpcStatus.Chase;
                 Chase();
+            }
         }
+
+        private void OnNpcStatusChanged(NpcStatus status)
+        {
+            switch (status)
+            {
+                case NpcStatus.Patrol:
+                    _animator.Animate(NpcAnimType.Idle);
+                    break;
+                case NpcStatus.Chase:
+                    _animator.Animate(NpcAnimType.Run);
+                    break;
+                case NpcStatus.Attack:
+                    _animator.Animate(NpcAnimType.Attack);
+                    break;
+            }
+        }
+        
 
         protected void CheckRangeRadius()
         {
@@ -65,8 +100,36 @@ namespace Npc
         {
             
         }
-    }
+        
+        [Serializable]
+        private struct NpcStatusTrack
+        {
+            public event Action<NpcStatus> NpcStatusChanged;
+            private NpcStatus _currentStatus;
 
+            public NpcStatus CurrentStatus
+            {
+                get => _currentStatus;
+
+                set
+                {
+                    if (_currentStatus != value)
+                    {
+                        _currentStatus = value;
+                        NpcStatusChanged?.Invoke(_currentStatus);
+                    }
+                }
+            }
+        }
+        
+        public enum NpcStatus
+        {
+            None,
+            Patrol,
+            Chase,
+            Attack
+        }
+    }
     public interface INPCDataProvider
     {
         AttackType AttackType { get;}

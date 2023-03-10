@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sequence.System
 {
     public class SequenceNode : MonoBehaviour, ISequenceNode
     {
-        [SerializeField] private SequenceNodeType _nodeType;
+        [SerializeField] protected SequenceNodeType _nodeType;
         [SerializeField] private float _waitInterval;
-        private bool _isCompleted;
-        public SequenceNode NextSequence { get; set; }
+        protected bool isNodeCompleted;
+        
+        // if we use same sequence node in sequencer we should add them to the queue so it can call them properly.
+        public Queue<SequenceNode> NextSequenceQueue { get; private set; }
+        protected SequenceNode CurrentNextSequence;
         public float WaitInterval => _waitInterval;
         public Action SequenceNodeCompleted { get; set; }
         public SequenceNodeType NodeType => _nodeType;
+
+        public virtual void InitializeNode()
+        {
+            NextSequenceQueue ??= new Queue<SequenceNode>();
+        }
 
         public virtual void StartSequenceNode()
         {
@@ -21,9 +30,11 @@ namespace Sequence.System
 
         protected virtual void CallNextNode()
         {
-            if (NextSequence == null)
+            if (NextSequenceQueue.Count == 0)
                 return;
 
+            CurrentNextSequence = NextSequenceQueue.Dequeue();
+            
             switch (_nodeType)
             {
                 case SequenceNodeType.None:
@@ -33,7 +44,7 @@ namespace Sequence.System
                     SequenceNodeCompleted += CallNextNodeOnComplete;
                     break;
                 case SequenceNodeType.Parallel:
-                    NextSequence.StartSequenceNode();
+                    CurrentNextSequence.StartSequenceNode();
                     break;
                 case SequenceNodeType.InTime:
                     StartCoroutine(StartNextNodeWithInterval());
@@ -44,24 +55,25 @@ namespace Sequence.System
         protected virtual void CallNextNodeOnComplete()
         {
             SequenceNodeCompleted -= CallNextNodeOnComplete;
-            NextSequence.StartSequenceNode();
+            CurrentNextSequence.StartSequenceNode();
         }
 
         private IEnumerator StartNextNodeWithInterval()
         {
-            yield return new WaitForSeconds(NextSequence.WaitInterval);
-            NextSequence.StartSequenceNode();
+            yield return new WaitForSeconds(WaitInterval);
+            CurrentNextSequence.StartSequenceNode();
         }
 
-        public bool IsCompleted() => _isCompleted;
+        public bool IsCompleted() => isNodeCompleted;
     }
 
     public interface ISequenceNode
     {
-        SequenceNode NextSequence { get; set; }
+        Queue<SequenceNode> NextSequenceQueue { get;}
         float WaitInterval { get; }
         Action SequenceNodeCompleted { get; set; }
         SequenceNodeType NodeType { get; }
+        void InitializeNode();
         void StartSequenceNode();
         bool IsCompleted();
     }
