@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Generic.Animation;
 using UnityEngine;
 
@@ -6,27 +7,26 @@ namespace Npc
 {
     public class NpcAnimator : AnimatorUser<NpcAnimType>
     {
-        private static readonly int Status = Animator.StringToHash("Status");
+        [SerializeField] private List<NpcAnimation> _animations;
+        private Dictionary<NpcAnimType, NpcAnimation> _animationDict;
+        
+        public void Initialize()
+        {
+            if (_animations == null || _animations.Count == 0)
+                return;
+
+            _animationDict = new Dictionary<NpcAnimType, NpcAnimation>();
+            foreach (var anim in _animations)
+            {
+                _animationDict.Add(anim.AnimType, anim);
+            }
+        }
         
         public override float Animate(NpcAnimType type)
         {
-            switch (type)
-            {
-                case NpcAnimType.Idle:
-                    animator.SetInteger(Status,0);
-                    return AnimationData[NpcAnimType.Idle].Length;
-                case NpcAnimType.Walk:
-                    animator.SetInteger(Status,1);
-                    return AnimationData[NpcAnimType.Walk].Length;
-                case NpcAnimType.Run:
-                    animator.SetInteger(Status,2);
-                    return AnimationData[NpcAnimType.Run].Length;
-                case NpcAnimType.Attack:
-                    animator.SetInteger(Status,3);
-                    return AnimationData[NpcAnimType.Attack].Length;
-            }
-
-            return 0f;
+            var anim = _animationDict[type];
+            animator.SetInteger(anim.ParameterName,anim.ConditionCode);
+            return AnimationData[type].Length;
         }
         
 #if UNITY_EDITOR
@@ -46,4 +46,7 @@ namespace Npc
         Run,
         Attack
     }
+    
+    [System.Serializable]
+    public class NpcAnimation : AnimationComponent<NpcAnimType>{}
 }

@@ -1,32 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Generic.Animation
 {
     public class CharacterAnimator : AnimatorUser<AnimType>
     {
-
-        private static readonly int Status = Animator.StringToHash("Status");
+        [SerializeField] private List<CharacterAnimation> _animations;
+        private Dictionary<AnimType, CharacterAnimation> _animationDict;
         
-        //Also you can use AnimType, Action dict.
-        public override float Animate(AnimType type) 
+        public void Initialize()
         {
-            switch (type)
+            if (_animations == null || _animations.Count == 0)
+                return;
+
+            _animationDict = new Dictionary<AnimType, CharacterAnimation>();
+            foreach (var anim in _animations)
             {
-                case AnimType.None:
-                    Debug.Log("you send wrong anim state, maybe?");
-                    return 0f;
-                
-                case AnimType.Walk:
-                    animator.SetInteger(Status,1);
-                    return AnimationData[AnimType.Walk].Length;
-                
-                case AnimType.Idle:
-                    animator.SetInteger(Status,0);
-                    return AnimationData[AnimType.Idle].Length;
-                
-                default:
-                    return 0f;                   
+                _animationDict.Add(anim.AnimType, anim);
             }
+        }
+
+        public override float Animate(AnimType type)
+        {
+            var anim = _animationDict[type];
+            animator.SetInteger(anim.ParameterName,anim.ConditionCode);
+            return AnimationData[type].Length;
         }
         
 #if UNITY_EDITOR
@@ -41,13 +39,16 @@ namespace Generic.Animation
          * Status
          * 0 - Idle
          * 1 - Walking
-         *
          * 
+         * 5- Pull
          */
     }
     
     public enum AnimType
     {
-        None,Walk,Idle
+        None,Walk,Idle,Pull
     }
+    
+    [System.Serializable]
+    public class CharacterAnimation : AnimationComponent<AnimType>{}
 }

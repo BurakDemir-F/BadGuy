@@ -1,4 +1,5 @@
 ﻿using System;
+using Generic;
 using Generic.Animation;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(CharacterAnimator))]
     [RequireComponent(typeof(PlayerMovementHandler))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IInteractable
     {
         private CharacterController _character;
         private CharacterAnimator _animator;
@@ -19,6 +20,7 @@ namespace Player
             _animator = GetComponent<CharacterAnimator>();
             _movementHandler = GetComponent<PlayerMovementHandler>();
 
+            _animator.Initialize();
             _animator.Animate(AnimType.Idle);
             _movementHandler.MovementStarted += OnMovementStarted;
             _movementHandler.MovementEnd += OnMovementEnd;
@@ -38,6 +40,15 @@ namespace Player
         private void OnMovementStarted()
         {
             _animator.Animate(AnimType.Walk);
+        }
+
+        public void Interact(Collider col)
+        {
+            if (col.CompareTag("Npc"))
+            {
+                _character.enabled = false;
+                _movementHandler.enabled = false;
+            }
         }
     }
 }

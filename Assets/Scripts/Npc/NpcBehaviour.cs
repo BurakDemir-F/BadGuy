@@ -1,5 +1,6 @@
 ﻿using System;
 using AYellowpaper;
+using AYellowpaper.Samples;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -12,6 +13,8 @@ namespace Npc
         [SerializeField] protected NavMeshAgent _agent;
         [SerializeField] protected NpcAnimator _animator;
         [SerializeField] private NpcStatusTrack statusTrack;
+
+        private bool _isNavMeshActive;
         
         protected Transform _currentAttackTarget;
         protected bool _hasActiveTarget;
@@ -21,11 +24,13 @@ namespace Npc
 
         private void Start()
         {
+            _animator.Initialize();
             _touchedCollider = new Collider[_colliderTrackCount];
             _agent.speed = _npcDataProvider.Value.MoveSpeed;
             statusTrack = new NpcStatusTrack();
             statusTrack.CurrentStatus = NpcStatus.Patrol;
             statusTrack.NpcStatusChanged += OnNpcStatusChanged;
+            _isNavMeshActive = true;
         }
 
         private void OnDestroy()
@@ -35,6 +40,9 @@ namespace Npc
 
         private void Update()
         {
+            if(!_isNavMeshActive)
+                return;
+            
             CheckRangeRadius();
             
             if(!_hasActiveTarget)
@@ -100,7 +108,24 @@ namespace Npc
         {
             
         }
-        
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.CompareTag("Player"))
+            {
+                _isNavMeshActive = false;
+                _agent.isStopped = true;
+                _agent.ResetPath();
+                _agent.enabled = false;
+                HarmPlayer(other);
+            }
+        }
+
+        protected virtual void HarmPlayer(Collider other)
+        {
+            other.GetComponent<Generic.IInteractable>()?.Interact(GetComponent<Collider>());
+        }
+
         [Serializable]
         private struct NpcStatusTrack
         {
@@ -121,7 +146,7 @@ namespace Npc
                 }
             }
         }
-        
+
         public enum NpcStatus
         {
             None,
