@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ShowOff
   m_EditorClassIdentifier: 
   _data:
-  - IsActive: 0
+  - IsActive: 1
     Description: Crazy Old Man!
-    NeedCameraMovement: 0
+    NeedCameraMovement: 1
     Camera: {fileID: 0}
     ShowOffDuration: 2
   - IsActive: 1

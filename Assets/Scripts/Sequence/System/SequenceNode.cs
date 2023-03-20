@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Sequence.System
 {
@@ -18,6 +19,8 @@ namespace Sequence.System
         public Action SequenceNodeCompleted { get; set; }
         public SequenceNodeType NodeType => _nodeType;
 
+        public UnityEvent OnSequenceStart;
+
         public virtual void InitializeNode()
         {
             NextSequenceQueue ??= new Queue<SequenceNode>();
@@ -25,6 +28,7 @@ namespace Sequence.System
 
         public virtual void StartSequenceNode()
         {
+            OnSequenceStart?.Invoke();
             CallNextNode();
         }
 

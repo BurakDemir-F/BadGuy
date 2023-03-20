@@ -2,6 +2,7 @@
 using Generic;
 using Generic.Animation;
 using UnityEngine;
+using Utilities;
 
 namespace Player
 {
@@ -20,7 +21,6 @@ namespace Player
             _animator = GetComponent<CharacterAnimator>();
             _movementHandler = GetComponent<PlayerMovementHandler>();
 
-            _animator.Initialize();
             _animator.Animate(AnimType.Idle);
             _movementHandler.MovementStarted += OnMovementStarted;
             _movementHandler.MovementEnd += OnMovementEnd;
@@ -46,8 +46,11 @@ namespace Player
         {
             if (col.CompareTag("Npc"))
             {
-                _character.enabled = false;
+                //_character.enabled = false;
                 _movementHandler.enabled = false;
+                var posY = transform.position.y;
+                transform.LookAt(col.transform.position.SetY(posY));
+                _animator.Animate(AnimType.Catched);
             }
         }
     }

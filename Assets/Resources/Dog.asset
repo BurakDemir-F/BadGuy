@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b103e58b0854692b252a7e4937ef56c, type: 3}
   m_Name: Dog
   m_EditorClassIdentifier: 
-  _moveSpeed: 4
+  _moveSpeed: 6
   _rotateSpeed: 360
   _fallSpeed: 5
   _gravity: 9.8
@@ -20,5 +20,5 @@ MonoBehaviour:
   _attackLayer:
     serializedVersion: 2
     m_Bits: 128
-  _chaseRangeRadius: 6
+  _chaseRangeRadius: 5
   _attackRangeRadius: 3

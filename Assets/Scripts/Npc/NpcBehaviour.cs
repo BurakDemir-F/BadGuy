@@ -1,9 +1,7 @@
 ﻿using System;
 using AYellowpaper;
-using AYellowpaper.Samples;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Npc
 {
@@ -21,14 +19,16 @@ namespace Npc
 
         private int _colliderTrackCount = 3;
         private Collider[] _touchedCollider;
+        private bool _continuesFollow;
+
+        public event Action<NpcBehaviour,Vector3> PlayerCatched;
 
         private void Start()
         {
-            _animator.Initialize();
             _touchedCollider = new Collider[_colliderTrackCount];
             _agent.speed = _npcDataProvider.Value.MoveSpeed;
             statusTrack = new NpcStatusTrack();
-            statusTrack.CurrentStatus = NpcStatus.Patrol;
+            statusTrack.CurrentStatus = NpcStatus.Idle;
             statusTrack.NpcStatusChanged += OnNpcStatusChanged;
             _isNavMeshActive = true;
         }
@@ -38,15 +38,19 @@ namespace Npc
             statusTrack.NpcStatusChanged -= OnNpcStatusChanged;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if(!_isNavMeshActive)
                 return;
             
-            CheckRangeRadius();
+            if(!_continuesFollow)
+                CheckRangeRadius();
             
             if(!_hasActiveTarget)
+            {
+                statusTrack.CurrentStatus = NpcStatus.Idle;
                 return;
+            }
 
             var distance = Vector3.Distance(_currentAttackTarget.position, transform.position);
             var attackRadius = _npcDataProvider.Value.AttackRangeRadius;
@@ -63,11 +67,30 @@ namespace Npc
             }
         }
 
+        public void SetDestination(Vector3 pos)
+        {
+            _agent.ResetPath();
+            _agent.SetDestination(pos);
+        }
+
+        public void LockToTarget(Transform target)
+        {
+            _agent.ResetPath();
+            _currentAttackTarget = target;
+            _hasActiveTarget = true;
+            _continuesFollow = true;
+        }
+        
+        protected void InvokeCatchEvent(Vector3 pos)
+        {
+            PlayerCatched?.Invoke(this,pos);
+        }
+
         private void OnNpcStatusChanged(NpcStatus status)
         {
             switch (status)
             {
-                case NpcStatus.Patrol:
+                case NpcStatus.Idle:
                     _animator.Animate(NpcAnimType.Idle);
                     break;
                 case NpcStatus.Chase:
@@ -78,7 +101,6 @@ namespace Npc
                     break;
             }
         }
-        
 
         protected void CheckRangeRadius()
         {
@@ -109,19 +131,33 @@ namespace Npc
             
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
+            if (!_agent.isActiveAndEnabled)
+                return;
+            
             if(other.CompareTag("Player"))
             {
-                _isNavMeshActive = false;
-                _agent.isStopped = true;
-                _agent.ResetPath();
-                _agent.enabled = false;
+                DisableAgent();
                 HarmPlayer(other);
             }
         }
 
+        protected void DisableAgent()
+        {
+            _isNavMeshActive = false;
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            _agent.enabled = false;
+        }
+
         protected virtual void HarmPlayer(Collider other)
+        {
+            InteractPlayer(other);
+            InvokeCatchEvent(other.transform.position);
+        }
+
+        protected void InteractPlayer(Collider other)
         {
             other.GetComponent<Generic.IInteractable>()?.Interact(GetComponent<Collider>());
         }
@@ -150,7 +186,7 @@ namespace Npc
         public enum NpcStatus
         {
             None,
-            Patrol,
+            Idle,
             Chase,
             Attack
         }

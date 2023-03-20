@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AYellowpaper;
+using Generic.Animation;
 using Generic.Camera;
 using UnityEngine;
 
@@ -20,6 +22,7 @@ namespace Sequence.SO
         public bool NeedCameraMovement;
         public CameraBase Camera;
         public float ShowOffDuration;
+        public SimpleAnimateNpc NpcAnimation;
     }
 
     public interface IShowScreenDataProvider

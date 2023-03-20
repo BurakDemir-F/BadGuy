@@ -67,6 +67,9 @@ namespace Sequence.ShowOff
             
             var data = CurrentShowOffData;
             _showUI.ShowText(data.Description);
+            
+            if (data.NpcAnimation != null)
+                data.NpcAnimation.Animate();
 
             yield return new WaitForSeconds(data.ShowOffDuration);
 

@@ -3,30 +3,13 @@ using UnityEngine;
 
 namespace Generic.Animation
 {
-    public class CharacterAnimator : AnimatorUser<AnimType>
+    public class CharacterAnimator : AnimatorUser<AnimType,CharacterAnimation>
     {
-        [SerializeField] private List<CharacterAnimation> _animations;
-        private Dictionary<AnimType, CharacterAnimation> _animationDict;
-        
-        public void Initialize()
+        protected override Dictionary<AnimType, CharacterAnimation> GetTypeAnimationDictionary()
         {
-            if (_animations == null || _animations.Count == 0)
-                return;
-
-            _animationDict = new Dictionary<AnimType, CharacterAnimation>();
-            foreach (var anim in _animations)
-            {
-                _animationDict.Add(anim.AnimType, anim);
-            }
+            return new Dictionary<AnimType, CharacterAnimation>();
         }
 
-        public override float Animate(AnimType type)
-        {
-            var anim = _animationDict[type];
-            animator.SetInteger(anim.ParameterName,anim.ConditionCode);
-            return AnimationData[type].Length;
-        }
-        
 #if UNITY_EDITOR
         [ContextMenu("Fill Animation Data")]
         protected void FillAnimations()
@@ -46,7 +29,7 @@ namespace Generic.Animation
     
     public enum AnimType
     {
-        None,Walk,Idle,Pull
+        None,Walk,Idle,Pull,Catched
     }
     
     [System.Serializable]
