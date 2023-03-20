@@ -1,24 +1,15 @@
-﻿using System;
-using DG.Tweening;
-using UnityEngine;
-using Utilities;
+﻿using UnityEngine;
 
 namespace Generic.Items
 {
-    public class ItemIndicator : MonoBehaviour
+    public class ItemIndicator : FlyObjectBehaviour
     {
-        [SerializeField] private GameObject _indicator;
-        private Vector3 _indicatorDefaultPos;
-        private Tween _indicatorAnimTween;
-
-        private void Start()
-        {
-            _indicatorDefaultPos = _indicator.transform.position;
-            SetIndicatorStatus(false);
-        }
-
+        [SerializeField] protected bool _enabled;
         private void OnTriggerEnter(Collider other)
         {
+            if(!_enabled)
+                return;
+            
             if (other.CompareTag("Player"))
             {
                 EnableIndicator();
@@ -27,39 +18,13 @@ namespace Generic.Items
 
         private void OnTriggerExit(Collider other)
         {
+            if(!_enabled)
+                return;
+            
             if (other.CompareTag("Player"))
-            {   
+            {
                 DisableIndicator();
             }
-        }
-
-        private void EnableIndicator()
-        {
-            SetIndicatorStatus(true);
-            PlayIndicatorAnim();
-        }
-        
-        public void DisableIndicator()
-        {
-            SetIndicatorStatus(false);
-            StopIndicatorAnim();
-        }
-
-        private void SetIndicatorStatus(bool status)
-        {
-            _indicator.SetActive(status);
-        }
-
-        private void PlayIndicatorAnim()
-        {
-            var topPos = _indicatorDefaultPos.SetY(_indicatorDefaultPos.y + .2f);
-            _indicatorAnimTween = _indicator.transform.DOMove(topPos, 1f).SetLoops(-1, LoopType.Yoyo);
-        }
-
-        private void StopIndicatorAnim()
-        {
-            _indicatorAnimTween?.Kill();
-            _indicator.transform.position = _indicatorDefaultPos;
         }
     }
 }

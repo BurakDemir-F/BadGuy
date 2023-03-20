@@ -8,6 +8,7 @@ TagManager:
   - HoldableItem
   - BreakableItem
   - ItemIndicator
+  - PickableItem
   layers:
   - Default
   - TransparentFX

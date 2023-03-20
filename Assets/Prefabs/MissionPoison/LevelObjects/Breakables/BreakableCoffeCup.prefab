@@ -170,8 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cebf29fa11f64b68b347193316f31af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tag: ItemIndicator
-  _indicator: {fileID: 4052236549941498062}
+  _flyObject: {fileID: 4052236549941498062}
+  _hideOnStart: 1
+  _enabled: 1
 --- !u!1001 &8067653219578146825
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -59,8 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cebf29fa11f64b68b347193316f31af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tag: ItemIndicator
-  _indicator: {fileID: 3438582053176526792}
+  _flyObject: {fileID: 3438582053176526792}
+  _hideOnStart: 1
+  _enabled: 1
 --- !u!1 &1984564532823561673
 GameObject:
   m_ObjectHideFlags: 0

@@ -118,6 +118,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3151289276911684084}
     m_Modifications:
+    - target: {fileID: 4067952360877002423, guid: 1d07fcba5af01a94ca46511bea00e34b,
+        type: 3}
+      propertyPath: _flyObject
+      value: 
+      objectReference: {fileID: 8161445823115116742}
     - target: {fileID: 4067952360877002440, guid: 1d07fcba5af01a94ca46511bea00e34b,
         type: 3}
       propertyPath: m_RootOrder
@@ -195,6 +200,12 @@ MonoBehaviour:
 --- !u!4 &7536976598147895640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4067952360877002440, guid: 1d07fcba5af01a94ca46511bea00e34b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5831314163418308496}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8161445823115116742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2427364238900059990, guid: 1d07fcba5af01a94ca46511bea00e34b,
     type: 3}
   m_PrefabInstance: {fileID: 5831314163418308496}
   m_PrefabAsset: {fileID: 0}
