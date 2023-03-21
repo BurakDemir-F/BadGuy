@@ -18,13 +18,22 @@ MonoBehaviour:
     NeedCameraMovement: 1
     Camera: {fileID: 0}
     ShowOffDuration: 2
+    NpcAnimation: {fileID: 0}
   - IsActive: 1
     Description: The Dog!
     NeedCameraMovement: 1
     Camera: {fileID: 0}
     ShowOffDuration: 2
+    NpcAnimation: {fileID: 0}
   - IsActive: 1
-    Description: Grave Yard!
+    Description: Cyanide!
     NeedCameraMovement: 1
     Camera: {fileID: 0}
     ShowOffDuration: 2
+    NpcAnimation: {fileID: 0}
+  - IsActive: 1
+    Description: Old Lonely House
+    NeedCameraMovement: 1
+    Camera: {fileID: 0}
+    ShowOffDuration: 2
+    NpcAnimation: {fileID: 0}

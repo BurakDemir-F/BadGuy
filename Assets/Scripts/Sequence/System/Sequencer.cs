@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,16 +10,15 @@ namespace Sequence.System
         [SerializeField] private List<SequenceNode> _sequence;
         private int _currentNodeIndex;
         private SequenceNode _currentNode => _sequence[_currentNodeIndex == 0 ? 0 :_currentNodeIndex - 1];
+        public event Action SequenceNodesCompleted;
         
-        private IEnumerator Start()
+        public void StartSequencer()
         {
-            //giving time for other scripts initialization.
-            yield return new WaitForSeconds(.5f);
-            
             for (var i = 0; i < _sequence.Count; i++)
             {
                 var node = _sequence[i];
                 node.InitializeNode();
+                node.SequenceNodeCompleted += OnNodeCompleted;
                 
                 if (i == _sequence.Count - 1) 
                     continue;
@@ -29,9 +29,19 @@ namespace Sequence.System
             _sequence[0].StartSequenceNode();
         }
 
+        private void OnDestroy()
+        {
+            foreach (var node in _sequence)
+            {
+                node.SequenceNodeCompleted -= OnNodeCompleted;
+            }
+        }
+
         private void OnNodeCompleted()
         {
             var isCompleted = _sequence.TrueForAll((node) => node.IsCompleted());
+            if(isCompleted)
+                SequenceNodesCompleted?.Invoke();
         }
     }
 }

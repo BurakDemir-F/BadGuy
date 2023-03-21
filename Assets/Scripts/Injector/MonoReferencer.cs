@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using General;
+using Generic;
 using Generic.Interaction;
 using Generic.Items;
 using Generic.Providers;
+using InputRelated;
+using Managers;
 using Npc;
 using Player;
 using UnityEngine;
@@ -51,6 +54,9 @@ namespace Injector
         {
             _injectionList.AddType(typeof(BreakableItem));
             _injectionList.AddType(typeof(InteractionListener));
+            _injectionList.AddType(typeof(MovementInput));
+            _injectionList.AddType(typeof(PlayerInputHandler));
+            _refTable.CreateReference<IItemHolder<IInputControlProvider>,InputManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IObjectProvider<AudioSource>,AudioSourceProvider>(ReferenceType.FromTransform);
             _refTable.CreateReference<IItemHolder<BreakableItem>,NpcManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IItemHolder<InteractionListener>,PlayerTriggerManager>(ReferenceType.FromTransform);

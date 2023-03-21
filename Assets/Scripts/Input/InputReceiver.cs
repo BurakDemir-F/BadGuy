@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using General;
+using Injector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +24,7 @@ namespace InputRelated
                 _actionTypeDict.Add(inputGameAction.InputAction,inputGameAction.GameActionType);
             }
         }
-
+        
         private void OnActionPerformed(InputAction.CallbackContext obj)
         {
             var gameActionType = _actionTypeDict[obj.action];
@@ -35,7 +37,25 @@ namespace InputRelated
             
         }
         
-        private void OnEnable()
+        protected virtual void OnEnable()
+        {
+            EnableInput();
+        }
+
+        protected virtual void OnDisable()
+        {
+            DisableInput();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            foreach (var inputGameAction in GameActions)
+            {
+                inputGameAction.InputAction.performed -= OnActionPerformed;
+            }
+        }
+
+        public void EnableInput()
         {
             foreach (var inputGameAction in GameActions)
             {
@@ -43,19 +63,11 @@ namespace InputRelated
             }
         }
 
-        private void OnDisable()
+        public void DisableInput()
         {
             foreach (var inputGameAction in GameActions)
             {
                 inputGameAction.InputAction.Disable();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            foreach (var inputGameAction in GameActions)
-            {
-                inputGameAction.InputAction.performed -= OnActionPerformed;
             }
         }
     }

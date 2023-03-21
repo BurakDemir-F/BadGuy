@@ -1,10 +1,13 @@
 using System;
+using General;
+using Injector;
+using InputRelated;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Generic
 {
-    public class MovementInput : MonoBehaviour, Inputs.IPlayerActions
+    public class MovementInput : MonoBehaviour, Inputs.IPlayerActions,IInputControlProvider
     {
         [SerializeField] private float _inputSmoothSpeed = .2f;
         private Vector2 _refSmoothValue;
@@ -15,9 +18,14 @@ namespace Generic
         public Vector2 MoveVector { get; private set; }
         public Vector2 CurrentMoveVector => _currentInput;
         public float VerticalAxis { get; private set; }
+        public InputType InputType => InputType.Movement;
+        
+        [InjectReference]
+        public IItemHolder<IInputControlProvider> _inputHolder { get; set; }
 
         protected virtual void Start()
         {
+            _inputHolder.Add(this);
             _inputs = new Inputs();
             _playerActions = new Inputs.PlayerActions(_inputs);
             _playerActions.SetCallbacks(this);
@@ -26,6 +34,7 @@ namespace Generic
 
         protected virtual void OnDestroy()
         {
+            _inputHolder.Remove(this);
             _inputs.Player.Disable();
             _inputs.Dispose();
         }
@@ -71,5 +80,16 @@ namespace Generic
             if (MoveVector.y == 0f)
                 _currentInput.y = 0f;
         }
+
+        public void EnableInput()
+        {
+            EnableInputs();
+        }
+
+        public void DisableInput()
+        {
+            DisableInputs();
+        }
+
     }
 }
