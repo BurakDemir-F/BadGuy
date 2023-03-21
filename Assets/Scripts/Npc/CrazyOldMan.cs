@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Injector;
+using UnityEngine;
 using UnityEngine.AI;
 using Utilities;
 
@@ -10,10 +11,18 @@ namespace Npc
         private bool _isPullingPlayer;
         private Transform _playerTransform;
         private Vector3 _playerDistanceOffset;
+        
+        [InjectReference]
+        public AudioSource AudioSource { get; set; }
+
+        [SerializeField] private AudioClip _whistle;
 
         protected override void OnTriggerEnter(Collider other)
         {
             if (!_agent.isActiveAndEnabled)
+                return;
+            
+            if(!other.CompareTag("Player"))
                 return;
             
             if(!IsInHouse())
@@ -24,6 +33,7 @@ namespace Npc
 
         protected override void HarmPlayer(Collider other)
         {
+            //play whistle for calling dog.
             InteractPlayer(other);
             
             transform.LookAt(other.transform.position.SetY(0f));
@@ -54,6 +64,12 @@ namespace Npc
                 DisableAgent();
                 _isPullingPlayer = false;
             }
+        }
+
+        public override void DisableAgent()
+        {
+            base.DisableAgent();
+            _isPullingPlayer = false;
         }
 
         private bool IsInHouse()

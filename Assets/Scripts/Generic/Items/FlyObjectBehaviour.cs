@@ -11,14 +11,14 @@ namespace Generic.Items
         private Vector3 _defaultPos;
         private Tween _animTween;
 
-        private void Start()
+        private void Awake()
         {
             _defaultPos = _flyObject.transform.position;
             SetIndicatorStatus(!_hideOnStart);
             if(!_hideOnStart)
                 PlayIndicatorAnim();
         }
-
+    
         public void EnableIndicator()
         {
             SetIndicatorStatus(true);

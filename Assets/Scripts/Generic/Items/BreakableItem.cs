@@ -23,8 +23,9 @@ namespace Generic.Items
         private YieldInstruction _interactDuration;
         private bool _isInteracting;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             RigidbodySetDynamic(false);
             _itemHolder.Add(this);
             AudioSource.clip = _itemData.Clip;

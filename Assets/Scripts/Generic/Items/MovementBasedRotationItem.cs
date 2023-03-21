@@ -19,14 +19,11 @@ namespace Generic.Items
         private float _rotateToZeroTime;
         private DG.Tweening.Sequence _bindTransformSequence;
 
-        private void Start()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
-
         public void BindTransform(Transform holdTransform)
         {
             RigidbodySetDynamic(false);
+            
+            DisableIndicator();
             
             _myTransform = transform;
             _baseTransformForRotation.parent = null;
@@ -47,7 +44,7 @@ namespace Generic.Items
         public Transform ReleaseTransform()
         {
             RigidbodySetDynamic(true);
-
+            //EnableIndicator();
             _bindTransformSequence.Kill();
             _baseTransformForRotation.SetParent(null);
             var myTransform = transform;

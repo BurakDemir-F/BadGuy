@@ -7,9 +7,8 @@ namespace Npc
 {
     public class NpcManager : MonoBehaviour,IItemHolder<BreakableItem>
     {
-        [SerializeField] private NpcBehaviour _creazyOldMan;
-        [SerializeField] private NpcBehaviour _dog;
-
+        [SerializeField] private CrazyOldMan _creazyOldMan;
+        [SerializeField] private DogNpc _dog;
         private HashSet<BreakableItem> _items;
 
         private void Awake()
@@ -30,6 +29,11 @@ namespace Npc
             if (behaviour is CrazyOldMan)
             {
                 _dog.SetDestination(targetPos);
+            }
+            else
+            {
+                _dog.DisableAgent();
+                _creazyOldMan.DisableAgent();
             }
         }
 

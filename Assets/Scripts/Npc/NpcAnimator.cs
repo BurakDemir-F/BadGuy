@@ -28,7 +28,8 @@ namespace Npc
         Run,
         Attack,
         Hi,
-        Pull
+        Pull,
+        Win
     }
     
     [System.Serializable]

@@ -23,7 +23,7 @@ namespace Npc
 
         public event Action<NpcBehaviour,Vector3> PlayerCatched;
 
-        private void Start()
+        protected virtual void Start()
         {
             _touchedCollider = new Collider[_colliderTrackCount];
             _agent.speed = _npcDataProvider.Value.MoveSpeed;
@@ -143,7 +143,7 @@ namespace Npc
             }
         }
 
-        protected void DisableAgent()
+        public virtual void DisableAgent()
         {
             _isNavMeshActive = false;
             _agent.isStopped = true;

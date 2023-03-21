@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Generic.Items
 {
@@ -8,7 +9,7 @@ namespace Generic.Items
         [SerializeField] protected ItemIndicator _indicator;
         protected Rigidbody _rigidbody;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
             DisableIndicator();
@@ -23,6 +24,11 @@ namespace Generic.Items
         protected void DisableIndicator()
         {
             _indicator.DisableIndicator();
+        }
+
+        protected void EnableIndicator()
+        {
+            _indicator.EnableIndicator();
         }
     }
 }

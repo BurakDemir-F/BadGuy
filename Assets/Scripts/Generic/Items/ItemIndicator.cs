@@ -13,6 +13,7 @@ namespace Generic.Items
             if (other.CompareTag("Player"))
             {
                 EnableIndicator();
+                Debug.Log("indicator enable called");
             }
         }
 
@@ -24,6 +25,7 @@ namespace Generic.Items
             if (other.CompareTag("Player"))
             {
                 DisableIndicator();
+                Debug.Log("indicator enable called");
             }
         }
     }
