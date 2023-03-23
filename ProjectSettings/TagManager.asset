@@ -9,6 +9,8 @@ TagManager:
   - BreakableItem
   - ItemIndicator
   - PickableItem
+  - WinBox
+  - HitEffect
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Player
   - Npc
   - House
-  - 
-  - 
+  - Item
+  - HitObject
   - 
   - 
   - 

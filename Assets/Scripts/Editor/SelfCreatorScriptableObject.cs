@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Generic.SO
+namespace EditorSpecific
 {
     public class ScriptableObjectHelper
     {

@@ -14,7 +14,7 @@ namespace InputRelated
 
         private Dictionary<InputAction, TEnum> _actionTypeDict;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _actionTypeDict = new Dictionary<InputAction, TEnum>();
 

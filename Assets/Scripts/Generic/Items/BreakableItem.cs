@@ -17,6 +17,8 @@ namespace Generic.Items
         [InjectReference]
         public IObjectProvider<AudioSource> _audioSourceProvider { get; set; }
 
+        public bool IsDisabled { get; set; }
+        
         private AudioSource AudioSource => _audioSourceProvider.Get();
 
         public event Action<Transform> OnItemBreak;
@@ -39,6 +41,9 @@ namespace Generic.Items
 
         public void Interact(Collider col)
         {
+            if(IsDisabled)
+                return;
+            
             if (_isInteracting)
                 return;
             _isInteracting = true;

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
-using Utilities;
 
 #if UNITY_EDITOR
+using UnityEditor.Animations;
 using UnityEditor;
 #endif
 

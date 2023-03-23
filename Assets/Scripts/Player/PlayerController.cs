@@ -9,7 +9,7 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(CharacterAnimator))]
     [RequireComponent(typeof(PlayerMovementHandler))]
-    public class PlayerController : MonoBehaviour, IInteractable
+    public class PlayerController : MonoBehaviour, IInteractable,IMissionGoalInformer
     {
         private CharacterController _character;
         private CharacterAnimator _animator;
@@ -53,5 +53,17 @@ namespace Player
                 _animator.Animate(AnimType.Catched);
             }
         }
+
+        public bool GoalAccomplished { get; private set; }
+        public void SetGoalResult(bool isAccomplished)
+        {
+            GoalAccomplished = isAccomplished;
+        }
+    }
+
+    public interface IMissionGoalInformer
+    {
+        bool GoalAccomplished { get; }
+        void SetGoalResult(bool isAccomplished);
     }
 }

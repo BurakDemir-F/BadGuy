@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 7397409553541256492}
   - component: {fileID: 7397409553541256487}
   - component: {fileID: 7397409553541256474}
-  m_Layer: 0
+  - component: {fileID: 3088383266758521748}
+  m_Layer: 10
   m_Name: Prop_TrashCan_01
   m_TagString: HoldableItem
   m_Icon: {fileID: 0}
@@ -148,6 +149,19 @@ MonoBehaviour:
   _dataProvider:
     _underlyingValue: {fileID: 11400000, guid: bb7278487f7bf9549a0917618e1a6b8d, type: 2}
   _baseTransformForRotation: {fileID: 7397409553031587975}
+--- !u!114 &3088383266758521748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197629019317551972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bfec0707044d26adfde458856ccdaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 8300000, guid: 3df9bbbc130ccb344af5f3fc793a630f, type: 3}
 --- !u!1 &7397409553031587974
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7397409553031587975}
   - component: {fileID: 7397409553031587968}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BaseTransformForRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +219,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 717706384129071582}
     m_Modifications:
+    - target: {fileID: 2427364238900059990, guid: 1d07fcba5af01a94ca46511bea00e34b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4067952360877002423, guid: 1d07fcba5af01a94ca46511bea00e34b,
         type: 3}
       propertyPath: _flyObject
@@ -274,6 +293,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Indicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067952360877002441, guid: 1d07fcba5af01a94ca46511bea00e34b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968704113576761727, guid: 1d07fcba5af01a94ca46511bea00e34b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d07fcba5af01a94ca46511bea00e34b, type: 3}

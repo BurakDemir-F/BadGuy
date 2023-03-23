@@ -85,7 +85,7 @@ public class DrawableObject
     {
         Object.DestroyImmediate(objToDestroy);
     }
-    
+
     private GameObject CreateGameObject(Object prefab = null, string name = "", bool isPrefabCreation = false)
     {
         if (prefab != null)

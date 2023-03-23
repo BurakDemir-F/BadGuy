@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e870b777774d8dbf1121d6b6b0870b, type: 3}
   m_Name: CD_PickableItem
   m_EditorClassIdentifier: 
-  PickTime: 10
+  PickTime: 0.5

@@ -145,6 +145,9 @@ namespace Npc
 
         public virtual void DisableAgent()
         {
+            if(!_isNavMeshActive)
+                return;
+            
             _isNavMeshActive = false;
             _agent.isStopped = true;
             _agent.ResetPath();

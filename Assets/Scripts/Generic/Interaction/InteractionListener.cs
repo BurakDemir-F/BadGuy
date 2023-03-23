@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using General;
 using Injector;
 using UnityEngine;
@@ -20,9 +21,9 @@ namespace Generic.Interaction
         public abstract void OnTriggerEntered(Object obj);
         public abstract void OnTriggerExited(Object obj);
 
-        private void OnEnable()
+        private  void OnEnable()
         {
-            StartListening();
+            StartCoroutine(StartListeningCor());
         }
 
         private void OnDisable()
@@ -30,6 +31,12 @@ namespace Generic.Interaction
             StopListening();
         }
 
+        private IEnumerator StartListeningCor()
+        {
+            yield return new WaitForSeconds(.1f);
+            StartListening();
+        }
+        
         protected void StartListening()
         {
             _itemHolder.Add(this);

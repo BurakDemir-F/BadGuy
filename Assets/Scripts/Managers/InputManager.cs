@@ -9,6 +9,7 @@ namespace Managers
     {
         private Dictionary<InputType, IInputControlProvider> _inputMap;
         private InputType _activeInput;
+        private bool _isInitialized;
         private void Awake()
         {
             Init();
@@ -16,11 +17,15 @@ namespace Managers
 
         private void Init()
         {
+            if(_isInitialized)
+                return;
+            _isInitialized = true;
             _inputMap = new Dictionary<InputType, IInputControlProvider>();
         }
 
         public void Add(IInputControlProvider item)
         {
+            Init();
             if (_inputMap.ContainsKey(item.InputType))
                 return;
             _inputMap.Add(item.InputType,item);
@@ -28,7 +33,7 @@ namespace Managers
 
         public void Remove(IInputControlProvider item)
         {
-            
+            Init();
             if (!_inputMap.ContainsKey(item.InputType))
                 return;
             _inputMap.Remove(item.InputType);

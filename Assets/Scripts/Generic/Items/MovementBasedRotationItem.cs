@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using AYellowpaper;
 using DG.Tweening;
 using UnityEngine;
@@ -18,9 +19,18 @@ namespace Generic.Items
         private Transform _myTransform;
         private float _rotateToZeroTime;
         private DG.Tweening.Sequence _bindTransformSequence;
+        private bool _isCollisionEnabled;
+        public event Action<Transform> OnCollision;
+
+        protected override void Start()
+        {
+            base.Start();
+            _isCollisionEnabled = false;
+        }
 
         public void BindTransform(Transform holdTransform)
         {
+            _isCollisionEnabled = false;
             RigidbodySetDynamic(false);
             
             DisableIndicator();
@@ -43,6 +53,7 @@ namespace Generic.Items
 
         public Transform ReleaseTransform()
         {
+            _isCollisionEnabled = true;
             RigidbodySetDynamic(true);
             //EnableIndicator();
             _bindTransformSequence.Kill();
@@ -111,6 +122,14 @@ namespace Generic.Items
             var ratioZ = Mathf.Clamp(distanceVec.z / Data.ShakeMaxDistance, -1f, 1f);
             var angle = maxAngle * ratioZ * Time.deltaTime * Data.RotateSpeed;
             _baseTransformForRotation.transform.Rotate(Vector3.right, angle,Space.World);
+        }
+
+        private void OnCollisionEnter()
+        {
+            if(!_isCollisionEnabled)
+                return;
+
+            OnCollision?.Invoke(transform);
         }
     }
 

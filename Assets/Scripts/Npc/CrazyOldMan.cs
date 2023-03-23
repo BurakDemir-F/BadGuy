@@ -1,4 +1,5 @@
-﻿using Injector;
+﻿using System;
+using Injector;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities;
@@ -16,6 +17,7 @@ namespace Npc
         public AudioSource AudioSource { get; set; }
 
         [SerializeField] private AudioClip _whistle;
+        public event Action PlayerHold;
 
         protected override void OnTriggerEnter(Collider other)
         {
@@ -34,6 +36,7 @@ namespace Npc
         protected override void HarmPlayer(Collider other)
         {
             //play whistle for calling dog.
+            PlayerHold?.Invoke();
             InteractPlayer(other);
             
             transform.LookAt(other.transform.position.SetY(0f));

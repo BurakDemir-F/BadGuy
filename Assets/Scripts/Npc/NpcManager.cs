@@ -15,6 +15,7 @@ namespace Npc
         {
             _items = new HashSet<BreakableItem>();
             _creazyOldMan.PlayerCatched += OnPlayerCatched;
+            _creazyOldMan.PlayerHold += PlayerHold;
             _dog.PlayerCatched += OnPlayerCatched;
         }
         
@@ -22,6 +23,7 @@ namespace Npc
         {
             _creazyOldMan.PlayerCatched -= OnPlayerCatched;
             _dog.PlayerCatched -= OnPlayerCatched;
+            _creazyOldMan.PlayerHold -= PlayerHold;
         }
 
         private void OnPlayerCatched(NpcBehaviour behaviour, Vector3 targetPos)
@@ -34,6 +36,25 @@ namespace Npc
             {
                 _dog.DisableAgent();
                 _creazyOldMan.DisableAgent();
+            }
+        }
+
+        public void SetDestination(Vector3 pos)
+        {
+            _dog.SetDestination(pos);
+            _creazyOldMan.SetDestination(pos);
+        }
+
+        private void PlayerHold()
+        {
+            DisableBreakables();
+        }
+
+        public void DisableBreakables()
+        {
+            foreach (var item in _items)
+            {
+                item.IsDisabled = true;
             }
         }
 

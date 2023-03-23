@@ -3,13 +3,14 @@ using System.Collections;
 using DG.Tweening;
 using Generic.Interaction;
 using Generic.Items.SO;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace Generic.Items
 {
-    public class PickableItem : InteractionListener
+    public class GoalItem : InteractionListener
     {
         [SerializeField] private CD_PickableItem _itemData;
         [SerializeField] private FlyObjectBehaviour _flyObject;
@@ -21,7 +22,7 @@ namespace Generic.Items
         public override string Tag => tag;
         public override Type RequestedComponentType => typeof(Transform);
         public override ComponentProvider ComponentProvider => ComponentProvider.Trigger;
-        public event Action ItemPicked;
+        public static event Action ItemPicked;
 
         private void Start()
         {
@@ -67,6 +68,9 @@ namespace Generic.Items
                 {
                     _isItemPicked = true;
                     ItemPicked?.Invoke();
+                    var goalInformer = target.GetComponent<IMissionGoalInformer>();
+                    if(goalInformer!=null)
+                        goalInformer.SetGoalResult(true);
                 });
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using General;
 using Generic;
 using Injector;
@@ -19,8 +20,15 @@ namespace Player
         protected override void OnEnable()
         {
             base.OnEnable();
+            StartCoroutine(AddHolderCor());
+        }
+
+        private IEnumerator AddHolderCor()
+        {
+            yield return new WaitForSeconds(.1f);
             _inputHolder.Add(this);
         }
+        
 
         protected override void OnDisable()
         {

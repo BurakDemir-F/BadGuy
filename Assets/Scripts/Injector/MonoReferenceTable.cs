@@ -37,6 +37,7 @@ namespace Injector
             
             newRef.ReferenceObject = newObj;
             References.Add(typeof(TBase), newRef);
+            Debug.LogWarning($"### Referencer Reference created: {typeof(TBase)} to {newObj}", newObj.gameObject);
         }
 
 

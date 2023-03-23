@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Generic.SO;
 using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
+using Utilities;
 
 namespace EditorSpecific
 {
@@ -14,6 +14,9 @@ namespace EditorSpecific
         private KeyCode _genericDrawKey = KeyCode.D;
         private KeyCode _genericStopKey = KeyCode.R;
         private LayerMask _drawableLayerMask;
+
+        private CD_DrawerSaveConfig _saveConfig;
+        private CD_DrawerConfig _currentDrawConfig;
 
         [MenuItem("Tools/Mesh Drawer")]
         static void Init()
@@ -47,15 +50,54 @@ namespace EditorSpecific
 
         private void OnGUI()
         {
+            DrawSaveConfigs();
             DrawEnums();
             DrawDrawables();
             ShowAddDrawableButton();
+            AddNewDrawSettingsButton();
+        }
+
+        private void DrawSaveConfigs()
+        {
+            EditorGUILayout.BeginHorizontal();
+            foreach (var saveConfig in _saveConfig.SaveConfigs)
+            {
+                if (GUILayout.Button(saveConfig.SaveName))
+                {
+                    Save();
+                    ChooseConfig(saveConfig.Config);
+                }
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void AddNewDrawSettingsButton()
+        {
+            if(!GUILayout.Button("Add New Draw Settings Button"))
+                return;
+            
+            var saveConfig = new SaveConfig();
+            saveConfig.Config = ScriptableObjectHelper.GetNew<CD_DrawerConfig>(typeof(CD_DrawerConfig).GetTypeName());
+            saveConfig.SaveName = saveConfig.Config.name;
+            _saveConfig.SaveConfigs.Add(saveConfig);
+            _currentDrawConfig = saveConfig.Config;
+            saveConfig.Config.drawableObjects = new List<DrawableObject>();
+        }
+
+        private void ChooseConfig(CD_DrawerConfig config)
+        {
+            _currentDrawConfig = config;
+            _currentDrawable = null;
+            _drawableObjects = config.drawableObjects;
+            _genericDrawKey = config.genericDrawKey;
+            _genericStopKey = config.genericStopKey;
         }
 
         private void DrawEnums()
         {
-            _genericDrawKey = (KeyCode)EditorGUILayout.EnumPopup("Generic Draw Key",_genericDrawKey);
-            _genericStopKey = (KeyCode)EditorGUILayout.EnumPopup("Generic Stop Key",_genericStopKey);
+            _genericDrawKey = (KeyCode)EditorGUILayout.EnumPopup("Generic Draw Key", _genericDrawKey);
+            _genericStopKey = (KeyCode)EditorGUILayout.EnumPopup("Generic Stop Key", _genericStopKey);
             _drawableLayerMask = EditorGUILayout.LayerField("Drawable Layer", _drawableLayerMask);
         }
 
@@ -72,7 +114,8 @@ namespace EditorSpecific
                     typeof(GameObject),
                     true);
 
-                drawableObject.activationKey = (KeyCode)EditorGUILayout.EnumPopup("Activation Key",drawableObject.activationKey);
+                drawableObject.activationKey =
+                    (KeyCode)EditorGUILayout.EnumPopup("Activation Key", drawableObject.activationKey);
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -89,10 +132,10 @@ namespace EditorSpecific
         private void OnSceneGui(SceneView view)
         {
             CheckDrawableActivationStatus();
-        
-            if(_currentDrawable == null)
+
+            if (_currentDrawable == null)
                 return;
-        
+
             if (!_isInitialized || !_currentDrawable.IsDrawable)
                 return;
 
@@ -119,14 +162,14 @@ namespace EditorSpecific
                 var scrollDelta = currentEvent.delta;
                 _currentDrawable.indicator.transform.Rotate(Vector3.up, 360f * scrollDelta.y * .01f);
             }
-        
+
             currentEvent.type = EventType.Used;
         }
 
         private void CheckDrawableActivationStatus()
         {
             var currentEvent = Event.current;
-            if(currentEvent.type != EventType.KeyDown)
+            if (currentEvent.type != EventType.KeyDown)
                 return;
 
             var keyCode = currentEvent.keyCode;
@@ -137,11 +180,12 @@ namespace EditorSpecific
                 {
                     drawable.IsDrawable = false;
                 }
+
                 return;
             }
-        
+
             DrawableObject drawableObject = null;
-        
+
             foreach (var drawable in _drawableObjects)
             {
                 if (drawable.activationKey != keyCode)
@@ -149,8 +193,8 @@ namespace EditorSpecific
 
                 drawableObject = drawable;
             }
-        
-            if(drawableObject == null)
+
+            if (drawableObject == null)
                 return;
 
             drawableObject.IsDrawable = true;
@@ -168,7 +212,7 @@ namespace EditorSpecific
             var mousePos = Event.current.mousePosition;
             var ray = HandleUtility.GUIPointToWorldRay(mousePos);
             var layerMask = 1 << _drawableLayerMask;
-            if (Physics.Raycast(ray,out var hitInfo,Mathf.Infinity,layerMask))
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, layerMask))
             {
                 position = hitInfo.point;
                 return true;
@@ -180,7 +224,7 @@ namespace EditorSpecific
 
         private void Save()
         {
-            var config = ScriptableObjectHelper.Get<CD_DrawerConfig>(nameof(CD_DrawerConfig));
+            var config = _currentDrawConfig;
             config.drawableObjects = _drawableObjects;
             config.genericDrawKey = _genericDrawKey;
             config.genericStopKey = _genericStopKey;
@@ -188,11 +232,15 @@ namespace EditorSpecific
 
         private void Load()
         {
-            var config = ScriptableObjectHelper.Get<CD_DrawerConfig>(nameof(CD_DrawerConfig));
+            _saveConfig = ScriptableObjectHelper.Get<CD_DrawerSaveConfig>(typeof(CD_DrawerSaveConfig).GetTypeName());
+            if(_saveConfig.SaveConfigs.Count == 0)
+                return;
+            
+            var config = _saveConfig.SaveConfigs[0].Config;
             _drawableObjects = config.drawableObjects;
             _genericDrawKey = config.genericDrawKey;
             _genericStopKey = config.genericStopKey;
-
+            _currentDrawConfig = config;
         }
     }
 }

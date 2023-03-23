@@ -2,15 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using General;
-using Generic;
-using Generic.Interaction;
-using Generic.Items;
-using Generic.Providers;
-using InputRelated;
-using Managers;
-using Npc;
-using Player;
 using UnityEngine;
 using Utilities;
 using Object = UnityEngine.Object;
@@ -20,8 +11,8 @@ namespace Injector
     public class MonoReferencer : MonoBehaviour
     {
         [SerializeField] private TypeObjectDict _injectableObjects;
-        private MonoReferenceTable _refTable;
-        private MonoNeedInjectionList _injectionList;
+        protected MonoReferenceTable _refTable;
+        protected MonoNeedInjectionList _injectionList;
 
         private void Awake()
         {
@@ -52,14 +43,7 @@ namespace Injector
 
         protected virtual void AddReferences()
         {
-            _injectionList.AddType(typeof(BreakableItem));
-            _injectionList.AddType(typeof(InteractionListener));
-            _injectionList.AddType(typeof(MovementInput));
-            _injectionList.AddType(typeof(PlayerInputHandler));
-            _refTable.CreateReference<IItemHolder<IInputControlProvider>,InputManager>(ReferenceType.FromTransform);
-            _refTable.CreateReference<IObjectProvider<AudioSource>,AudioSourceProvider>(ReferenceType.FromTransform);
-            _refTable.CreateReference<IItemHolder<BreakableItem>,NpcManager>(ReferenceType.FromTransform);
-            _refTable.CreateReference<IItemHolder<InteractionListener>,PlayerTriggerManager>(ReferenceType.FromTransform);
+            
         }
 
         private void GetComponents()
@@ -88,7 +72,8 @@ namespace Injector
                         var propType = propInfo.PropertyType;
                         var monoObj = _refTable.GetReference(propType, injectionType);
                         propInfo.SetValue(iObj,monoObj);
-                        Debug.Log($"reference connected : {propType.Name} with {monoObj.name}");
+                        Debug.LogWarning(
+                            $" ### Referencer,reference connected : type of object : {iObj.GetType()},{propType.Name} with {monoObj.name}");
                     }
                 }
             }
