@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227b491b7a9a43a3bd5e68b2d6683b35, type: 3}
+  m_Name: LoafCinnamonSlice
+  m_EditorClassIdentifier: 
+  Item:
+    Type: 4
+    Name: Loaf
+    Prefab: {fileID: 1322240162484686839, guid: 86f430ac2524d6248a6ae987d2ccb9c1,
+      type: 3}
+    UIObject: {fileID: 8291494634184896360, guid: 04eccca44db5f7d4ea290ec71f7d89fd,
+      type: 3}

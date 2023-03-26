@@ -24,8 +24,9 @@ namespace Player
             (other as IInteractable).Interact(_controller);
         }
 
-        public override void OnTriggerExited(Object obj)
+        public override void OnTriggerExited(Object other)
         {
+            (other as IInteractable).InteractEnd(_controller);
         }
     }
 }

@@ -54,6 +54,10 @@ namespace Player
             }
         }
 
+        public void InteractEnd(Collider col)
+        {
+        }
+
         public bool GoalAccomplished { get; private set; }
         public void SetGoalResult(bool isAccomplished)
         {

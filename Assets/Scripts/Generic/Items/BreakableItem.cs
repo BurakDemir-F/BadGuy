@@ -57,6 +57,10 @@ namespace Generic.Items
             StartCoroutine(InteractCor());
         }
 
+        public void InteractEnd(Collider col)
+        {
+        }
+
         private IEnumerator InteractCor()
         {
             AudioSource.Play();

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using General;
-using Injector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

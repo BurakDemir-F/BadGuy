@@ -1,8 +1,10 @@
 ﻿using General;
 using Generic;
 using Generic.Interaction;
+using Generic.ShowSystem;
 using Injector;
 using InputRelated;
+using LevelSpecific.MobBakery.Machines;
 using Managers;
 using Player;
 
@@ -15,9 +17,12 @@ namespace LevelSpecific.MobBakery
             _injectionList.AddType(typeof(InteractionListener));
             _injectionList.AddType(typeof(PlayerInputHandler));
             _injectionList.AddType(typeof(MovementInput));
+            _injectionList.AddType(typeof(BaseMachine));
+            _injectionList.AddType(typeof(UISelectionSystem));
             
             _refTable.CreateReference<IItemHolder<InteractionListener>,PlayerTriggerManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IItemHolder<IInputControlProvider>,InputManager>(ReferenceType.FromTransform);
+            _refTable.CreateReference<IInputManager,InputManager>(ReferenceType.FromTransform);
         }
     }
 }

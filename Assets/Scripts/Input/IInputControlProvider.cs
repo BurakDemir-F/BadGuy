@@ -12,6 +12,7 @@
         None,
         Movement,
         PlayerInteraction,
-        UI
+        UI,
+        InGameUI
     }
 }
