@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Generic.ShowSystem;
 using LevelSpecific.MobBakery.IngredientSystem;
 using UnityEngine;
@@ -11,16 +12,16 @@ namespace LevelSpecific.MobBakery
     {
         [SerializeField] private CD_FoodMachine _foods;
         [SerializeField] private UISelectionSystem _uiSystem;
-        [SerializeField] private List<InputButton> _inputButtons;
-        private List<InputButton> _buttonsInUse;
+        [SerializeField] private List<ProductButton> _inputButtons;
+        private List<ProductButton> _buttonsInUse;
 
-        public event Action<IngredientSO> IngredientSelected; 
+        public event Action<IngredientSO> IngredientSelected;
 
         private void Start()
         {
             CreateButtons();
-            _uiSystem.Init(_buttonsInUse);
-            
+            _uiSystem.Init(_buttonsInUse.Select((button) => button as InputButton ).ToList());
+
             foreach (var inputButton in _inputButtons)
             {
                 inputButton.gameObject.SetActive(false);
@@ -32,6 +33,8 @@ namespace LevelSpecific.MobBakery
                 button.Deactivate();
                 button.ButtonPressed += OnButtonSelected;
             }
+
+            DeactivateButtons();
         }
 
         private void OnDestroy()
@@ -46,15 +49,24 @@ namespace LevelSpecific.MobBakery
         {
             Debug.Assert(_foods.Ingredients.Count < _inputButtons.Count,
                 "something wrong with ingredient and button count!");
-            
-            _buttonsInUse = new List<InputButton>();
+
+            _buttonsInUse = new List<ProductButton>();
 
             for (var i = 0; i < _foods.Ingredients.Count; i++)
             {
                 var ingredient = _foods.Ingredients[i];
                 var newUIObj = Instantiate(ingredient.Item.UIObject);
                 var button = _inputButtons[i];
-                button.SetButtonData(newUIObj,ingredient);
+                button.SetButtonData(newUIObj, ingredient);
+                _buttonsInUse.Add(button);
+            }
+
+            for (var i = 0; i < _foods.Products.Count; i++)
+            {
+                var ingredient = _foods.Products[i];
+                var newUIObj = Instantiate(ingredient.Item.UIObject);
+                var button = _inputButtons[i];
+                button.SetButtonData(newUIObj, ingredient);
                 _buttonsInUse.Add(button);
             }
         }
@@ -65,8 +77,17 @@ namespace LevelSpecific.MobBakery
             {
                 inputButton.Activate();
             }
-            
+
             _uiSystem.EnableInput();
+        }
+
+        public void ActivatePassiveButtons()
+        {
+            foreach (var inputButton in _buttonsInUse)
+            {
+                inputButton.Activate();
+                inputButton.SetPassive();
+            }
         }
 
         public void DeactivateButtons()
@@ -75,6 +96,7 @@ namespace LevelSpecific.MobBakery
             {
                 inputButton.Deactivate();
             }
+
             _uiSystem.DisableInput();
         }
 

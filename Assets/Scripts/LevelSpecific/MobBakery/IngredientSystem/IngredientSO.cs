@@ -23,9 +23,11 @@ namespace LevelSpecific.MobBakery.IngredientSystem
     {
         None,
         CoffeeCup,
-        Coffee,
+        CupWithCoffee,
         Bagel,
         Loaf,
-        Concha
+        Concha,
+        FriedLoaf,
+        FriedBagel
     }
 }

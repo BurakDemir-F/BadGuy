@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Generic;
 using Injector;
 using InputRelated;
@@ -6,23 +6,19 @@ using InteractableArea;
 using LevelSpecific.MobBakery.IngredientSystem;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LevelSpecific.MobBakery.Machines
 {
-    public abstract class BaseMachine : MonoBehaviour,IInteractable
+    public abstract class BaseMachine : MonoBehaviour, IInteractable
     {
         [SerializeField] protected CD_FoodMachine Foods;
-        [SerializeField] private FoodMachineUI _machineUI;
+        [SerializeField] protected FoodMachineUI _machineUI;
         private Door _door;
-
-        [InjectReference]
-        public IInputManager InputManager { get; set; }
-
         protected IngredientHolder CurrentHolder;
         protected bool IsGiver;
         protected bool IsRecipeMaker;
-        
+        protected Dictionary<IngredientType, Ingredient> Ingredients;
+
         private void Start()
         {
             _door = GetComponent<Door>();
@@ -30,6 +26,17 @@ namespace LevelSpecific.MobBakery.Machines
 
             IsGiver = Foods.HasIngredients;
             IsRecipeMaker = Foods.HasRecipes;
+            PickIngredients();
+            //InputManager.DeactivateInput(InputType.InGameUI);
+        }
+
+        private void PickIngredients()
+        {
+            Ingredients = new Dictionary<IngredientType, Ingredient>();
+            foreach (var foodsIngredient in Foods.Ingredients)
+            {
+                Ingredients.Add(foodsIngredient.Item.Type,foodsIngredient.Item);
+            }
         }
 
         private void OnDestroy()
@@ -39,20 +46,42 @@ namespace LevelSpecific.MobBakery.Machines
 
         public virtual void Interact(Collider col)
         {
-            InputManager.ActivateInput(InputType.InGameUI);
-            _door.Open();
-            _machineUI.ActivateButtons();
-            CurrentHolder = col.GetComponent<IngredientHolder>();
+            OpenMachine(col);
         }
 
         public virtual void InteractEnd(Collider col)
         {
-            InputManager.DeactivateInput(InputType.InGameUI);
-            _door.Close();
+           CloseMachine();
+        }
+
+        protected virtual void OpenMachine(Collider col)
+        {
+            OpenDoor();
+            _machineUI.ActivateButtons();
+            CurrentHolder = col.GetComponent<IngredientHolder>();
+        }
+
+        protected virtual void CloseMachine()
+        {
+            CloseDoor();
             _machineUI.DeactivateButtons();
             CurrentHolder = null;
         }
 
-        protected abstract void OnIngredientSelected(IngredientSO ingredientSo);
+        protected void OpenDoor()
+        {
+            if(!Foods.HasDoor)
+                return;
+            _door.Open();
+        }
+
+        protected void CloseDoor()
+        {
+            if(!Foods.HasDoor)
+                return;
+            _door.Close();
+        }
+
+        protected virtual void OnIngredientSelected(IngredientSO ingredientSo){}
     }
 }

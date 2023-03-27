@@ -11,6 +11,9 @@ namespace LevelSpecific.MobBakery.IngredientSystem
         
         //Recipes
         public List<FoodProduct> Products;
+        public bool IsTimeMachine;
+        public float MachineProcessDuration;
+        public bool HasDoor;
 
         public bool HasIngredients => Ingredients.Count > 0;
         public bool HasRecipes => Products.Count > 0;

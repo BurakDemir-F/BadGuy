@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Generic.ShowSystem;
 using LevelSpecific.MobBakery.IngredientSystem;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LevelSpecific.MobBakery
 {
@@ -12,12 +9,11 @@ namespace LevelSpecific.MobBakery
     {
         [SerializeField] private InputButton _inputButton;
         private Ingredient _ingredient;
-
         private Dictionary<IngredientType, GameObject> _ingredients;
-
         private bool _hasIngredient;
         private bool _isInitialized;
         public bool HasIngredient => _hasIngredient;
+        public Ingredient Ingredient => _ingredient;
 
         private void Start()
         {
@@ -32,9 +28,10 @@ namespace LevelSpecific.MobBakery
             _isInitialized = true;
             _ingredients = new Dictionary<IngredientType, GameObject>();
             _ingredient = new Ingredient();
+            _inputButton.DeactivateButtonImage();
         }
         
-        public void Give(IngredientSO ingredientSo)
+        public void Hold(IngredientSO ingredientSo)
         {
             Init();
             _inputButton.gameObject.SetActive(true);
@@ -43,13 +40,15 @@ namespace LevelSpecific.MobBakery
             _ingredient.Prefab = CreateAndStoreVisual(ingredientSo);
             _ingredient.Prefab.transform.SetParent(_inputButton.transform);
             _inputButton.SetButtonData(this._ingredient.Prefab,ingredientSo);
+            _inputButton.ActivateVisual();
             _hasIngredient = true;
         }
 
-        public Ingredient Take()
+        public Ingredient Release()
         {
             _inputButton.gameObject.SetActive(false);
             _ingredient.Prefab.gameObject.SetActive(false);
+            _hasIngredient = false;
             return _ingredient;
         }
 
@@ -61,6 +60,7 @@ namespace LevelSpecific.MobBakery
 
             var newObj = Instantiate(ingredientSo.Item.UIObject);
             _ingredients.Add(key,newObj);
+            Debug.Log("player ingredient created.");
             return newObj;
         }
     }

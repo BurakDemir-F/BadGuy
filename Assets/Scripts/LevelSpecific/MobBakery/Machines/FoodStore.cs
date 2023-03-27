@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LevelSpecific.MobBakery.Machines
 {
-    public class BagelStore : BaseMachine
+    public class FoodStore : BaseMachine
     {
         protected override void OnIngredientSelected(IngredientSO ingredientSo)
         {
@@ -16,7 +16,7 @@ namespace LevelSpecific.MobBakery.Machines
             var isHolding = CurrentHolder.HasIngredient;
             if(isHolding) return;
             
-            CurrentHolder.Give(ingredientSo);
+            CurrentHolder.Hold(ingredientSo);
         }
     }
 }

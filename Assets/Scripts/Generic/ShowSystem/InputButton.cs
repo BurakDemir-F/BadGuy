@@ -1,7 +1,5 @@
 ﻿using System;
-using LevelSpecific.MobBakery.IngredientSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -9,56 +7,82 @@ namespace Generic.ShowSystem
 {
     public class InputButton : MonoBehaviour
     {
-        [SerializeField] private Button _button;
-        [SerializeField] private Image _buttonImage;
-        [SerializeField] private GameObject _buttonVisual;
-        [SerializeField] private Image _highLightImage;
-        [SerializeField] private Object _data;
-        [SerializeField] private Transform _visualTransform;
+        [SerializeField] protected Button _button;
+        [SerializeField] protected Image _buttonImage;
+        [SerializeField] protected GameObject _buttonVisual;
+        [SerializeField] protected Image _highLightImage;
+        [SerializeField] protected Object _data;
+        [SerializeField] protected Transform _visualTransform;
         public event Action<Object> ButtonPressed;
 
-        public void HighLight()
+        public virtual void HighLight()
         {
             _highLightImage.gameObject.SetActive(true);
         }
 
-        public void CloseHighlight()
+        public virtual void CloseHighlight()
         {
             _highLightImage.gameObject.SetActive(false);
         }
 
-        public void Click()
+        public virtual void Click()
         {
             _button.onClick?.Invoke();
             ButtonPressed?.Invoke(_data);
         }
 
-        public void SetButtonData(GameObject visual, Object data)
+        public virtual void SetButtonData(GameObject visual, Object data)
         {
             _buttonVisual = visual;
             _buttonVisual.transform.position = _visualTransform.position;
+            _buttonVisual.SetActive(false);
             _data = data;
         }
 
-        public void Activate()
+        public virtual void Activate()
         {
             SetActivationStatus(true);
         }
 
-        public void Deactivate()
+        public virtual void Deactivate()
         {
             SetActivationStatus(false);
         }
 
-        private void SetActivationStatus(bool status)
+        protected void SetActivationStatus(bool status)
         {
-            _buttonVisual.SetActive(status);
+            SetVisualActivationStatus(status);
             _buttonImage.gameObject.SetActive(status);
         }
 
-        public void CloseImage()
+        public void ActivateVisual()
         {
-            _buttonImage.gameObject.SetActive(false);
+            SetVisualActivationStatus(true);
+        }
+
+        public void DeactivateVisual()
+        {
+            SetVisualActivationStatus(false);
+        }
+
+        protected void SetVisualActivationStatus(bool status)
+        {
+            _buttonVisual.gameObject.SetActive(status);
+        }
+
+        public void ActivateButtonImage()
+        {
+            SetButtonImageActivationStatus(true);
+        }
+
+        public void DeactivateButtonImage()
+        {
+            SetButtonImageActivationStatus(false);
+        }
+
+        protected void SetButtonImageActivationStatus(bool status)
+        {
+            _buttonImage.gameObject.SetActive(status);
         }
     }
 }

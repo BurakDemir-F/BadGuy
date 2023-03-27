@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2024312984191622069}
   - component: {fileID: 4319860956426612607}
   - component: {fileID: 3075766170556249403}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cup3_C5 UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2374460054407253674}
   m_LocalRotation: {x: -0.17110594, y: -0, z: -0, w: 0.9852527}
   m_LocalPosition: {x: 14, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
