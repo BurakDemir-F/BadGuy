@@ -67,5 +67,17 @@ namespace Utilities
             return xLerp.LerpZ(secondVec, value);
         }
         
+        public static void PlaceOnCircleXY(this Transform @this,Vector3 centerPos,float angle,float radius)
+        {
+            @this.position = centerPos +
+                             new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0f) *
+                             radius;
+        }
+        public static void PlaceOnCircleXZ(this Transform @this,Vector3 centerPos,float angle,float radius)
+        {
+            @this.position = centerPos +
+                             new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), 0f, Mathf.Sin(Mathf.Deg2Rad * angle)) *
+                             radius;
+        }
     }
 }

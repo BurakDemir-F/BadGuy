@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7839420086816258056}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.438, y: 0.83, z: 1.128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -242,6 +242,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeUI (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6976140162118925618, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}
       propertyPath: m_Pivot.x
@@ -383,6 +388,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7458215675376362162}
     m_Modifications:
+    - target: {fileID: 358982265071720042, guid: 7fca3a2e2cd57524f8af8062f9bed40e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2430580381685616657, guid: 7fca3a2e2cd57524f8af8062f9bed40e,
         type: 3}
       propertyPath: m_IsActive
@@ -498,6 +508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food Machine UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5423186130150781501, guid: 7fca3a2e2cd57524f8af8062f9bed40e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5820391722665140335, guid: 7fca3a2e2cd57524f8af8062f9bed40e,
         type: 3}
       propertyPath: m_IsActive
@@ -514,6 +529,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 32f5806fe3d4d2d4f9a0001c07093862,
         type: 2}
+    - target: {fileID: 7975080518224797461, guid: 7fca3a2e2cd57524f8af8062f9bed40e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fca3a2e2cd57524f8af8062f9bed40e, type: 3}
 --- !u!114 &1401135342176937292 stripped

@@ -27,6 +27,16 @@ namespace Generic.Animation
 
         [SerializeField] private List<TAnimation> _animations;
         private Dictionary<TEnum, TAnimation> _animationDict;
+
+        public void SetController(AnimatorController controller)
+        {
+            animatorController = controller;
+        }
+
+        public void SetAnimator(Animator anim)
+        {
+            animator = anim;
+        }
         
         private void Awake()
         {

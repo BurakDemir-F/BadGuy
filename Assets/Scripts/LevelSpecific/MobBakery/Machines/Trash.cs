@@ -16,7 +16,7 @@ namespace LevelSpecific.MobBakery.Machines
             
             var duration = Foods.MachineProcessDuration;
             _isProducing = true;
-            _timerCor = StartCoroutine(TimerCor(duration,OnTrashThrow));
+            _timerCor = StartTimer(duration,OnTrashThrow);
         }
 
         public override void InteractEnd(Collider col)

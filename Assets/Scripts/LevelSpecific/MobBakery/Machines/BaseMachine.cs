@@ -15,19 +15,13 @@ namespace LevelSpecific.MobBakery.Machines
         [SerializeField] protected FoodMachineUI _machineUI;
         private Door _door;
         protected IngredientHolder CurrentHolder;
-        protected bool IsGiver;
-        protected bool IsRecipeMaker;
         protected Dictionary<IngredientType, Ingredient> Ingredients;
 
         private void Start()
         {
             _door = GetComponent<Door>();
             _machineUI.IngredientSelected += OnIngredientSelected;
-
-            IsGiver = Foods.HasIngredients;
-            IsRecipeMaker = Foods.HasRecipes;
             PickIngredients();
-            //InputManager.DeactivateInput(InputType.InGameUI);
         }
 
         private void PickIngredients()

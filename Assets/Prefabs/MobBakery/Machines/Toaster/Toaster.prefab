@@ -112,8 +112,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6760668, y: 1.0579284, z: 0.6676897}
-  m_Center: {x: 0.25584444, y: -0.30372417, z: 0.34289914}
+  m_Size: {x: 0.6760668, y: 1.0579284, z: 0.7514348}
+  m_Center: {x: 0.25584444, y: -0.30372417, z: 0.30102658}
 --- !u!114 &1947454254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TimeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976140162118925618, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}

@@ -24,12 +24,12 @@ namespace Managers
         {
             Application.targetFrameRate = 60;
             base.Awake();
-            WinBox.OnGoalAccomplished += OnLevelWin;
         }
 
         private IEnumerator Start()
         {
             yield return new WaitForSeconds(.5f);
+            WinBox.OnGoalAccomplished += OnLevelWin;
             if(!playSequence)
                 yield break;
             _state = GameState.ShowOff;

@@ -531,7 +531,6 @@ GameObject:
   m_Component:
   - component: {fileID: 16313495339727464}
   - component: {fileID: 6312137005932485503}
-  - component: {fileID: 8446014086538017925}
   m_Layer: 5
   m_Name: CupButton
   m_TagString: Untagged
@@ -582,15 +581,3 @@ MonoBehaviour:
   _data: {fileID: 0}
   _visualTransform: {fileID: 2462282718675880658}
   _passiveImage: {fileID: 2321740440784917304}
---- !u!114 &8446014086538017925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5223533572529111981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29e32423e9fe8e4784b8c177aa6941c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

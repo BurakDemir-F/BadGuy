@@ -50,8 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationRoot: {fileID: 1166248971283372567}
   _rotationAngle: 60
-  _rotateOnY: 0
-  _rotateOnX: 1
+  _rotateOnY: 1
+  _rotateOnX: 0
 --- !u!65 &2098484573994732656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ PrefabInstance:
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.2
+      value: 2.46
       objectReference: {fileID: 0}
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}
@@ -195,12 +195,12 @@ PrefabInstance:
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5.7
+      value: -3.92
       objectReference: {fileID: 0}
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.940407
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7194238829125214133, guid: 84c82a0fbe02d1048b6a4f1ee3620222,
         type: 3}

@@ -51,8 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationRoot: {fileID: 3202163630387811473}
   _rotationAngle: 60
-  _rotateOnY: 1
-  _rotateOnX: 0
+  _rotateOnY: 0
+  _rotateOnX: 1
 --- !u!65 &2833562931935781114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -64,8 +64,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0393648, y: 1.3354357, z: 0.8856731}
-  m_Center: {x: 0.25073797, y: 0.24272388, z: -3.5155462e-11}
+  m_Size: {x: 1.8725216, y: 1.3354357, z: 1.6650647}
+  m_Center: {x: 0.6673169, y: 0.24272388, z: 0.05395323}
 --- !u!114 &1496294879764821342
 MonoBehaviour:
   m_ObjectHideFlags: 0

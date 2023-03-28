@@ -8,6 +8,7 @@ namespace LevelSpecific.MobBakery
     public class IngredientHolder : MonoBehaviour               
     {
         [SerializeField] private InputButton _inputButton;
+        [SerializeField] private Transform _holderTransform;
         private Ingredient _ingredient;
         private Dictionary<IngredientType, GameObject> _ingredients;
         private bool _hasIngredient;
@@ -38,7 +39,7 @@ namespace LevelSpecific.MobBakery
             _ingredient.Type = ingredientSo.Item.Type;
             _ingredient.Name = ingredientSo.Item.Name;
             _ingredient.Prefab = CreateAndStoreVisual(ingredientSo);
-            _ingredient.Prefab.transform.SetParent(_inputButton.transform);
+            _ingredient.Prefab.transform.SetParent(_holderTransform);
             _inputButton.SetButtonData(this._ingredient.Prefab,ingredientSo);
             _inputButton.ActivateVisual();
             _hasIngredient = true;

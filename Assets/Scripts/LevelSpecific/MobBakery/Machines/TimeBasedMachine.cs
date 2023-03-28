@@ -7,7 +7,7 @@ namespace LevelSpecific.MobBakery.Machines
 {
     public class TimeBasedMachine : BaseMachine
     {
-        [SerializeField] protected FoodMachineTimeUI _timeUI;
+        [SerializeField] protected TimerUI _timeUI;
         protected bool _isProducing;
         protected bool _hasProduced;
 
@@ -42,28 +42,22 @@ namespace LevelSpecific.MobBakery.Machines
             CurrentHolder.Release();
             _isProducing = true;
             var duration = Foods.MachineProcessDuration;
-            StartCoroutine(TimerCor(duration,ActivateButtonAndInput));
+            _timeUI.StartTimer(duration, () =>
+            {
+                _isProducing = false;
+                _hasProduced = true;
+                ActivateButtonAndInput();
+            });
         }
 
-        protected IEnumerator TimerCor(float duration, Action endCallback)
+        protected Coroutine StartTimer(float duration, Action endCallback)
         {
-            _timeUI.ActivateUI();
-            _timeUI.ResetUI();
-            var timer = 0f;
-            while (timer < duration)
+            return _timeUI.StartTimer(duration, () =>
             {
-                _timeUI.UpdateUI(timer / duration);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-
-            _timeUI.UpdateUI(1f);
-            _timeUI.DeactivateUI();
-
-            //ActivateButtonAndInput();
-            _isProducing = false;
-            _hasProduced = true;
-            endCallback?.Invoke();
+                _isProducing = false;
+                _hasProduced = true;
+                endCallback?.Invoke();
+            });
         }
 
         protected override void OpenMachine(Collider col)
