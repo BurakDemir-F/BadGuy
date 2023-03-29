@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using General;
 using Injector;
 using LevelSpecific.MobBakery.IngredientSystem;
@@ -17,17 +18,21 @@ namespace LevelSpecific.MobBakery.Npc
 
         private bool _isWalking;
         private Action _destinationReachedCallback;
-        private Vector3 _currentDestination;
         
         [InjectReference]
         public IItemHolder<BakeryNpc> NpcHolder { get; set; }
 
         public BakeryNpcData NpcData => npcData;
-        
+
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(.1f);
+            NpcHolder.Add(this);
+        }
+
         public void Init(BakeryNpcData data)
         {
             npcData = data;
-            NpcHolder.Add(this);
         }
 
         private void OnDestroy()
@@ -38,9 +43,9 @@ namespace LevelSpecific.MobBakery.Npc
         public void Move(Vector3 target,Action destinationReachedCallback)
         {
             agent.ResetPath();
-            agent.SetDestination(target);
+            var setDestinationResult = agent.SetDestination(target);
+            Debug.Log($"destination result: {setDestinationResult}");
             Animate(BakeryNpcAnimType.Walk);
-            _currentDestination = target;
             _destinationReachedCallback = destinationReachedCallback;
             _isWalking = true;
         }
@@ -64,9 +69,9 @@ namespace LevelSpecific.MobBakery.Npc
             return animator.Animate(type);
         }
 
-        public void Sit()
+        public void Sit(Vector3 sitPos)
         {
-            Animate(BakeryNpcAnimType.Sit);
+            Move(sitPos,()=> Animate(BakeryNpcAnimType.Sit));
         }
 
         public void SetNpcAnimator(BakeryNpcAnimator bakeryNpcAnimator)

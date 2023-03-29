@@ -1,4 +1,5 @@
-﻿using General;
+﻿using System.Collections.Generic;
+using General;
 using LevelSpecific.MobBakery.Npc.SO;
 using UnityEngine;
 using Utilities.DataStructures;
@@ -9,6 +10,7 @@ namespace LevelSpecific.MobBakery.Npc
     {
         [SerializeField] private CD_BakeryNpc _npcData;
         [SerializeField] private BakeryNpc _targetNpc;
+        [SerializeField] private List<BakeryNpc> _npcListForEditor;
         private HashList<BakeryNpc> _npcList;
         private int _npcIndex;
 
@@ -20,13 +22,7 @@ namespace LevelSpecific.MobBakery.Npc
         private void Init()
         {
             _npcList = new HashList<BakeryNpc>();
-            var dataCount = _npcData.NpcData.Count;
-            for (var i = 0; i < _npcList.Count; i++)
-            {
-                var npc = _npcList[i];
-                npc.Init(_npcData.NpcData[i % dataCount]);
-            }
-            RemoveTargetNpcFromList();
+            _npcListForEditor = new List<BakeryNpc>();
             _targetNpc.Init(_npcData.TargetNpcData);
         }
 
@@ -37,7 +33,14 @@ namespace LevelSpecific.MobBakery.Npc
 
         public void Add(BakeryNpc item)
         {
+            if(item == _targetNpc)
+                return;
+            
             _npcList.Add(item);
+            _npcListForEditor.Add(item);
+            var itemCount = _npcList.Count;
+            var dataCount = _npcData.NpcData.Count;
+            item.Init(_npcData.NpcData[itemCount % dataCount]);
         }
 
         public void Remove(BakeryNpc item)

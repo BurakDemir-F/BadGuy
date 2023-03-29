@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: CD_BakeryNpc
   m_EditorClassIdentifier: 
   NpcData:
-  - Speed: 5
-    WaitDuration: 5
+  - Speed: 50
+    WaitDuration: 50
     WantedProduct: {fileID: 11400000, guid: f575f4d1982b2f941ac97968142bd80b, type: 2}
-  - Speed: 5
-    WaitDuration: 5
+  - Speed: 50
+    WaitDuration: 50
     WantedProduct: {fileID: 11400000, guid: 1c1ffe633cbc3fa4c897ed4d89cb1618, type: 2}
-  - Speed: 5
-    WaitDuration: 5
+  - Speed: 50
+    WaitDuration: 50
     WantedProduct: {fileID: 11400000, guid: 31304e501d6903d45b5cf5c4cf13c01a, type: 2}
   TargetNpcData:
-    Speed: 5
-    WaitDuration: 5
+    Speed: 50
+    WaitDuration: 50
     WantedProduct: {fileID: 11400000, guid: 31304e501d6903d45b5cf5c4cf13c01a, type: 2}

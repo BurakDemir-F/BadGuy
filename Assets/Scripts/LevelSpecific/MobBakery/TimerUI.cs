@@ -8,7 +8,8 @@ namespace LevelSpecific.MobBakery
     public class TimerUI : MonoBehaviour
     {
         [SerializeField] private Image _timerImage;
-
+        private Coroutine _timerCor;
+        
         private void Start()
         {
             ResetUI();
@@ -36,7 +37,12 @@ namespace LevelSpecific.MobBakery
 
         public Coroutine StartTimer(float duration, Action endCallback)
         {
-            return StartCoroutine(TimerCor(duration, endCallback));
+            return _timerCor =  StartCoroutine(TimerCor(duration, endCallback));
+        }
+
+        public void StopTimer()
+        {
+            StopCoroutine(_timerCor);
         }
         
         protected IEnumerator TimerCor(float duration, Action endCallback)

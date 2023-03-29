@@ -54,10 +54,17 @@ namespace LevelSpecific.MobBakery.Machines
         {
             return _timeUI.StartTimer(duration, () =>
             {
-                _isProducing = false;
-                _hasProduced = true;
                 endCallback?.Invoke();
             });
+        }
+
+        public override void InteractEnd(Collider col)
+        {
+            if(!_isProducing)
+            {
+                base.InteractEnd(col);
+                return;
+            }
         }
 
         protected override void OpenMachine(Collider col)
