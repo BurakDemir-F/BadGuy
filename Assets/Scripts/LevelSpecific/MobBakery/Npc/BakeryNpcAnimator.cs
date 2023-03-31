@@ -31,5 +31,7 @@ namespace LevelSpecific.MobBakery.Npc
         Pick,
         Sit,
         Shoot,
+        Jump,
+        Death
     }
 }

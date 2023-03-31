@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Generic.Animation
 {
     public class SimpleAnimate<TEnum,TAnimation> : MonoBehaviour, IAnimatable where TEnum : Enum where TAnimation : AnimationComponent<TEnum>
     {
-        [SerializeField] private TEnum _animationType;
+        [SerializeField] protected TEnum _animationType;
         private AnimatorUser<TEnum, TAnimation> _animatorUser;
         protected virtual void Awake()
         {

@@ -37,7 +37,7 @@ namespace LevelSpecific.MobBakery.Npc
 
         private void OnDestroy()
         {
-            NpcHolder.Remove(this);
+            NpcHolder?.Remove(this);
         }
 
         public void Move(Vector3 target,Action destinationReachedCallback)

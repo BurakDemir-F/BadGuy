@@ -29,7 +29,8 @@ namespace Npc
         Attack,
         Hi,
         Pull,
-        Win
+        Win,
+        Stabbing
     }
     
     [System.Serializable]
