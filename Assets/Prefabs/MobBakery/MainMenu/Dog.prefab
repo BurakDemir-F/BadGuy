@@ -730,7 +730,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674095508094064667}
-  m_LocalRotation: {x: -0, y: 0.7700338, z: -0, w: -0.6380032}
+  m_LocalRotation: {x: 0, y: 0.7700347, z: -0, w: -0.63800204}
   m_LocalPosition: {x: 8.665, y: 0.059, z: 18.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -762,7 +762,7 @@ Animator:
   m_GameObject: {fileID: 674095508094064667}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ab49f3cef633f1d4c84f8c46ec6c0b74, type: 3}
-  m_Controller: {fileID: 9100000, guid: 121f3a78a8b716c4e9081939efacf7e7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 39f8b25c4db145647bd38be4565f0c2b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -782,7 +782,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 674095508094064667}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.6
   m_Height: 1.62
   m_Direction: 1
@@ -796,7 +796,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 674095508094064667}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
@@ -808,7 +808,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674095508094064667}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -854,10 +854,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 580264816700781533}
-  _keys: 0200000001000000030000000400000006000000050000000700000008000000
+  _keys: 020000000100000003000000040000000500000007000000
   _values:
-  - Name: Npc Walk
-    Length: 1.6333334
+  - Name: Walk Forward In Place 02
+    Length: 1
     Events: []
     Parameters:
       ParameterName: 
@@ -866,8 +866,8 @@ MonoBehaviour:
       IntParameter: 0
       FloatParameter: 0
       TriggerParameter: 0
-  - Name: Sad Idle
-    Length: 2.8000002
+  - Name: Idle 02
+    Length: 1
     Events: []
     Parameters:
       ParameterName: 
@@ -876,8 +876,8 @@ MonoBehaviour:
       IntParameter: 0
       FloatParameter: 0
       TriggerParameter: 0
-  - Name: Run
-    Length: 0.73333335
+  - Name: BoximonRun
+    Length: 1
     Events: []
     Parameters:
       ParameterName: 
@@ -886,18 +886,8 @@ MonoBehaviour:
       IntParameter: 0
       FloatParameter: 0
       TriggerParameter: 0
-  - Name: CreazyOldManAttack(Pull)
-    Length: 1.1
-    Events: []
-    Parameters:
-      ParameterName: 
-      ParameterType: 0
-      BoolParameter: 0
-      IntParameter: 0
-      FloatParameter: 0
-      TriggerParameter: 0
-  - Name: CreazyOldManAttack(Pull)
-    Length: 1.1
+  - Name: Attack 02
+    Length: 0.8333334
     Events: []
     Parameters:
       ParameterName: 
@@ -907,7 +897,7 @@ MonoBehaviour:
       FloatParameter: 0
       TriggerParameter: 0
   - Name: Hi
-    Length: 1.4666667
+    Length: 1.3333334
     Events: []
     Parameters:
       ParameterName: 
@@ -916,8 +906,8 @@ MonoBehaviour:
       IntParameter: 0
       FloatParameter: 0
       TriggerParameter: 0
-  - Name: Win
-    Length: 8.533334
+  - Name: BoximonWin
+    Length: 0.5
     Events: []
     Parameters:
       ParameterName: 
@@ -926,17 +916,7 @@ MonoBehaviour:
       IntParameter: 0
       FloatParameter: 0
       TriggerParameter: 0
-  - Name: Stabbing
-    Length: 2.2
-    Events: []
-    Parameters:
-      ParameterName: 
-      ParameterType: 0
-      BoolParameter: 0
-      IntParameter: 0
-      FloatParameter: 0
-      TriggerParameter: 0
-  animatorController: {fileID: 9100000, guid: 121f3a78a8b716c4e9081939efacf7e7, type: 2}
+  animatorController: {fileID: 9100000, guid: 39f8b25c4db145647bd38be4565f0c2b, type: 2}
   _animations:
   - AnimType: 1
     ParameterType: 1
@@ -993,17 +973,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSequence:
-  - AnimationType: 8
+  - AnimationType: 1
     Duration: 2
     Number: 1
-  - AnimationType: 5
+  - AnimationType: 3
     Duration: 2
     Number: 4
-  - AnimationType: 1
+  - AnimationType: 4
+    Duration: 2
+    Number: 6
+  - AnimationType: 7
+    Duration: 2
+    Number: 6
+  - AnimationType: 5
     Duration: 2
     Number: 6
   _isLoop: 1
-  _shuffleAnimations: 1
+  _shuffleAnimations: 0
 --- !u!1 &674144205582815855
 GameObject:
   m_ObjectHideFlags: 0

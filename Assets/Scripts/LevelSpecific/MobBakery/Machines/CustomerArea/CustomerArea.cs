@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using Generic;
-using Generic.ShowSystem;
 using LevelSpecific.MobBakery.Npc;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LevelSpecific.MobBakery.Machines.CustomerArea
 {
@@ -18,6 +14,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         [SerializeField] private SitController _sitController;
         [SerializeField] private Transform _outsideTransform;
         [SerializeField] private Transform _shootTransform;
+        [SerializeField] private InformUI _informUI;
 
         private IngredientHolder CurrentHolder;
         private BakeryNpc _currentNpc;
@@ -43,6 +40,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             _currentNpc.Animate(BakeryNpcAnimType.Idle);
             _timerUI.StartTimer(data.WaitDuration, () =>
             {
+                _informUI.TimeOver();
                 KillPlayer();
                 wantedFoodHolder.Release();
             });
@@ -58,6 +56,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             {
                 _currentNpc.Animate(BakeryNpcAnimType.Shoot);
             }
+            CallLevelFailed();
         }
 
         public void Interact(Collider col)
@@ -73,6 +72,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             var type = CurrentHolder.Ingredient.Type;
             if (type != _currentNpc.NpcData.WantedProduct.Item.Type)
             {
+                _informUI.WrongService();
                 KillPlayer();
                 wantedFoodHolder.Release();
                 return;
@@ -107,6 +107,17 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             Debug.Log("customer area interact end.");
             if (!_isStarted)
                 return;
+        }
+
+        private void CallLevelFailed()
+        {
+            StartCoroutine(LevelFailCor());
+        }
+        
+        private IEnumerator LevelFailCor()
+        {
+            yield return new WaitForSeconds(5f);
+            GameManager.Instance.GameLoose();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Managers
         
         private void OnLevelWin()
         {
-            Debug.Log("level win");
+            GameManager.Instance.GameWin();
         }
         protected override void OnGameActionPerformed(LifeTimeInputTypes gameActionType)
         {

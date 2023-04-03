@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using Generic;
+using Generic.Items;
 using Injector;
 using InputRelated;
 using InteractableArea;
 using LevelSpecific.MobBakery.IngredientSystem;
 using Managers;
 using UnityEngine;
+using Utilities;
 
 namespace LevelSpecific.MobBakery.Machines
 {
@@ -13,15 +17,28 @@ namespace LevelSpecific.MobBakery.Machines
     {
         [SerializeField] protected CD_FoodMachine Foods;
         [SerializeField] protected FoodMachineUI _machineUI;
+        [SerializeField] protected List<FlyObjectBehaviour> _indicators;
         private Door _door;
         protected IngredientHolder CurrentHolder;
         protected Dictionary<IngredientType, Ingredient> Ingredients;
-
+        
         private void Start()
         {
             _door = GetComponent<Door>();
             _machineUI.IngredientSelected += OnIngredientSelected;
             PickIngredients();
+            ChangeIndicatorActivationStatus(true);
+        }
+
+        protected void ChangeIndicatorActivationStatus(bool status)
+        {
+            foreach (var item in _indicators)
+            {
+                if(status)
+                    item.EnableIndicator();
+                else
+                    item.DisableIndicator();
+            }
         }
 
         private void PickIngredients()

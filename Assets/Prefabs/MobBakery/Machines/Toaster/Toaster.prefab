@@ -34,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 730657417860632477}
+  - {fileID: 6947291348243026896}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,6 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Foods: {fileID: 11400000, guid: 212f5e87db388e7409c0fb40527d1284, type: 2}
   _machineUI: {fileID: 5309868704133275637}
+  _indicators:
+  - {fileID: 3912904836401373609}
   _timeUI: {fileID: 2975456275429307175}
 --- !u!1001 &2975456276169299544
 PrefabInstance:
@@ -473,3 +476,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac9a96bc6dc470486e0cbb1f3fc149b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &8263315406093588475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4889184243437576320}
+    m_Modifications:
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.306
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4771920359714920120, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_Name
+      value: IndicatorFriedLoaf
+      objectReference: {fileID: 0}
+    - target: {fileID: 4771920359714920120, guid: 2395a770be76fc140846a4b889798347,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2395a770be76fc140846a4b889798347, type: 3}
+--- !u!114 &3912904836401373609 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4963071943761999442, guid: 2395a770be76fc140846a4b889798347,
+    type: 3}
+  m_PrefabInstance: {fileID: 8263315406093588475}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f70c5b99e0476988a2cc53e586e0dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &6947291348243026896 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1352361063870563371, guid: 2395a770be76fc140846a4b889798347,
+    type: 3}
+  m_PrefabInstance: {fileID: 8263315406093588475}
+  m_PrefabAsset: {fileID: 0}

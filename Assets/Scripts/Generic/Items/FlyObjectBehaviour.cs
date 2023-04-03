@@ -1,5 +1,7 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities;
 
 namespace Generic.Items
@@ -8,6 +10,7 @@ namespace Generic.Items
     {
         [SerializeField] private GameObject _flyObject;
         [SerializeField] private bool _hideOnStart;
+        [SerializeField] private float _flyDistance = .2f;
         private Vector3 _defaultPos;
         private Tween _animTween;
 
@@ -38,7 +41,7 @@ namespace Generic.Items
 
         public void PlayIndicatorAnim()
         {
-            var topPos = _defaultPos.SetY(_defaultPos.y + .2f);
+            var topPos = _defaultPos.SetY(_defaultPos.y + _flyDistance);
             _animTween = _flyObject.transform.DOMove(topPos, 1f).SetLoops(-1, LoopType.Yoyo);
         }
 
@@ -46,6 +49,11 @@ namespace Generic.Items
         {
             _animTween?.Kill();
             _flyObject.transform.position = _defaultPos;
+        }
+
+        private void OnDestroy()
+        {
+            _animTween?.Kill();
         }
     }
 }

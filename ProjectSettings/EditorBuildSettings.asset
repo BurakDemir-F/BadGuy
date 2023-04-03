@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu/MainMenu.unity
+    guid: e43a27275ade6b948bf9dfc4f2a9cf4b
+  - enabled: 1
     path: Assets/Scenes/MissionPoison.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MobBakery.unity
+    guid: 1b7cc6b718e32f9478c92d60121f8035
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 6cf14a34b6d3899478d464cfc6356f16,
       type: 2}

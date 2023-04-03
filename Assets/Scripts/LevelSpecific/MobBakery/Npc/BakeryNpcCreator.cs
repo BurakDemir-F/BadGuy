@@ -1,4 +1,5 @@
-﻿using UnityEditor.Animations;
+﻿#if UNITY_EDITOR
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,9 +7,8 @@ namespace LevelSpecific.MobBakery.Npc
 {
     public class BakeryNpcCreator : MonoBehaviour
     {
-#if UNITY_EDITOR
+
         [SerializeField] private AnimatorController _controller;
-#endif
         [ContextMenu("Fill References")]
         private void FillReferences()
         {
@@ -25,3 +25,4 @@ namespace LevelSpecific.MobBakery.Npc
         }
     }
 }
+#endif

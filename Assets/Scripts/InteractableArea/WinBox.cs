@@ -10,17 +10,17 @@ namespace InteractableArea
         public override string Tag => tag;
         public override Type RequestedComponentType => typeof(IMissionGoalInformer);
         public override ComponentProvider ComponentProvider => ComponentProvider.Trigger;
-        public event Action OnGoalAccomplished; 
+        public event Action OnGoalAccomplished;
+
         public override void OnTriggerEntered(Object obj)
         {
             var goal = obj as IMissionGoalInformer;
-            if(goal.GoalAccomplished)
+            if (goal.GoalAccomplished)
                 OnGoalAccomplished?.Invoke();
         }
 
         public override void OnTriggerExited(Object obj)
         {
-            
         }
     }
 }

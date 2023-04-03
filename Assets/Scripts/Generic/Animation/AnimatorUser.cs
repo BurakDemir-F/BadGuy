@@ -28,10 +28,12 @@ namespace Generic.Animation
         [SerializeField] private List<TAnimation> _animations;
         private Dictionary<TEnum, TAnimation> _animationDict;
 
+#if UNITY_EDITOR
         public void SetController(AnimatorController controller)
         {
             animatorController = controller;
         }
+#endif
 
         public void SetAnimator(Animator anim)
         {
