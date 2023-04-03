@@ -21,10 +21,12 @@ namespace LevelSpecific.MobBakery
             _injectionList.AddType(typeof(BaseMachine));
             _injectionList.AddType(typeof(UISelectionSystem));
             _injectionList.AddType(typeof(BakeryNpc));
+            _injectionList.AddType(typeof(PoisonInjector));
             
             _refTable.CreateReference<IItemHolder<InteractionListener>,PlayerTriggerManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IItemHolder<IInputControlProvider>,InputManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IInputManager,InputManager>(ReferenceType.FromTransform);
+            _refTable.CreateReference<InputManager,InputManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IItemHolder<BakeryNpc>,BakeryNpcManager>(ReferenceType.FromTransform);
         }
     }

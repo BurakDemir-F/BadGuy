@@ -28,6 +28,7 @@ namespace LevelSpecific.MobBakery.IngredientSystem
         Loaf,
         Concha,
         FriedLoaf,
-        FriedBagel
+        FriedBagel,
+        FriedLoafWithPoison
     }
 }

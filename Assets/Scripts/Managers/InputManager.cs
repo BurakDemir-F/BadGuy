@@ -41,11 +41,15 @@ namespace Managers
 
         public void ActivateInput(InputType type)
         {
+            if(!_inputMap.ContainsKey(type))
+                return;
             _inputMap[type].EnableInput();
         }
 
         public void DeactivateInput(InputType type)
         {
+            if(!_inputMap.ContainsKey(type))
+                return;
             _inputMap[type].DisableInput();
         }
     }

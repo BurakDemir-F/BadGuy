@@ -17,6 +17,8 @@ namespace LevelSpecific.MobBakery.Npc
         protected BakeryNpcData npcData;
 
         private bool _isWalking;
+        private bool _isTargetNpc;
+        public bool IsTargetNpc => _isTargetNpc;
         private Action _destinationReachedCallback;
         
         [InjectReference]
@@ -33,6 +35,11 @@ namespace LevelSpecific.MobBakery.Npc
         public void Init(BakeryNpcData data)
         {
             npcData = data;
+        }
+
+        public void SetTarget()
+        {
+            _isTargetNpc = true;
         }
 
         private void OnDestroy()

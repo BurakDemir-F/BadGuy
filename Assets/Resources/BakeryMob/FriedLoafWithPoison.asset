@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6800ffc1df904ef6aabed8fcd3586533, type: 3}
+  m_Name: FriedLoafWithPoison
+  m_EditorClassIdentifier: 
+  Item:
+    Type: 8
+    Name: Fried Loaf With Poison
+    Prefab: {fileID: 0}
+    UIObject: {fileID: 1875570251681332145, guid: ee0b5f1140fda2e4b9e502edfbb01003,
+      type: 3}
+  Ingredients: []

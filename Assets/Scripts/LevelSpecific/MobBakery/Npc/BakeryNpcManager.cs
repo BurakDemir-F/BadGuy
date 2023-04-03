@@ -24,6 +24,7 @@ namespace LevelSpecific.MobBakery.Npc
             _npcList = new HashList<BakeryNpc>();
             _npcListForEditor = new List<BakeryNpc>();
             _targetNpc.Init(_npcData.TargetNpcData);
+            _targetNpc.SetTarget();
         }
 
         private void RemoveTargetNpcFromList()

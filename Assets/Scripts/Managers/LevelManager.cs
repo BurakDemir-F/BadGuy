@@ -29,7 +29,8 @@ namespace Managers
         private IEnumerator Start()
         {
             yield return new WaitForSeconds(.5f);
-            WinBox.OnGoalAccomplished += OnLevelWin;
+            if(WinBox)
+                WinBox.OnGoalAccomplished += OnLevelWin;
             if(!playSequence)
                 yield break;
             _state = GameState.ShowOff;
@@ -41,7 +42,8 @@ namespace Managers
         {
             base.OnDestroy();
             _sequencer.SequenceNodesCompleted -= OnSequenceCompleted;
-            WinBox.OnGoalAccomplished -= OnLevelWin;
+            if(WinBox)
+                WinBox.OnGoalAccomplished -= OnLevelWin;
         }
         
         private void OnLevelWin()

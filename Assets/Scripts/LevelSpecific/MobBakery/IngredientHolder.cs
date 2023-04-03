@@ -39,7 +39,6 @@ namespace LevelSpecific.MobBakery
             _ingredient.Type = ingredientSo.Item.Type;
             _ingredient.Name = ingredientSo.Item.Name;
             _ingredient.Prefab = CreateAndStoreVisual(ingredientSo);
-            _ingredient.Prefab.transform.SetParent(_holderTransform);
             _inputButton.SetButtonData(this._ingredient.Prefab,ingredientSo);
             _inputButton.ActivateVisual();
             _hasIngredient = true;
@@ -59,7 +58,8 @@ namespace LevelSpecific.MobBakery
             if (_ingredients.ContainsKey(key))
                 return _ingredients[key];
 
-            var newObj = Instantiate(ingredientSo.Item.UIObject);
+            var newObj = Instantiate(ingredientSo.Item.UIObject, _holderTransform, true);
+            newObj.transform.localPosition = Vector3.zero;
             _ingredients.Add(key,newObj);
             Debug.Log("player ingredient created.");
             return newObj;

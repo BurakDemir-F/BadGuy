@@ -13,6 +13,7 @@
         Movement,
         PlayerInteraction,
         UI,
-        InGameUI
+        InGameUI,
+        PoisonInput,
     }
 }

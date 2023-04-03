@@ -35,12 +35,16 @@ namespace Player
         public override void EnableInputs()
         {
             base.EnableInputs();
+            if(!_freeLookCam)
+                return;
             _freeLookCam.GetComponent<CinemachineInputProvider>().enabled = true;
         }
 
         public override void DisableInputs()
         {
             base.DisableInputs();
+            if(!_freeLookCam)
+                return;
             _freeLookCam.GetComponent<CinemachineInputProvider>().enabled = false;
         }
     }

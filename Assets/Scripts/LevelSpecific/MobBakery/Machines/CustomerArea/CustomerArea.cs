@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Generic;
+using LevelSpecific.MobBakery.IngredientSystem;
 using LevelSpecific.MobBakery.Npc;
 using UnityEngine;
 
@@ -19,12 +21,8 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         private IngredientHolder CurrentHolder;
         private BakeryNpc _currentNpc;
         private bool _isStarted;
-
-        private IEnumerator Start()
-        {
-            yield return new WaitForSeconds(1f);
-            CallNewCustomer();
-        }
+        public event Action MissionSuccess;
+        public event Action MissionFail;
 
         public void CallNewCustomer()
         {
@@ -56,6 +54,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             {
                 _currentNpc.Animate(BakeryNpcAnimType.Shoot);
             }
+
             CallLevelFailed();
         }
 
@@ -69,24 +68,45 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             if (!CurrentHolder.HasIngredient)
                 return;
 
+            if (_currentNpc.IsTargetNpc)
+            {
+                if (CurrentHolder.Ingredient.Type == IngredientType.FriedLoafWithPoison)
+                {
+                    MissionSuccess?.Invoke();
+                    return;
+                }
+                MissionFail?.Invoke();
+                return;
+            }
+
             var type = CurrentHolder.Ingredient.Type;
             if (type != _currentNpc.NpcData.WantedProduct.Item.Type)
+            {
+                WrongService();
+                return;
+            }
+            
+            GoNextCustomer();
+            
+            void WrongService()
             {
                 _informUI.WrongService();
                 KillPlayer();
                 wantedFoodHolder.Release();
-                return;
             }
 
-            _isStarted = false;
-            _timerUI.ResetUI();
-            _timerUI.DeactivateUI();
-            _timerUI.StopTimer();
-            CurrentHolder.Release();
-            wantedFoodHolder.Release();
-            NpcSit();
-            _currentNpc = null;
-            CallNewCustomer();
+            void GoNextCustomer()
+            {
+                _isStarted = false;
+                _timerUI.ResetUI();
+                _timerUI.DeactivateUI();
+                _timerUI.StopTimer();
+                CurrentHolder.Release();
+                wantedFoodHolder.Release();
+                NpcSit();
+                _currentNpc = null;
+                CallNewCustomer();
+            }
         }
 
         private void NpcSit()
@@ -113,7 +133,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         {
             StartCoroutine(LevelFailCor());
         }
-        
+
         private IEnumerator LevelFailCor()
         {
             yield return new WaitForSeconds(5f);

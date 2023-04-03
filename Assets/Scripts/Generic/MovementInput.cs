@@ -23,8 +23,18 @@ namespace Generic
         [InjectReference]
         public IItemHolder<IInputControlProvider> _inputHolder { get; set; }
 
+        private bool _isInitialized;
+        
         protected virtual void Start()
         {
+            Init();
+        }
+
+        private void Init()
+        {
+            if(_isInitialized)
+                return;
+            _isInitialized = true;
             _inputHolder.Add(this);
             _inputs = new Inputs();
             _playerActions = new Inputs.PlayerActions(_inputs);
@@ -34,6 +44,7 @@ namespace Generic
 
         protected virtual void OnDestroy()
         {
+            Init();
             _inputHolder.Remove(this);
             _inputs.Player.Disable();
             _inputs.Dispose();
@@ -41,6 +52,7 @@ namespace Generic
 
         public virtual void EnableInputs()
         {
+            Init();
             _inputs.Player.Enable();
             _inputs.Player.Movement.Enable();
             _inputs.Player.Look.Enable();
@@ -48,6 +60,7 @@ namespace Generic
 
         public virtual void DisableInputs()
         {
+            Init();
             _inputs.Player.Disable();
             _inputs.Player.Look.Disable();
             _inputs.Player.Movement.Disable();
