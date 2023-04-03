@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e9221bf54c4b549525aa8f17b0093c, type: 3}
+  m_Name: MissionPoisonObjectives
+  m_EditorClassIdentifier: 
+  NumberColor: {r: 0.24705882, g: 0.28627452, b: 0.49803922, a: 1}
+  ObjectiveColor: {r: 1, g: 1, b: 1, a: 1}
+  ShowDuration: 7
+  Objectives:
+  - Number: 0
+    ObjectiveDetail: Don't get caught by the old man or the dog
+  - Number: 1
+    ObjectiveDetail: Find A Way To Pass Hedges
+  - Number: 2
+    ObjectiveDetail: Don't hit any noisy object
+  - Number: 3
+    ObjectiveDetail: Find a way to get the crazy old man out of the house
+  - Number: 4
+    ObjectiveDetail: You can find something to throw and distract them.
+  - Number: 5
+    ObjectiveDetail: Enter the house.
+  - Number: 6
+    ObjectiveDetail: Steal the poison.
+  - Number: 7
+    ObjectiveDetail: Go back to stop sign.

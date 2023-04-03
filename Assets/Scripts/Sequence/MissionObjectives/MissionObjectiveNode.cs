@@ -1,0 +1,53 @@
+﻿using System.Collections;
+using System.Text;
+using Sequence.MissionObjectives.SO;
+using Sequence.System;
+using TMPro;
+using UnityEngine;
+using Utilities;
+
+namespace Sequence.MissionObjectives
+{
+    public class MissionObjectiveNode : SequenceNode
+    {
+        [SerializeField] private TextMeshProUGUI _missionsText;
+        [SerializeField] private GameObject _textRoot;
+        [SerializeField] private CD_MissionObjectives _objectives;
+
+        public override void InitializeNode()
+        {
+            base.InitializeNode();
+            ChangeTextActivation(false);
+        }
+
+        public override void StartSequenceNode()
+        {
+            base.StartSequenceNode();
+            ChangeTextActivation(true);
+            var sb = new StringBuilder();
+            var numColor = _objectives.NumberColor;
+            var textColor = _objectives.ObjectiveColor;
+
+            foreach (var mission in _objectives.Objectives)
+            {
+                sb.Append(
+                    $"{mission.Number.ToString().GetColored(numColor)} - {mission.ObjectiveDetail.GetColored(textColor)}\n");
+            }
+
+            _missionsText.text = sb.ToString();
+            StartCoroutine(ShowMissionObjectivesCor());
+        }
+
+        private IEnumerator ShowMissionObjectivesCor()
+        {
+            yield return new WaitForSeconds(_objectives.ShowDuration);
+            ChangeTextActivation(false);
+        }
+
+        private void ChangeTextActivation(bool status)
+        {
+            _textRoot.gameObject.SetActive(status);
+            _missionsText.gameObject.SetActive(status);
+        }
+    }
+}

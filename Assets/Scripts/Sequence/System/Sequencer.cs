@@ -22,8 +22,19 @@ namespace Sequence.System
                 
                 if (i == _sequence.Count - 1) 
                     continue;
-                
-                node.NextSequenceQueue.Enqueue(_sequence[i + 1]);
+
+                var j = i + 1;
+                while (j < _sequence.Count)
+                {
+                    var possibleNextSeq = _sequence[j];
+                    if(possibleNextSeq.isActiveAndEnabled)
+                    {
+                        node.NextSequenceQueue.Enqueue(possibleNextSeq);
+                        break;
+                    }
+
+                    j++;
+                }
             }
             
             _sequence[0].StartSequenceNode();

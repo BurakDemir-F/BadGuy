@@ -45,5 +45,11 @@ namespace Utilities
             var name = nameWithAssembly.Split('.')[^1];
             return name;
         }
+
+        public static string GetColored(this string str,Color color)
+        {
+            var hexColor = ColorUtility.ToHtmlStringRGBA(color);
+            return $"<color=#{hexColor}>{str}</color>";
+        }
     }
 }
