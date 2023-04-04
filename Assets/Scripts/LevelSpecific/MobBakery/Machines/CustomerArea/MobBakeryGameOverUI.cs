@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LevelSpecific.MobBakery.Machines.CustomerArea
 {
-    public class InformUI : MonoBehaviour
+    public class MobBakeryGameOverUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _wrongServiceText;
         [SerializeField] private TextMeshProUGUI _timeOverText;

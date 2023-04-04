@@ -4,6 +4,7 @@ using Generic;
 using LevelSpecific.MobBakery.IngredientSystem;
 using LevelSpecific.MobBakery.Npc;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LevelSpecific.MobBakery.Machines.CustomerArea
 {
@@ -16,7 +17,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         [SerializeField] private SitController _sitController;
         [SerializeField] private Transform _outsideTransform;
         [SerializeField] private Transform _shootTransform;
-        [SerializeField] private InformUI _informUI;
+        [FormerlySerializedAs("_informUI")] [SerializeField] private MobBakeryGameOverUI mobBakeryGameOverUI;
 
         private IngredientHolder CurrentHolder;
         private BakeryNpc _currentNpc;
@@ -38,7 +39,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             _currentNpc.Animate(BakeryNpcAnimType.Idle);
             _timerUI.StartTimer(data.WaitDuration, () =>
             {
-                _informUI.TimeOver();
+                mobBakeryGameOverUI.TimeOver();
                 KillPlayer();
                 wantedFoodHolder.Release();
             });
@@ -90,7 +91,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             
             void WrongService()
             {
-                _informUI.WrongService();
+                mobBakeryGameOverUI.WrongService();
                 KillPlayer();
                 wantedFoodHolder.Release();
             }

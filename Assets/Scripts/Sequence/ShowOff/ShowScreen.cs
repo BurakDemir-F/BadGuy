@@ -18,7 +18,7 @@ namespace Sequence.ShowOff
         [SerializeField] private ShowUI _showUI;
         [SerializeField] private int _camLowPriority, _camHighPriority;
 
-        private static int _counter;
+        private int _counter;
         private ShowScreenData CurrentShowOffData => _data[_counter];
 
         public override void InitializeNode()
