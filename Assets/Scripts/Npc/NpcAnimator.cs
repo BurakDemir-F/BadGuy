@@ -6,10 +6,6 @@ namespace Npc
 {
     public class NpcAnimator : AnimatorUser<NpcAnimType, NpcAnimation>
     {
-        protected override Dictionary<NpcAnimType, NpcAnimation> GetTypeAnimationDictionary()
-        {
-            return new Dictionary<NpcAnimType, NpcAnimation>();
-        }
 
 #if UNITY_EDITOR
         [ContextMenu("Fill Animation Data")]

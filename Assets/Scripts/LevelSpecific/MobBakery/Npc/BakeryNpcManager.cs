@@ -9,6 +9,7 @@ namespace LevelSpecific.MobBakery.Npc
     public class BakeryNpcManager : MonoBehaviour, IItemHolder<BakeryNpc>
     {
         [SerializeField] private CD_BakeryNpc _npcData;
+        [SerializeField] private int _targetNpcIndex;
         [SerializeField] private BakeryNpc _targetNpc;
         [SerializeField] private List<BakeryNpc> _npcListForEditor;
         private HashList<BakeryNpc> _npcList;
@@ -56,6 +57,13 @@ namespace LevelSpecific.MobBakery.Npc
                 Debug.Log("npc list is empty");
                 return null;
             }
+
+            if (_npcIndex == _targetNpcIndex)
+            {
+                _npcIndex++;
+                return _targetNpc;
+            }
+            
             return _npcList[_npcIndex++ % _npcList.Count];
         }
     }

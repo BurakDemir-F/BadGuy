@@ -82,6 +82,14 @@ namespace Sequence.ShowOff
             SequenceNodeCompleted?.Invoke();
         }
 
+        public override void StopNode()
+        {
+            base.StopNode();
+            _showUI.Disable();
+            if (CurrentShowOffData.NeedCameraMovement)
+                CurrentShowOffData.Camera.Deactivate();
+        }
+
         private void Reset()
         {
             _data = null;

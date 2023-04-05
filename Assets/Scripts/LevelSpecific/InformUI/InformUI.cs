@@ -11,6 +11,7 @@ namespace LevelSpecific.InformUI
     public class InformUI : InputReceiver<InGameInputType>
     {
         [SerializeField] private GameObject _screen;
+        [SerializeField] private TextMeshProUGUI _objectiveText;
         [SerializeField] private GameObject _frame;
         [SerializeField] private TextMeshProUGUI _informText;
         [SerializeField] private CD_InformUI _informUI;
@@ -69,6 +70,7 @@ namespace LevelSpecific.InformUI
             {
                 _isScreenOpen = !_isScreenOpen;
                 _screen.SetActive(_isScreenOpen);
+                _objectiveText.gameObject.SetActive(_isScreenOpen);
                 return;
             }
 

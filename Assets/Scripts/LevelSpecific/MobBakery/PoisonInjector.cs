@@ -22,13 +22,14 @@ namespace LevelSpecific.MobBakery
         [SerializeField] private IngredientHolder _holder;
 
         [InjectReference] public InputManager InputManager { get; set; }
-        public InputType InputType { get; }
+        public InputType InputType => InputType.PoisonInput;
 
         public IEnumerator Start()
         {
             ChangeInjectorActivationStatus(false);
             yield return new WaitForSeconds(.1f);
             InputManager.Add(this);
+            DisableInput();
         }
 
         protected override void OnDestroy()

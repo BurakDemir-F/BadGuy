@@ -20,5 +20,5 @@ MonoBehaviour:
   _attackLayer:
     serializedVersion: 2
     m_Bits: 128
-  _chaseRangeRadius: 3
+  _chaseRangeRadius: 6
   _attackRangeRadius: 1

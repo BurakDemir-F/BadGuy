@@ -5,10 +5,6 @@ namespace Generic.Animation
 {
     public class CharacterAnimator : AnimatorUser<AnimType,CharacterAnimation>
     {
-        protected override Dictionary<AnimType, CharacterAnimation> GetTypeAnimationDictionary()
-        {
-            return new Dictionary<AnimType, CharacterAnimation>();
-        }
 
 #if UNITY_EDITOR
         [ContextMenu("Fill Animation Data")]

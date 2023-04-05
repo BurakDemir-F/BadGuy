@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
+using DG.Tweening;
 using Generic;
 using LevelSpecific.MobBakery.IngredientSystem;
 using LevelSpecific.MobBakery.Npc;
+using Managers;
+using Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,13 +20,15 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         [SerializeField] private SitController _sitController;
         [SerializeField] private Transform _outsideTransform;
         [SerializeField] private Transform _shootTransform;
-        [FormerlySerializedAs("_informUI")] [SerializeField] private MobBakeryGameOverUI mobBakeryGameOverUI;
+        [SerializeField] private PlayerController _player;
+        [SerializeField] private MobBakeryGameResultUI mobBakeryGameResultUI;
 
         private IngredientHolder CurrentHolder;
         private BakeryNpc _currentNpc;
         private bool _isStarted;
         public event Action MissionSuccess;
-        public event Action MissionFail;
+        public event Action MissionFailWrongService;
+        public event Action MissionFailTimeOut;
 
         public void CallNewCustomer()
         {
@@ -39,7 +44,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             _currentNpc.Animate(BakeryNpcAnimType.Idle);
             _timerUI.StartTimer(data.WaitDuration, () =>
             {
-                mobBakeryGameOverUI.TimeOver();
+                mobBakeryGameResultUI.TimeOver();
                 KillPlayer();
                 wantedFoodHolder.Release();
             });
@@ -50,10 +55,12 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         {
             Debug.Log("player killed.");
             _currentNpc.Move(_shootTransform.position, AnimateShoot);
-
+            _currentNpc.Aim(_player.transform);
+            
             void AnimateShoot()
             {
                 _currentNpc.Animate(BakeryNpcAnimType.Shoot);
+                DOVirtual.DelayedCall(1.2f, _player.PlayDieEffects);
             }
 
             CallLevelFailed();
@@ -74,24 +81,39 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
                 if (CurrentHolder.Ingredient.Type == IngredientType.FriedLoafWithPoison)
                 {
                     MissionSuccess?.Invoke();
+                    //mobBakeryGameResultUI.AdventureWillContinue();
+                    CallLevelWin();
                     return;
                 }
-                MissionFail?.Invoke();
+                MissionFailWrongService?.Invoke();
+                mobBakeryGameResultUI.WrongService();
+                CallLevelFailed();
                 return;
+            }
+            else
+            {
+                if (CurrentHolder.Ingredient.Type == IngredientType.FriedLoafWithPoison)
+                {
+                    MissionFailWrongService?.Invoke();
+                    mobBakeryGameResultUI.WrongService();
+                    CallLevelFailed();
+                    return;
+                }
+                
+                var type = CurrentHolder.Ingredient.Type;
+                if (type != _currentNpc.NpcData.WantedProduct.Item.Type)
+                {
+                    WrongService();
+                    mobBakeryGameResultUI.WrongService();
+                    return;
+                }
             }
 
-            var type = CurrentHolder.Ingredient.Type;
-            if (type != _currentNpc.NpcData.WantedProduct.Item.Type)
-            {
-                WrongService();
-                return;
-            }
-            
             GoNextCustomer();
             
             void WrongService()
             {
-                mobBakeryGameOverUI.WrongService();
+                mobBakeryGameResultUI.WrongService();
                 KillPlayer();
                 wantedFoodHolder.Release();
             }
@@ -133,6 +155,17 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         private void CallLevelFailed()
         {
             StartCoroutine(LevelFailCor());
+        }
+
+        private void CallLevelWin()
+        {
+            StartCoroutine(LevelWinCor());
+        }
+        
+        private IEnumerator LevelWinCor()
+        {
+            yield return new WaitForSeconds(5f);
+            GameManager.Instance.GameWin();
         }
 
         private IEnumerator LevelFailCor()

@@ -26,7 +26,7 @@ MonoBehaviour:
     ShowOffDuration: 2
     NpcAnimation: {fileID: 0}
   - IsActive: 1
-    Description: Cyanide!
+    Description: Poison
     NeedCameraMovement: 1
     Camera: {fileID: 0}
     ShowOffDuration: 2

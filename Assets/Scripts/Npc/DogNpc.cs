@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Generic;
+using Player;
 using UnityEngine;
 
 namespace Npc
@@ -15,6 +16,7 @@ namespace Npc
             other.transform.DOMove(_mouthTransform.position, .1f);
             other.transform.DORotate(_mouthTransform.rotation.eulerAngles, .1f).OnComplete(() =>
             {
+                other.GetComponent<PlayerEffects>().PlayDieEffect();
                 other.transform.SetParent(_animationRoot);
                 _animator.Animate(NpcAnimType.Win);
             });

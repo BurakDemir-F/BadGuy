@@ -18,6 +18,7 @@ namespace Sequence.System
         public float WaitInterval => _waitInterval;
         public Action SequenceNodeCompleted { get; set; }
         public SequenceNodeType NodeType => _nodeType;
+        private Coroutine _intervalCor;
 
         public virtual void InitializeNode()
         {
@@ -48,7 +49,7 @@ namespace Sequence.System
                     CurrentNextSequence.StartSequenceNode();
                     break;
                 case SequenceNodeType.InTime:
-                    StartCoroutine(StartNextNodeWithInterval());
+                    _intervalCor = StartCoroutine(StartNextNodeWithInterval());
                     break;
             }
         }
@@ -66,6 +67,13 @@ namespace Sequence.System
         }
 
         public bool IsCompleted() => isNodeCompleted;
+
+        public virtual void StopNode()
+        {
+            SequenceNodeCompleted -= CallNextNodeOnComplete;
+            if(_intervalCor != null)
+                StopCoroutine(_intervalCor);
+        }
     }
 
     public interface ISequenceNode

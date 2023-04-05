@@ -6,12 +6,12 @@ namespace Generic
 {
     public class CameraBasedMovementHandler : XZMovementHandler
     {
-        [SerializeField] private InterfaceReference<IObjectProvider<Transform>> _transformProvider;
+        [SerializeField] private TransformProvider _transformProvider;
 
         // camera relative movement.
         protected override Vector3 GetMovementDirection()
         {
-            var camTransform = _transformProvider.Value.Get();
+            var camTransform = _transformProvider.Get();
             var camDirectionForward = camTransform.forward;
             var camDirectionRight = camTransform.right;
 

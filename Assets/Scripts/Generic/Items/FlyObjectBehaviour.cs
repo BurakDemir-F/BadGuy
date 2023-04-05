@@ -48,12 +48,18 @@ namespace Generic.Items
         public void StopIndicatorAnim()
         {
             _animTween?.Kill();
+            _flyObject.transform.DOKill();
             _flyObject.transform.position = _defaultPos;
         }
 
         private void OnDestroy()
         {
-            _animTween?.Kill();
+            StopIndicatorAnim();
+        }
+
+        private void OnDisable()
+        {
+            StopIndicatorAnim();
         }
     }
 }

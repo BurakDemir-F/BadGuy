@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using Generic.ShowSystem;
+using Injector;
+using InputRelated;
 using LevelSpecific.MobBakery.IngredientSystem;
+using Managers;
 using UnityEngine;
 
 namespace LevelSpecific.MobBakery
@@ -15,6 +18,11 @@ namespace LevelSpecific.MobBakery
         private bool _isInitialized;
         public bool HasIngredient => _hasIngredient;
         public Ingredient Ingredient => _ingredient;
+
+        private bool _poisonInputActivated;
+        
+        [InjectReference]
+        public IInputManager InputManager { get; set; }
 
         private void Start()
         {
@@ -34,6 +42,11 @@ namespace LevelSpecific.MobBakery
         
         public void Hold(IngredientSO ingredientSo)
         {
+            if (gameObject.CompareTag("Player") && (ingredientSo.Item.Type == IngredientType.Loaf || ingredientSo.Item.Type == IngredientType.FriedLoaf))
+            {
+                InputManager.ActivateInput(InputType.PoisonInput);
+                _poisonInputActivated = true;
+            }
             Init();
             _inputButton.gameObject.SetActive(true);
             _ingredient.Type = ingredientSo.Item.Type;
@@ -46,6 +59,9 @@ namespace LevelSpecific.MobBakery
 
         public Ingredient Release()
         {
+            if(_poisonInputActivated)
+                InputManager.DeactivateInput(InputType.PoisonInput);
+
             _inputButton.gameObject.SetActive(false);
             _ingredient.Prefab.gameObject.SetActive(false);
             _hasIngredient = false;

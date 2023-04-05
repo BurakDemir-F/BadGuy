@@ -11,7 +11,7 @@ namespace Sequence.Customer
         public override void StartSequenceNode()
         {
             base.StartSequenceNode();
-            _customerArea.CallNewCustomer();
+            _customerArea.CallNewCustomer();    
             SequenceNodeCompleted?.Invoke();
         }
     }

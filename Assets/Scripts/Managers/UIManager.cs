@@ -5,6 +5,7 @@ using Patterns;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utilities;
 
@@ -15,19 +16,24 @@ namespace Managers
         [SerializeField] private LoadingScreen _loadingScreen;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private TextMeshProUGUI _gameFinishedText;
-        public Button playButton;
-        public Button musicOnOffButton;
+        [SerializeField] private GameObject _gameFinishedRoot;
+        public Button newGameButton;
+        public Button continueButton;
 
         private IEnumerator Start()
         {
             var level = _gameManager.Level;
-            playButton.onClick.AddListener(LoadScene);
+            newGameButton.onClick.AddListener(PlayNew);
             _gameManager.LevelWin += OnLevelWin;
             _gameManager.GameFinished += OnGameFinished;
             _gameManager.LevelLoose += OnLevelLoose;
+            continueButton.gameObject.SetActive(level>0);
+            continueButton.onClick.AddListener(LoadScene);
 
             yield return new WaitForSeconds(2f);
-            FadeButton(true);
+            FadeButton(newGameButton,true);
+            if(level>0)
+                FadeButton(continueButton,true);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -35,12 +41,16 @@ namespace Managers
         {
             var isSceneMainMenu = arg0.name.Contains("main", StringComparison.OrdinalIgnoreCase);
             if(isSceneMainMenu)
-                FadeButton(true);
+            {
+                FadeButton(newGameButton,true);
+                FadeButton(continueButton,true);
+            }
         }
 
         private void OnDestroy()
         {
-            playButton.onClick.RemoveListener(LoadScene);
+            newGameButton.onClick.RemoveListener(PlayNew);
+            continueButton.onClick.RemoveListener(LoadScene);
             _gameManager.LevelWin -= OnLevelWin;
             _gameManager.GameFinished -= OnGameFinished;
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -52,29 +62,36 @@ namespace Managers
             LoadLevel();
         }
 
-        private void FadeButton(bool isFadeIn)
+        private void FadeButton(Button button, bool isFadeIn)
         {
             if(isFadeIn)
-                playButton.gameObject.SetActive(true);
-            var buttonColor = playButton.image.color;
+                button.gameObject.SetActive(true);
+            var buttonColor = button.image.color;
             var fullColor = buttonColor.GetFullAlpha();
             var zeroColor = buttonColor.GetZeroAlpha();
 
-            playButton.image.color = isFadeIn ? zeroColor : fullColor;
+            button.image.color = isFadeIn ? zeroColor : fullColor;
             var targetColor = isFadeIn ? fullColor : zeroColor;
-            playButton.image.DOColor(targetColor, 2f).OnComplete(() =>
+            button.image.DOColor(targetColor, 2f).OnComplete(() =>
             {
                 if (!isFadeIn)
                 {
-                    playButton.gameObject.SetActive(false);
+                    button.gameObject.SetActive(false);
                 }
             });
         }
 
+        private void PlayNew()
+        {
+            _gameManager.Level = 0;
+            LoadScene();
+        }
+        
         [ContextMenu("Load Scene Cor")]
         public void LoadScene()
         {
-            FadeButton(false);
+            FadeButton(newGameButton,false);
+            FadeButton(continueButton,false);
             LoadLevel();
         }
 
@@ -115,7 +132,10 @@ namespace Managers
         {
             yield return StartCoroutine(_loadingScreen.FadeInCor(LoadingType.MissionPoison));
             _gameFinishedText.gameObject.SetActive(true);
+            _gameFinishedRoot.gameObject.SetActive(true);
             yield return new WaitForSeconds(3f);
+            _gameFinishedText.gameObject.SetActive(false);
+            _gameFinishedRoot.gameObject.SetActive(false);
             _gameManager.LoadMainMenu();
             StartCoroutine(_loadingScreen.FadeOutCor());
         }

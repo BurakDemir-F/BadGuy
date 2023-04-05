@@ -14,6 +14,7 @@ namespace Player
         private CharacterController _character;
         private CharacterAnimator _animator;
         private PlayerMovementHandler _movementHandler;
+        [SerializeField] private PlayerEffects _effects;
 
         private void Start()
         {
@@ -42,6 +43,11 @@ namespace Player
             _animator.Animate(AnimType.Walk);
         }
 
+        public void PlayDieEffects()
+        {
+            _effects.PlayDieEffect();
+        }
+        
         public void Interact(Collider col)
         {
             if (col.CompareTag("Npc"))

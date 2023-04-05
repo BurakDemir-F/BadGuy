@@ -2,21 +2,22 @@
 using System.Collections;
 using General;
 using Injector;
-using LevelSpecific.MobBakery.IngredientSystem;
 using LevelSpecific.MobBakery.Npc.SO;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace LevelSpecific.MobBakery.Npc
 {
     public class BakeryNpc : MonoBehaviour
     {
-        [SerializeField]protected NavMeshAgent agent;
+        [SerializeField] protected NavMeshAgent agent;
         [SerializeField] protected BakeryNpcAnimator animator;
+        protected NpcEffects _npcEffects;
         protected BakeryNpcData npcData;
 
         private bool _isWalking;
+        private bool _isAiming;
+        private Transform _aimTarget;
         private bool _isTargetNpc;
         public bool IsTargetNpc => _isTargetNpc;
         private Action _destinationReachedCallback;
@@ -28,6 +29,8 @@ namespace LevelSpecific.MobBakery.Npc
 
         private IEnumerator Start()
         {
+            _npcEffects = GetComponent<NpcEffects>();
+            animator.AddEventAction(BakeryNpcAnimType.Shoot,1.1f,_npcEffects.PlayEffect);
             yield return new WaitForSeconds(.1f);
             NpcHolder.Add(this);
         }
@@ -57,8 +60,20 @@ namespace LevelSpecific.MobBakery.Npc
             _isWalking = true;
         }
 
+        public void Aim(Transform target)
+        {
+            _isAiming = true;
+            _aimTarget = target;
+        }
+
         public void Update()
         {
+            if (_isAiming)
+            {
+                transform.LookAt(_aimTarget);
+                transform.Rotate(0f,-90f,0f);
+            }
+            
             if(!_isWalking)
                 return;
 

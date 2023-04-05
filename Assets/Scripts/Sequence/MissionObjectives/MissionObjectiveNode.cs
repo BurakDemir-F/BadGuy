@@ -14,6 +14,8 @@ namespace Sequence.MissionObjectives
         [SerializeField] private GameObject _textRoot;
         [SerializeField] private CD_MissionObjectives _objectives;
 
+        private Coroutine _nodeCor;
+        
         public override void InitializeNode()
         {
             base.InitializeNode();
@@ -35,12 +37,20 @@ namespace Sequence.MissionObjectives
             }
 
             _missionsText.text = sb.ToString();
-            StartCoroutine(ShowMissionObjectivesCor());
+            _nodeCor = StartCoroutine(ShowMissionObjectivesCor());
         }
 
         private IEnumerator ShowMissionObjectivesCor()
         {
             yield return new WaitForSeconds(_objectives.ShowDuration);
+            ChangeTextActivation(false);
+        }
+
+        public override void StopNode()
+        {
+            base.StopNode();
+            if(_nodeCor != null)
+                StopCoroutine(_nodeCor);
             ChangeTextActivation(false);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace Generic.Animation
 
         [SerializeField] private List<TAnimation> _animations;
         private Dictionary<TEnum, TAnimation> _animationDict;
+
+        private Coroutine _eventCor; 
 
 #if UNITY_EDITOR
         public void SetController(AnimatorController controller)
@@ -57,20 +60,35 @@ namespace Generic.Animation
             if (_animations == null || _animations.Count == 0)
                 return;
 
-            _animationDict = GetTypeAnimationDictionary();
+            _animationDict = new Dictionary<TEnum, TAnimation>();
             foreach (var anim in _animations)
             {
                 _animationDict.Add(anim.AnimType, anim);
             }
         }
 
-        protected abstract Dictionary<TEnum, TAnimation> GetTypeAnimationDictionary();
-
         public virtual float Animate(TEnum type)
         {
             var anim = _animationDict[type];
+            var animData = AnimationData[type];
+            if (animData.HasEvent())
+            {
+                StartCoroutine(AnimationEventCor(animData.Events[0]));
+            }
             anim.PlayAnimationOnAnimator(animator);
             return AnimationData[type].Length;
+        }
+
+        private IEnumerator AnimationEventCor(AnimationEventVO vo)
+        {
+            yield return new WaitForSeconds(vo.EventTime);
+            vo.EventFunction?.Invoke();
+        }
+
+        public virtual void AddEventAction(TEnum type, float duration, Action eventFunction)
+        {
+            var anim = AnimationData[type];
+            anim.Events.Add(new AnimationEventVO(){EventTime = duration,EventFunction = eventFunction});
         }
 
         #region Editor
@@ -183,6 +201,11 @@ namespace Generic.Animation
             Events = eventsVo;
             Parameters = parameters;
         }
+
+        public bool HasEvent()
+        {
+            return Events != null && Events.Count > 0;
+        }
     }
 
     [Serializable]
@@ -200,6 +223,7 @@ namespace Generic.Animation
     public class AnimationEventVO
     {
         public float EventTime;
+        public Action EventFunction;
     }
     
     [System.Serializable]

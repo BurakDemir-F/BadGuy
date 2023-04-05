@@ -13,13 +13,11 @@ public class GameManager : Singleton<GameManager>
     public event Action GameFinished;
     public event Action LevelLoose;
 
-    private int _level
+    public int Level
     {
         get => PlayerPrefs.GetInt(SavePrefName, 0);
         set => PlayerPrefs.SetInt(SavePrefName, value);
     }
-
-    public int Level => _level;
 
     private int _mainMenuIndex = 0;
     private int _missionPoisonIndex = 1;
@@ -42,10 +40,9 @@ public class GameManager : Singleton<GameManager>
 
     public void GameWin()
     {
-        var level = _level;
-        if (level == 0)
+        if (Level == 0)
         {
-            _level++;
+            Level++;
             LevelWin?.Invoke();
             return;
         }
@@ -54,7 +51,7 @@ public class GameManager : Singleton<GameManager>
         
         if (isSceneMobBakery)
         {
-            _level = 0;
+            Level = 0;
             GameFinished?.Invoke();
         }
         else
@@ -66,6 +63,7 @@ public class GameManager : Singleton<GameManager>
         LevelLoose?.Invoke();
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Y))
@@ -75,4 +73,6 @@ public class GameManager : Singleton<GameManager>
             GameLoose();
 
     }
+#endif
+
 }

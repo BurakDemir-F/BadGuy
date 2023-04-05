@@ -22,6 +22,7 @@ namespace LevelSpecific.MobBakery
             _injectionList.AddType(typeof(UISelectionSystem));
             _injectionList.AddType(typeof(BakeryNpc));
             _injectionList.AddType(typeof(PoisonInjector));
+            _injectionList.AddType(typeof(IngredientHolder));
             
             _refTable.CreateReference<IItemHolder<InteractionListener>,PlayerTriggerManager>(ReferenceType.FromTransform);
             _refTable.CreateReference<IItemHolder<IInputControlProvider>,InputManager>(ReferenceType.FromTransform);
