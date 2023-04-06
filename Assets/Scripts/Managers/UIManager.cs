@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using CrazyGames;
 using DG.Tweening;
-using Patterns;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +11,7 @@ using Utilities;
 
 namespace Managers
 {
-    public class UIManager : Singleton<UIManager>
+    public class UIManager : Patterns.Singleton<UIManager>
     {
         [SerializeField] private LoadingScreen _loadingScreen;
         [SerializeField] private GameManager _gameManager;
@@ -87,6 +87,7 @@ namespace Managers
 
         private void PlayNew()
         {
+            CrazyEvents.Instance.GameplayStart();
             _gameManager.Level = 0;
             LoadScene();
         }

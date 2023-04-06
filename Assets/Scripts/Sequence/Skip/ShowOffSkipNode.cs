@@ -45,8 +45,10 @@ namespace Sequence.Skip
                 
                 _afterSkipNodes[0].StartSequenceNode();
                 _skipText.gameObject.SetActive(false);
-                _disableUIObjectsCamera.DisableCamera();
-                DOVirtual.DelayedCall(2f, _enableUIObjectsCamera.EnableCamera);
+                if(_disableUIObjectsCamera)
+                    _disableUIObjectsCamera.DisableCamera();
+                if(_enableUIObjectsCamera)
+                    DOVirtual.DelayedCall(2f, _enableUIObjectsCamera.EnableCamera);
             }
         }
 

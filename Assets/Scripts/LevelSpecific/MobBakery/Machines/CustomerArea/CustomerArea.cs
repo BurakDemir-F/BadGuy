@@ -56,7 +56,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             Debug.Log("player killed.");
             _currentNpc.Move(_shootTransform.position, AnimateShoot);
             _currentNpc.Aim(_player.transform);
-            
+
             void AnimateShoot()
             {
                 _currentNpc.Animate(BakeryNpcAnimType.Shoot);
@@ -86,6 +86,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
                     CallLevelWin();
                     return;
                 }
+
                 MissionFailWrongService?.Invoke();
                 mobBakeryGameResultUI.WrongService();
                 CallLevelFailed();
@@ -100,7 +101,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
                     CallLevelFailed();
                     return;
                 }
-                
+
                 var type = CurrentHolder.Ingredient.Type;
                 if (type != _currentNpc.NpcData.WantedProduct.Item.Type)
                 {
@@ -111,7 +112,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             }
 
             GoNextCustomer();
-            
+
             void WrongService()
             {
                 mobBakeryGameResultUI.WrongService();
@@ -122,15 +123,20 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             void GoNextCustomer()
             {
                 _isStarted = false;
-                _timerUI.ResetUI();
-                _timerUI.DeactivateUI();
-                _timerUI.StopTimer();
+                StopTimerUI();
                 CurrentHolder.Release();
                 wantedFoodHolder.Release();
                 NpcSit();
                 _currentNpc = null;
                 CallNewCustomer();
             }
+        }
+
+        private void StopTimerUI()
+        {
+            _timerUI.ResetUI();
+            _timerUI.DeactivateUI();
+            _timerUI.StopTimer();
         }
 
         private void NpcSit()
@@ -155,14 +161,16 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
 
         private void CallLevelFailed()
         {
+            StopTimerUI();
             StartCoroutine(LevelFailCor());
         }
 
         private void CallLevelWin()
         {
+            StopTimerUI();
             StartCoroutine(LevelWinCor());
         }
-        
+
         private IEnumerator LevelWinCor()
         {
             yield return new WaitForSeconds(5f);
