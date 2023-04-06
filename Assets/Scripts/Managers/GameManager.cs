@@ -1,5 +1,4 @@
 using System;
-using CrazyGames;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -61,7 +60,7 @@ public class GameManager : Patterns.Singleton<GameManager>
     public void GameLoose()
     {
         LevelLoose?.Invoke();
-        CrazyGames.CrazyAds.Instance.beginAdBreak(OnAddCompleted,AddFailCallback);
+        //CrazyGames.CrazyAds.Instance.beginAdBreak(OnAddCompleted,AddFailCallback);
     }
 
     private void OnAddCompleted()
