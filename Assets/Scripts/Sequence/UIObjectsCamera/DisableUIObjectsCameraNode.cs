@@ -11,8 +11,13 @@ namespace Sequence.UIObjectsCamera
         public override void StartSequenceNode()
         {
             base.StartSequenceNode();
-            _baseCameraData.cameraStack.Remove(_uiObjectsCam);
+            DisableCamera();
             SequenceNodeCompleted?.Invoke();
+        }
+
+        public void DisableCamera()
+        {
+            _baseCameraData.cameraStack.Remove(_uiObjectsCam);
         }
     }
 }

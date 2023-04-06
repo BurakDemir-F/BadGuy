@@ -16272,18 +16272,18 @@ MonoBehaviour:
   - {fileID: 1703684812280515712}
   - {fileID: 1703684811591537691}
   - {fileID: 1703684812472544939}
-  - {fileID: 6827062}
   - {fileID: 866481258}
   - {fileID: 398712675}
   _afterSkipNodes:
   - {fileID: 1703684811591537691}
   - {fileID: 1703684812472544939}
-  - {fileID: 6827062}
   - {fileID: 866481258}
   - {fileID: 398712675}
   _skipText: {fileID: 873719538}
   _inputReceiver: {fileID: 1811523725}
   _skipOptionDuration: 7
+  _enableUIObjectsCamera: {fileID: 6827062}
+  _disableUIObjectsCamera: {fileID: 51195832}
 --- !u!114 &1811523725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21633,7 +21633,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.49056602, g: 0.13189746, b: 0.13189746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -22978,7 +22978,7 @@ PrefabInstance:
     - target: {fileID: 3016232423605019156, guid: b986f7e258feef249a614b8963c34810,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 34.3
       objectReference: {fileID: 0}
     - target: {fileID: 3016232423605019156, guid: b986f7e258feef249a614b8963c34810,
         type: 3}

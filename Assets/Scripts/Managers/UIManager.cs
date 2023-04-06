@@ -27,13 +27,16 @@ namespace Managers
             _gameManager.LevelWin += OnLevelWin;
             _gameManager.GameFinished += OnGameFinished;
             _gameManager.LevelLoose += OnLevelLoose;
-            continueButton.gameObject.SetActive(level>0);
             continueButton.onClick.AddListener(LoadScene);
 
             yield return new WaitForSeconds(2f);
             FadeButton(newGameButton,true);
             if(level>0)
+            {
                 FadeButton(continueButton,true);
+                continueButton.gameObject.SetActive(true);
+            }
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -44,6 +47,7 @@ namespace Managers
             {
                 FadeButton(newGameButton,true);
                 FadeButton(continueButton,true);
+                Cursor.lockState = CursorLockMode.None;
             }
         }
 
@@ -90,6 +94,7 @@ namespace Managers
         [ContextMenu("Load Scene Cor")]
         public void LoadScene()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             FadeButton(newGameButton,false);
             FadeButton(continueButton,false);
             LoadLevel();

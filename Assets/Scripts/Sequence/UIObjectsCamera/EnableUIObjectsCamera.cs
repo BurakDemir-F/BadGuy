@@ -11,8 +11,14 @@ namespace Sequence.UIObjectsCamera
         public override void StartSequenceNode()
         {
             base.StartSequenceNode();
-            _baseCameraData.cameraStack.Add(_uiObjectsCam);
+            EnableCamera();
             SequenceNodeCompleted?.Invoke();
+        }
+
+        public void EnableCamera()
+        {
+            Debug.Log("ui object camera enabled.");
+            _baseCameraData.cameraStack.Add(_uiObjectsCam);
         }
     }
 }

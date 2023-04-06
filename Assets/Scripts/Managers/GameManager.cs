@@ -1,10 +1,10 @@
 using System;
+using CrazyGames;
 using Managers;
-using Patterns;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : Patterns.Singleton<GameManager>
 {
     [SerializeField] private UIManager _uiManager;
     private const string SavePrefName = "Level";
@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         var isSceneMobBakery = SceneManager.GetActiveScene().name.Contains("mob", StringComparison.OrdinalIgnoreCase);
-        
+
         if (isSceneMobBakery)
         {
             Level = 0;
@@ -61,6 +61,17 @@ public class GameManager : Singleton<GameManager>
     public void GameLoose()
     {
         LevelLoose?.Invoke();
+        CrazyGames.CrazyAds.Instance.beginAdBreak(OnAddCompleted,AddFailCallback);
+    }
+
+    private void OnAddCompleted()
+    {
+        Debug.Log("add completed");
+    }
+
+    private void AddFailCallback()
+    {
+        Debug.Log("add fail callback");
     }
 
 #if UNITY_EDITOR
@@ -68,11 +79,9 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Y))
             GameWin();
-        
+
         if (Input.GetKeyDown(KeyCode.Y))
             GameLoose();
-
     }
 #endif
-
 }

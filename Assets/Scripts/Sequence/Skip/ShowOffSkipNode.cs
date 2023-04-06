@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sequence.System;
+using Sequence.UIObjectsCamera;
 using TMPro;
 using UnityEngine;
 
@@ -13,6 +15,8 @@ namespace Sequence.Skip
         [SerializeField] private TextMeshProUGUI _skipText;
         [SerializeField] private SkipInputReceiver _inputReceiver;
         [SerializeField] private float _skipOptionDuration = 7;
+        [SerializeField] private EnableUIObjectsCamera _enableUIObjectsCamera;
+        [SerializeField] private DisableUIObjectsCameraNode _disableUIObjectsCamera;
         private float _counter;
 
         private bool _canReceiveInput;
@@ -41,6 +45,8 @@ namespace Sequence.Skip
                 
                 _afterSkipNodes[0].StartSequenceNode();
                 _skipText.gameObject.SetActive(false);
+                _disableUIObjectsCamera.DisableCamera();
+                DOVirtual.DelayedCall(2f, _enableUIObjectsCamera.EnableCamera);
             }
         }
 

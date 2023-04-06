@@ -23,7 +23,5 @@ MonoBehaviour:
     Text: Arrow Keys
   - Item: Objectives
     Text: O
-  - Item: Open Close Music
-    Text: M
   - Item: Inject Poison
     Text: P

@@ -29,34 +29,34 @@ MonoBehaviour:
     WaitDuration: 14
     WantedProduct: {fileID: 11400000, guid: 960416f773d968d4699df718552413e6, type: 2}
   - Speed: 30
-    WaitDuration: 13
+    WaitDuration: 14
     WantedProduct: {fileID: 11400000, guid: 31304e501d6903d45b5cf5c4cf13c01a, type: 2}
   - Speed: 30
     WaitDuration: 12
     WantedProduct: {fileID: 11400000, guid: bf68a9fd2412d3348931b79741425980, type: 2}
   - Speed: 30
-    WaitDuration: 11
+    WaitDuration: 12
     WantedProduct: {fileID: 11400000, guid: f575f4d1982b2f941ac97968142bd80b, type: 2}
   - Speed: 30
-    WaitDuration: 10
+    WaitDuration: 14
     WantedProduct: {fileID: 11400000, guid: 1c1ffe633cbc3fa4c897ed4d89cb1618, type: 2}
   - Speed: 30
     WaitDuration: 10
     WantedProduct: {fileID: 11400000, guid: 355d439073e25f4468eabbd5b89db532, type: 2}
   - Speed: 30
-    WaitDuration: 10
+    WaitDuration: 14
     WantedProduct: {fileID: 11400000, guid: 31304e501d6903d45b5cf5c4cf13c01a, type: 2}
   - Speed: 30
-    WaitDuration: 10
+    WaitDuration: 12
     WantedProduct: {fileID: 11400000, guid: f575f4d1982b2f941ac97968142bd80b, type: 2}
   - Speed: 30
-    WaitDuration: 10
+    WaitDuration: 14
     WantedProduct: {fileID: 11400000, guid: 31304e501d6903d45b5cf5c4cf13c01a, type: 2}
   - Speed: 30
-    WaitDuration: 9
+    WaitDuration: 14
     WantedProduct: {fileID: 11400000, guid: 1c1ffe633cbc3fa4c897ed4d89cb1618, type: 2}
   - Speed: 30
-    WaitDuration: 9
+    WaitDuration: 12
     WantedProduct: {fileID: 11400000, guid: f575f4d1982b2f941ac97968142bd80b, type: 2}
   TargetNpcData:
     Speed: 50

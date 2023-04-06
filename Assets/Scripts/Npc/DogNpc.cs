@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using Generic;
 using Player;
 using UnityEngine;
@@ -20,7 +21,13 @@ namespace Npc
                 other.transform.SetParent(_animationRoot);
                 _animator.Animate(NpcAnimType.Win);
             });
+            StartCoroutine(GameLooseCor());
+        }
 
+        private IEnumerator GameLooseCor()
+        {
+            yield return new WaitForSeconds(3f);
+            GameManager.Instance.GameLoose();
         }
     }
 }

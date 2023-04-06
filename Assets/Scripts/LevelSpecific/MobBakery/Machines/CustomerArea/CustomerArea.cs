@@ -81,6 +81,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
                 if (CurrentHolder.Ingredient.Type == IngredientType.FriedLoafWithPoison)
                 {
                     MissionSuccess?.Invoke();
+                    CurrentHolder.Release();
                     //mobBakeryGameResultUI.AdventureWillContinue();
                     CallLevelWin();
                     return;

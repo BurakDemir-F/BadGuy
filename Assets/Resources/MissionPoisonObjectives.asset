@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e9221bf54c4b549525aa8f17b0093c, type: 3}
   m_Name: MissionPoisonObjectives
   m_EditorClassIdentifier: 
-  NumberColor: {r: 0.24705882, g: 0.28627452, b: 0.49803922, a: 1}
+  NumberColor: {r: 0.6698113, g: 0.22873248, b: 0.22432362, a: 1}
   ObjectiveColor: {r: 1, g: 1, b: 1, a: 1}
   ShowDuration: 7
   Objectives:

@@ -26,6 +26,12 @@ namespace Sequence.MissionObjectives
         {
             base.StartSequenceNode();
             ChangeTextActivation(true);
+           SetObjectiveText();
+            _nodeCor = StartCoroutine(ShowMissionObjectivesCor());
+        }
+
+        private void SetObjectiveText()
+        {
             var sb = new StringBuilder();
             var numColor = _objectives.NumberColor;
             var textColor = _objectives.ObjectiveColor;
@@ -37,7 +43,6 @@ namespace Sequence.MissionObjectives
             }
 
             _missionsText.text = sb.ToString();
-            _nodeCor = StartCoroutine(ShowMissionObjectivesCor());
         }
 
         private IEnumerator ShowMissionObjectivesCor()
@@ -49,6 +54,7 @@ namespace Sequence.MissionObjectives
         public override void StopNode()
         {
             base.StopNode();
+            SetObjectiveText();
             if(_nodeCor != null)
                 StopCoroutine(_nodeCor);
             ChangeTextActivation(false);
