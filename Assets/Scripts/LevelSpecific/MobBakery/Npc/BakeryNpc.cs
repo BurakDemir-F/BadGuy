@@ -101,6 +101,12 @@ namespace LevelSpecific.MobBakery.Npc
             animator = bakeryNpcAnimator;
         }
 
+        public void Die(Transform target)
+        {
+            _npcEffects.PlayPoisonedEffect();
+            Move(target.position,()=> Animate(BakeryNpcAnimType.Death));
+        }
+        
         public void SetAgent(NavMeshAgent meshAgent)
         {
             agent = meshAgent;

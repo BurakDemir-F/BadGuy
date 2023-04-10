@@ -30,6 +30,8 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
         public event Action MissionFailWrongService;
         public event Action MissionFailTimeOut;
 
+        public BakeryNpc CurrentNpc => _currentNpc;
+
         public void CallNewCustomer()
         {
             _currentNpc = _npcManager.GetNpc();
@@ -88,6 +90,7 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
                     MissionSuccess?.Invoke();
                     CurrentHolder.Release();
                     //mobBakeryGameResultUI.AdventureWillContinue();
+                    _currentNpc.Die(_player.transform);
                     CallLevelWin();
                     return;
                 }

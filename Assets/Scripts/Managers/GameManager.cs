@@ -44,6 +44,7 @@ public class GameManager : Patterns.Singleton<GameManager>
         {
             Level++;
             LevelWin?.Invoke();
+            CrazyEvents.Instance.HappyTime();
             return;
         }
 
@@ -56,7 +57,10 @@ public class GameManager : Patterns.Singleton<GameManager>
             CrazyEvents.Instance.HappyTime();
         }
         else
+        {
             LevelWin?.Invoke();
+            CrazyEvents.Instance.HappyTime();
+        }
     }
 
     public void GameLoose()

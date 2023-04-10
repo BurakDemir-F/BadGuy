@@ -5,7 +5,10 @@ using General;
 using Injector;
 using InputRelated;
 using LevelSpecific.MobBakery.IngredientSystem;
+using LevelSpecific.MobBakery.Machines.CustomerArea;
+using LevelSpecific.MobBakery.Npc;
 using Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,6 +23,9 @@ namespace LevelSpecific.MobBakery
         [SerializeField] private float _moveDuration;
         [SerializeField] private float _poisonDuration;
         [SerializeField] private IngredientHolder _holder;
+        [SerializeField] private TextMeshProUGUI _correctFoodText;
+        [SerializeField] private TextMeshProUGUI _correctNpcText;
+        [SerializeField] private CustomerArea _customerArea;
 
         [InjectReference] public InputManager InputManager { get; set; }
         public InputType InputType => InputType.PoisonInput;
@@ -29,7 +35,7 @@ namespace LevelSpecific.MobBakery
             ChangeInjectorActivationStatus(false);
             yield return new WaitForSeconds(.1f);
             InputManager.Add(this);
-            DisableInput();
+            //DisableInput();
         }
 
         protected override void OnDestroy()
@@ -42,6 +48,22 @@ namespace LevelSpecific.MobBakery
         {
             if (gameActionType == PoisonInput.AddPoison)
             {
+
+                if (_customerArea.CurrentNpc == null || !_customerArea.CurrentNpc.IsTargetNpc)
+                {
+                    _correctNpcText.gameObject.SetActive(true);
+                    DOVirtual.DelayedCall(3f, () => _correctNpcText.gameObject.SetActive(false));
+                    return;
+                }
+                
+                var holderType = _holder.Ingredient.Type;
+                if(holderType != IngredientType.FriedLoaf && holderType != IngredientType.Loaf)
+                {
+                    _correctFoodText.gameObject.SetActive(true);
+                    DOVirtual.DelayedCall(3f, () => _correctFoodText.gameObject.SetActive(false));
+                    return;
+                }
+
                 ChangeInjectorActivationStatus(true);
                 DisableOtherInputs();
 

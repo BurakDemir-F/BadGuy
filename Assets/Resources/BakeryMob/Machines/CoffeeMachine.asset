@@ -17,5 +17,5 @@ MonoBehaviour:
   Products:
   - {fileID: 11400000, guid: f575f4d1982b2f941ac97968142bd80b, type: 2}
   IsTimeMachine: 0
-  MachineProcessDuration: 0
+  MachineProcessDuration: 1
   HasDoor: 0

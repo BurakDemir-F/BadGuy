@@ -46,7 +46,11 @@ namespace Managers
             if(isSceneMainMenu)
             {
                 FadeButton(newGameButton,true);
-                FadeButton(continueButton,true);
+                if(_gameManager.Level>0)
+                {
+                    FadeButton(continueButton,true);
+                    continueButton.gameObject.SetActive(true);
+                }
                 Cursor.lockState = CursorLockMode.None;
             }
         }

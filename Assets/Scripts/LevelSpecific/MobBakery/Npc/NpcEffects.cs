@@ -6,6 +6,7 @@ namespace LevelSpecific.MobBakery.Npc
     public class NpcEffects : MonoBehaviour
     {
         [SerializeField] protected ParticleSystem _muzzleFlash;
+        [SerializeField] protected ParticleSystem _poison;
         [SerializeField] protected AudioClip _shootSound;
         [SerializeField] protected AudioSource _source;
 
@@ -66,6 +67,13 @@ namespace LevelSpecific.MobBakery.Npc
         {
             _source.PlayOneShot(_shootSound);
             _muzzleFlash.Emit(11);
+        }
+
+        public void PlayPoisonedEffect()
+        {
+            if(_poison == null)
+                return;
+            _poison.Play();
         }
     }
 }

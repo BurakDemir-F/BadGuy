@@ -42,11 +42,11 @@ namespace LevelSpecific.MobBakery
         
         public void Hold(IngredientSO ingredientSo)
         {
-            if (gameObject.CompareTag("Player") && (ingredientSo.Item.Type == IngredientType.Loaf || ingredientSo.Item.Type == IngredientType.FriedLoaf))
-            {
-                InputManager.ActivateInput(InputType.PoisonInput);
-                _poisonInputActivated = true;
-            }
+            // if (gameObject.CompareTag("Player") && (ingredientSo.Item.Type == IngredientType.Loaf || ingredientSo.Item.Type == IngredientType.FriedLoaf))
+            // {
+            //     InputManager.ActivateInput(InputType.PoisonInput);
+            //     _poisonInputActivated = true;
+            // }
             Init();
             _inputButton.gameObject.SetActive(true);
             _ingredient.Type = ingredientSo.Item.Type;
@@ -59,8 +59,8 @@ namespace LevelSpecific.MobBakery
 
         public Ingredient Release()
         {
-            if(_poisonInputActivated)
-                InputManager.DeactivateInput(InputType.PoisonInput);
+            // if(_poisonInputActivated)
+            //     InputManager.DeactivateInput(InputType.PoisonInput);
 
             _inputButton.gameObject.SetActive(false);
             _ingredient.Prefab.gameObject.SetActive(false);
