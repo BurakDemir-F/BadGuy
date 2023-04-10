@@ -43,7 +43,7 @@ namespace Player
             _animator.Animate(AnimType.Walk);
         }
 
-        public void PlayDieEffects()
+        private void PlayDieEffects()
         {
             _effects.PlayDieEffect();
         }
@@ -62,6 +62,13 @@ namespace Player
 
         public void InteractEnd(Collider col)
         {
+        }
+
+        public void Die()
+        {
+            _movementHandler.DisableInputs();
+            _animator.Animate(AnimType.Death);
+            PlayDieEffects();
         }
 
         public bool GoalAccomplished { get; private set; }

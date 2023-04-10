@@ -23,12 +23,18 @@ MonoBehaviour:
   - Number: 2
     ObjectiveDetail: Don't hit any noisy object
   - Number: 3
-    ObjectiveDetail: Find a way to get the crazy old man out of the house
+    ObjectiveDetail: When you get close to noisy objects, you will see a red light
+      bulb.
   - Number: 4
-    ObjectiveDetail: You can find something to throw and distract them.
+    ObjectiveDetail: Find a way to get the crazy old man out of the house
   - Number: 5
-    ObjectiveDetail: Enter the house.
+    ObjectiveDetail: You can find something to throw and distract them.
   - Number: 6
-    ObjectiveDetail: Steal the poison.
+    ObjectiveDetail: When you get close to throwable objects, you will see a green
+      light bulb.
   - Number: 7
+    ObjectiveDetail: Enter the house.
+  - Number: 8
+    ObjectiveDetail: Steal the poison.
+  - Number: 9
     ObjectiveDetail: Go back to stop sign.

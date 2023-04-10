@@ -56,11 +56,16 @@ namespace LevelSpecific.MobBakery.Machines.CustomerArea
             Debug.Log("player killed.");
             _currentNpc.Move(_shootTransform.position, AnimateShoot);
             _currentNpc.Aim(_player.transform);
+            
 
             void AnimateShoot()
             {
                 _currentNpc.Animate(BakeryNpcAnimType.Shoot);
-                DOVirtual.DelayedCall(1.2f, _player.PlayDieEffects);
+                DOVirtual.DelayedCall(1.2f, () =>
+                {
+                    _player.Die();
+                    _currentNpc.Animate(BakeryNpcAnimType.Idle);
+                });
             }
 
             CallLevelFailed();

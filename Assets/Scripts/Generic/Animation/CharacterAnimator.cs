@@ -25,7 +25,7 @@ namespace Generic.Animation
     
     public enum AnimType
     {
-        None,Walk,Idle,Pull,Catched
+        None,Walk,Idle,Pull,Catched,Death
     }
     
     [System.Serializable]
