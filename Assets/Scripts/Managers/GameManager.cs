@@ -1,5 +1,4 @@
 using System;
-using CrazyGames;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,7 +43,7 @@ public class GameManager : Patterns.Singleton<GameManager>
         {
             Level++;
             LevelWin?.Invoke();
-            CrazyEvents.Instance.HappyTime();
+            //CrazyEvents.Instance.HappyTime();
             return;
         }
 
@@ -54,20 +53,20 @@ public class GameManager : Patterns.Singleton<GameManager>
         {
             Level = 0;
             GameFinished?.Invoke();
-            CrazyEvents.Instance.HappyTime();
+            //CrazyEvents.Instance.HappyTime();
         }
         else
         {
             LevelWin?.Invoke();
-            CrazyEvents.Instance.HappyTime();
+            //CrazyEvents.Instance.HappyTime();
         }
     }
 
     public void GameLoose()
     {
-        CrazyEvents.Instance.GameplayStop();
+        //CrazyEvents.Instance.GameplayStop();
         LevelLoose?.Invoke();
-        CrazyGames.CrazyAds.Instance.beginAdBreak(OnAddCompleted,AddFailCallback);
+        //CrazyGames.CrazyAds.Instance.beginAdBreak(OnAddCompleted,AddFailCallback);
     }
 
     private void OnAddCompleted()
