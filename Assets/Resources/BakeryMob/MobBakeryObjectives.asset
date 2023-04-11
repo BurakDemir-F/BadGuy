@@ -19,8 +19,10 @@ MonoBehaviour:
   - Number: 0
     ObjectiveDetail: Serve Food And Drink As Customers Requested
   - Number: 1
-    ObjectiveDetail: Do Not Be Late
+    ObjectiveDetail: You May or May Not Need to Use Machines Before Serving The Food
   - Number: 2
-    ObjectiveDetail: Wait For Wearing Blue Pants and Gray Haired Man.
+    ObjectiveDetail: Do Not Be Late
   - Number: 3
+    ObjectiveDetail: Wait For Wearing Blue Pants and Gray Haired Man.
+  - Number: 4
     ObjectiveDetail: Add The Poison To The Food He Wants.

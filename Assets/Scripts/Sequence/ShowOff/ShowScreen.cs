@@ -20,6 +20,7 @@ namespace Sequence.ShowOff
 
         private int _counter;
         private ShowScreenData CurrentShowOffData => _data[_counter];
+        private Coroutine _showOffCor;
 
         public override void InitializeNode()
         {
@@ -58,7 +59,7 @@ namespace Sequence.ShowOff
             if (data.NeedCameraMovement)
                 data.Camera.Activate();
 
-            StartCoroutine(ShowOffCor(2f,() => _counter++));
+            _showOffCor = StartCoroutine(ShowOffCor(2f,() => _counter++));
         }
 
         private IEnumerator ShowOffCor(float cameraMovementWait, Action completeCallback)
@@ -85,6 +86,8 @@ namespace Sequence.ShowOff
         public override void StopNode()
         {
             base.StopNode();
+            if(_showOffCor != null)
+                StopCoroutine(_showOffCor);
             _showUI.Disable();
             if (CurrentShowOffData.NeedCameraMovement)
                 CurrentShowOffData.Camera.Deactivate();

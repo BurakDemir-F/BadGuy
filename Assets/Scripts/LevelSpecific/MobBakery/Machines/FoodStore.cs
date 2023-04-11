@@ -17,6 +17,13 @@ namespace LevelSpecific.MobBakery.Machines
             if(isHolding) return;
             
             CurrentHolder.Hold(ingredientSo);
+            _interactionUI.HidePressFToSelect();
+        }
+
+        public override void Interact(Collider col)
+        {
+            base.Interact(col);
+            _interactionUI.ShowPressFToSelect();
         }
     }
 }

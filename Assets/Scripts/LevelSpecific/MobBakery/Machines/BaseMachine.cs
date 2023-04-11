@@ -18,6 +18,7 @@ namespace LevelSpecific.MobBakery.Machines
         [SerializeField] protected CD_FoodMachine Foods;
         [SerializeField] protected FoodMachineUI _machineUI;
         [SerializeField] protected List<FlyObjectBehaviour> _indicators;
+        [SerializeField] protected MachineInteractionUI _interactionUI;
         private Door _door;
         protected IngredientHolder CurrentHolder;
         protected Dictionary<IngredientType, Ingredient> Ingredients;
@@ -63,6 +64,7 @@ namespace LevelSpecific.MobBakery.Machines
         public virtual void InteractEnd(Collider col)
         {
            CloseMachine();
+           _interactionUI.HidePressFToSelect();
         }
 
         protected virtual void OpenMachine(Collider col)

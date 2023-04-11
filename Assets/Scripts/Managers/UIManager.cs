@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
+using CrazyGames;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utilities;
 
@@ -90,7 +90,7 @@ namespace Managers
 
         private void PlayNew()
         {
-            //CrazyEvents.Instance.GameplayStart();
+            CrazyEvents.Instance.GameplayStart();
             _gameManager.Level = 0;
             LoadScene();
         }

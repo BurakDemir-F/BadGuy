@@ -21,13 +21,14 @@ namespace LevelSpecific.MobBakery.Machines
             if (_hasProduced)
             {
                 ActivateButtonAndInput();
+                _interactionUI.ShowPressFToSelect();
                 return;
             }
 
             var hasItem = CurrentHolder.HasIngredient;
 
             if (!hasItem)
-            {   
+            {
                 ActivatePassiveButtons();
                 return;
             }
@@ -47,24 +48,14 @@ namespace LevelSpecific.MobBakery.Machines
                 _isProducing = false;
                 _hasProduced = true;
                 ActivateButtonAndInput();
+                if (CurrentHolder != null)
+                    _interactionUI.ShowPressFToSelect();
             });
         }
 
         protected Coroutine StartTimer(float duration, Action endCallback)
         {
-            return _timeUI.StartTimer(duration, () =>
-            {
-                endCallback?.Invoke();
-            });
-        }
-
-        public override void InteractEnd(Collider col)
-        {
-            if(!_isProducing)
-            {
-                base.InteractEnd(col);
-                return;
-            }
+            return _timeUI.StartTimer(duration, () => { endCallback?.Invoke(); });
         }
 
         protected override void OpenMachine(Collider col)
@@ -86,12 +77,13 @@ namespace LevelSpecific.MobBakery.Machines
         protected override void OnIngredientSelected(IngredientSO ingredientSo)
         {
             var hasAnyItem = CurrentHolder.HasIngredient;
-            if(hasAnyItem)
+            if (hasAnyItem)
                 return;
-            
+
             CurrentHolder.Hold(ingredientSo);
             _machineUI.DeactivateButtons();
             _hasProduced = false;
+            _interactionUI.HidePressFToSelect();
         }
     }
 }
