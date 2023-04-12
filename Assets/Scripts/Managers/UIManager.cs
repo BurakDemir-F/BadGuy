@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using CrazyGames;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -90,7 +89,6 @@ namespace Managers
 
         private void PlayNew()
         {
-            CrazyEvents.Instance.GameplayStart();
             _gameManager.Level = 0;
             LoadScene();
         }
