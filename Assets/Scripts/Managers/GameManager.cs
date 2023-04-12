@@ -32,6 +32,7 @@ public class GameManager : Patterns.Singleton<GameManager>
         SceneManager.LoadScene(_mobBakeryIndex);
     }
 
+    
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(_mainMenuIndex);
