@@ -17,6 +17,7 @@ public class GameManager : Patterns.Singleton<GameManager>
         get => PlayerPrefs.GetInt(SavePrefName, 0);
         set => PlayerPrefs.SetInt(SavePrefName, value);
     }
+    
 
     private int _mainMenuIndex = 0;
     private int _missionPoisonIndex = 1;
