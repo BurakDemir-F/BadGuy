@@ -76,4 +76,9 @@ namespace InputRelated
         public InputAction InputAction;
         public TEnum GameActionType;
     }
+
+    public interface IInputReceiver
+    {
+        object InputObject { get; }
+    }
 }
