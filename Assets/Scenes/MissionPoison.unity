@@ -4596,7 +4596,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ee48c5fba4919649a8a6094cbead669, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c65a6b86c8162ea4e93768a73fa6f9ad, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28740,6 +28740,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: JoyStickCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082309697760080336, guid: d0a810082d17b7b4f81977d17c491447,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

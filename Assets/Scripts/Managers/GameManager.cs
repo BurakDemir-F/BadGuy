@@ -1,4 +1,5 @@
 using System;
+using CrazyGames;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,8 @@ public class GameManager : Patterns.Singleton<GameManager>
         {
             Level = 0;
             GameFinished?.Invoke();
+            CrazyEvents.Instance.HappyTime();
+            CrazyEvents.Instance.GameplayStop();
         }
         else
         {
@@ -63,6 +66,17 @@ public class GameManager : Patterns.Singleton<GameManager>
     public void GameLoose()
     {
         LevelLoose?.Invoke();
+        CrazyAds.Instance.beginAdBreak(AdShownHandler, AdErrorHandler);
+    }
+
+    private void AdErrorHandler()
+    {
+        Debug.Log("ad error");
+    }
+
+    private void AdShownHandler()
+    {
+        Debug.Log("ad shown");
     }
 
     private void OnAddCompleted()

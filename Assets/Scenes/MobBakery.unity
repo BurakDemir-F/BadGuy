@@ -16523,6 +16523,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: JoyStickCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5082309697760080336, guid: d0a810082d17b7b4f81977d17c491447,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

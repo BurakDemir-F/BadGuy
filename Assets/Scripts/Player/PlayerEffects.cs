@@ -38,17 +38,19 @@ namespace Player
 
         public void PlayWalkingEffect()
         {
-            _walkingParticles.Play();
+            if(_walkingParticles)
+                _walkingParticles.Play();
             _isWalking = true;
-            _walkCor = StartCoroutine(PlayWalkingSound());
+            //_walkCor = StartCoroutine(PlayWalkingSound());
         }
 
         public void StopWalkingEffect()
         {
-            _walkingParticles.Stop();
+            if(_walkingParticles)
+                _walkingParticles.Stop();
             _isWalking = false;
-            if(_walkCor != null)
-                StopCoroutine(_walkCor);
+            //if(_walkCor != null)
+                //StopCoroutine(_walkCor);
         }
 
         private IEnumerator PlayWalkingSound()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CrazyGames;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -16,11 +17,12 @@ namespace Managers
         [SerializeField] private TextMeshProUGUI _gameFinishedText;
         [SerializeField] private GameObject _gameFinishedRoot;
         public Button newGameButton;
+        [SerializeField] private TMP_Text _newGameText;
         public Button continueButton;
+        [SerializeField] private TMP_Text _continueGameText;
 
         private IEnumerator Start()
         {
-            var level = _gameManager.Level;
             newGameButton.onClick.AddListener(PlayNew);
             _gameManager.LevelWin += OnLevelWin;
             _gameManager.GameFinished += OnGameFinished;
@@ -28,27 +30,32 @@ namespace Managers
             continueButton.onClick.AddListener(LoadScene);
 
             yield return new WaitForSeconds(2f);
-            FadeButton(newGameButton,true);
-            if(level>0)
-            {
-                FadeButton(continueButton,true);
-                continueButton.gameObject.SetActive(true);
-            }
+           
+            FadeUI();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void FadeUI()
+        {
+            var level = _gameManager.Level;
+            FadeButton(newGameButton, true);
+            FadeText(_newGameText, true);
+            if (level > 0)
+            {
+                continueButton.gameObject.SetActive(true);
+                FadeButton(continueButton, true);
+                FadeText(_continueGameText, true);
+            }
         }
 
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             var isSceneMainMenu = arg0.name.Contains("main", StringComparison.OrdinalIgnoreCase);
-            if(isSceneMainMenu)
+            if (isSceneMainMenu)
             {
-                FadeButton(newGameButton,true);
-                if(_gameManager.Level>0)
-                {
-                    FadeButton(continueButton,true);
-                    continueButton.gameObject.SetActive(true);
-                }
+                FadeUI();
+
                 Cursor.lockState = CursorLockMode.None;
             }
         }
@@ -68,38 +75,88 @@ namespace Managers
             LoadLevel();
         }
 
-        private void FadeButton(Button button, bool isFadeIn)
+        private void FadeButton(Button button, bool isFadeIn, Action callback = null)
         {
-            if(isFadeIn)
+            if (isFadeIn)
                 button.gameObject.SetActive(true);
-            var buttonColor = button.image.color;
+
+            StartCoroutine(FadeUICor((color) => button.image.color = color,
+                () => button.image.color,
+                isFadeIn,
+                () =>
+                {
+                    if (!isFadeIn)
+                    {
+                        button.gameObject.SetActive(false);
+                    }
+
+                    callback?.Invoke();
+                }
+            ));
+        }
+
+        private void FadeText(TMP_Text text, bool isFadeIn, Action endCallback = null)
+        {
+            if (isFadeIn)
+                text.gameObject.SetActive(true);
+
+            StartCoroutine(FadeUICor((color) => text.color = color,
+                () => text.color,
+                isFadeIn,
+                () =>
+                {
+                    if (!isFadeIn)
+                    {
+                        text.gameObject.SetActive(false);
+                    }
+
+                    endCallback?.Invoke();
+                }
+            ));
+        }
+
+        private IEnumerator FadeUICor(Action<Color> changeFadeValue, Func<Color> getColorValue, bool isFadeIn,
+            Action endCallback)
+        {
+            var buttonColor = getColorValue.Invoke();
             var fullColor = buttonColor.GetFullAlpha();
             var zeroColor = buttonColor.GetZeroAlpha();
 
-            button.image.color = isFadeIn ? zeroColor : fullColor;
+            var startColor = isFadeIn ? zeroColor : fullColor;
             var targetColor = isFadeIn ? fullColor : zeroColor;
-            button.image.DOColor(targetColor, 2f).OnComplete(() =>
+            changeFadeValue.Invoke(isFadeIn ? zeroColor : fullColor);
+
+            var elapsedTime = 0f;
+            var duration = 2f;
+
+            while (elapsedTime < duration)
             {
-                if (!isFadeIn)
-                {
-                    button.gameObject.SetActive(false);
-                }
-            });
+                elapsedTime += Time.deltaTime;
+                var value = elapsedTime / duration;
+                var color = Color.Lerp(startColor, targetColor, value);
+                changeFadeValue.Invoke(color);
+                yield return null;
+            }
+
+            endCallback?.Invoke();
         }
 
         private void PlayNew()
         {
+            CrazyEvents.Instance.GameplayStart();
             _gameManager.Level = 0;
             LoadScene();
         }
-        
+
         [ContextMenu("Load Scene Cor")]
         public void LoadScene()
         {
             Cursor.lockState = CursorLockMode.Locked;
-            FadeButton(newGameButton,false);
-            FadeButton(continueButton,false);
-            LoadLevel();
+            FadeButton(newGameButton, false);
+            FadeText(_newGameText,false);
+            FadeButton(continueButton, false);
+            FadeText(_continueGameText,false,LoadLevel);
+            //LoadLevel();
         }
 
         private void LoadLevel()
